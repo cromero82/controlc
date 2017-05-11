@@ -1,0 +1,176 @@
+{% extends 'basePlantilla.html' %}
+
+{% block subContenidoIzquierda %}
+	<div class="animated-delay p20" data-animate='["300","fadeIn"]'>
+                        <h4 class="mt5 mb20"> Bootstrap - <span class="fs14 fw400 text-muted">Painless Tables!</span></h4>
+
+                        <ul class="fs14 list-unstyled list-spacing-10 mb10 pl5">
+                            <li>
+                                <i class="fa fa-exclamation-circle text-warning fa-lg pr10"></i>
+                                <b> Author:</b> Twitter Bootstrap
+                            </li>
+                            <li>
+                                <i class="fa fa-exclamation-circle text-warning fa-lg pr10"></i>
+                                <b> License:</b> Mit - Free to use
+                            </li>
+                            <li>
+                                <i class="fa fa-exclamation-circle text-warning fa-lg pr10"></i>
+                                <b> Website:</b>
+                                <a href="http://www.getbootstrap.com"> www.getbootstrap.com </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    
+                    <div id="nav-spy">
+                        <ul class="nav tray-nav custom-nav-animation" data-spy="affix" data-offset-top="200">
+                            <li class="active">
+                                <a href="#spy1">
+                                    Contextual Headers</a>
+                            </li>
+                            <li>
+                                <a href="#spy2">
+                                    Basic Table</a>
+                            </li>                           
+                        </ul>
+                    </div>
+{% endblock %}
+{% block contenido %}
+	<div class="panel">
+                        <div class="panel-heading">
+                            <span class="panel-title">
+                                <span class="glyphicons glyphicons-table"></span>Header Colors</span>
+                            <div class="pull-right">
+                                <code class="mr20">&#x3C;tr class=&#x22;success info warning danger&#x22;&#x3E;</code>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="spy1">
+                        <div class="col-sm-6">
+                            <div class="panel">
+                                <div class="panel-body pn">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="primary">
+                                                <th>#</th>
+                                                <th>First Name</th>
+                                                <th>
+                                                    <code>.primary</code>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Mark</td>
+                                                <td>Cell</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Jacob</td>
+                                                <td>Cell</td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Larry</td>
+                                                <td>Cell</td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>Sussy</td>
+                                                <td>Cell</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="panel">
+                                <div class="panel-body pn">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="success">
+                                                <th>#</th>
+                                                <th>First Name</th>
+                                                <th>
+                                                    <code>.success</code>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Mark</td>
+                                                <td>Cell</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Jacob</td>
+                                                <td>Cell</td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Larry</td>
+                                                <td>Cell</td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>Sussy</td>
+                                                <td>Cell</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+
+                    <div class="panel" id="spy2">
+                        <div class="panel-heading">
+                            <span class="panel-title">
+                                <span class="glyphicons glyphicons-table"></span>Basic Table</span>
+                            <div class="pull-right">
+                                <code class="mr20">.table</code>
+                            </div>
+                        </div>
+                        <div class="panel-body pn">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Username</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>@fat</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Sussy</td>
+                                        <td>Watcher</td>
+                                        <td>@thehawk</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+{% endblock %}

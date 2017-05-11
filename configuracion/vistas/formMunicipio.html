@@ -1,0 +1,73 @@
+{% load widget_tweaks %}
+<form method="post" id="frmMunicipio" class="js-update-form">
+  {% csrf_token %}
+  <div class="panel-heading">
+
+    <span class="panel-title" id="tituloForm"> Registro de persona </span>
+
+    <button type="button" class="close" data-dismiss="modal">
+      <span class="panel-icon text-right">
+      <i class="fa fa-close"></i>
+    </span>
+    </button>
+  </div>
+  <div class="panel-body">
+    <input type="hidden" id="id" name="id" value="{{form.instance.pk}}">
+    <input type="hidden" id="hdEstregistro" name="estregistro" value="">
+    <div class="admin-form">
+      
+<div class="section row mb10">
+        <label for="account-name" class=" col-md-3 field-label text-left">{{ form.departamento.label  }}</label>
+        <div class="col-md-9">
+          <label class="field select">
+             {{ form.departamento }}              
+            <i class="arrow double"></i>
+          </label>
+          <div id="codigoDepartamento"  class="well well-sm"></div>
+        </div>
+      </div>
+
+      <div class="section row mb10">
+        <label for="account-name" class=" col-md-3 field-label text-left">{{ form.codigo.label  }}</label>
+        <div class="col-md-9">
+          <label for="account-name" class="field ">
+            {{ form.codigo|add_class:'gui-input' }}               
+          </label>
+        </div>
+      </div>
+
+      <div class="section row mb10">
+        <label for="account-name" class=" col-md-3 field-label text-left">{{ form.nombre.label  }}</label>
+        <div class="col-md-9">
+          <label for="account-name" class="field ">
+            {{ form.nombre|add_class:'gui-input' }}                                             
+          </label>
+        </div>
+      </div>      
+
+      <div class="section row mb10">
+        <label for="store-timezone" class="field-label col-md-3 text-left">Estado del registro:</label>
+        <div class="col-md-9">
+          <label class="field select">
+             {{ form.estregistro }} 
+            <i class="arrow double"></i>
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <!--fin del modal-body    -->
+  <div class="panel-footer text-right">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+    <button type="button" id="btnRegistrar" onclick="clicRegistrarPost()" class="btn btn-primary">Registrar</button>
+    <button type="button" id="btnEditar" onclick="clicActualizarPost()" class="btn btn-primary">Guardar cambios</button>
+  </div>
+</form>
+
+<!--Procedimiento javascript inicial-->
+<script type="text/javascript">
+  iniciarModal();
+
+</script>

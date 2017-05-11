@@ -1,0 +1,107 @@
+{% extends 'basePlantilla.html' %} 
+
+{% block migaPan %}
+     <li class="crumb-active">
+                            <a href="dashboard.html">Tipos de relaciones familiares</a>
+                        </li>
+                        <li class="crumb-icon">
+                            <a href="dashboard.html">
+                                <span class="glyphicon glyphicon-home"></span>
+                            </a>
+                        </li>
+                        <li class="crumb-link">
+                            <a href="index.html">Configuración</a>
+                        </li>
+                        <li class="crumb-trail"> Tipos de relaciones familiares</li>
+{% endblock %}
+
+{% block panelMigaPan %}
+    <a class="btn btn-default btn-sm light fw600 ml10" onclick="formularioRegistrar()" title="Nuevo Tipo de relación familiar">
+        <span class="fa fa-plus pr5"></span> Nuevo</a>
+{% endblock %} 
+{% block subContenidoIzquierda %}
+<div class="animated-delay p20" data-animate='["300","fadeIn"]'>
+    <h4 class="mt5 mb20"> Relaciones familiares - <span class="fs14 fw400 text-muted">Relaciones familiares que puede 
+        tener cualquier estudiante con los miembros de la familia.</span></h4>
+
+    <ul class="fs14 list-unstyled list-spacing-10 mb10 pl5">
+        <li>
+            <i class="fa fa-exclamation-circle text-warning fa-lg pr10"></i>
+            <b> Recuerde:</b> Nombres en singular, evitar por ejemplo "PADRES".
+        </li>                
+    </ul>
+
+
+
+</div>
+    <div id="nav-spy">
+                        <ul class="nav tray-nav tray-nav-border custom-nav-animation affix-top" data-spy="affix" data-offset-top="240">
+                            <li class="animated animated-short zoomIn active">
+                                <a href="#p0">
+                                    <span class="imoon imoon-user3"></span> Registrar Familias a estudiantes</a>
+                            </li>
+                            <li class="animated animated-short zoomIn active">
+                                <a href="#p1">
+                                    <span class="fa fa-comment-o"></span> Notificar a familiares</a>
+                            </li>                                                   
+                        </ul>
+                    </div>
+
+{% endblock %} {% block contenido %}
+<div class="row" id="spy1">
+    <div class="col-md-12">
+        <div class="panel panel-visible" id="spy2">
+            <div class="panel-heading">
+                <div class="panel-title hidden-xs">
+                    <span class="glyphicon glyphicon-tasks"></span>Tipos de relaciones familiares</div>
+            </div>
+            <div class="dt-panelmenu clearfix">
+                <div id="dataTables_filter" class="dataTables_filter"  style="float:left;" >                   
+                    <label>Buscar:<input type="search" name="nombre" id="nombre" class="form-control input-sm" style="width: 200px; " placeholder="Escriba tipo de relación..." aria-controls="datatable2"></label>
+                    <button type="button" onclick="filtrarNombre()" class="button btn-primary"> <i class="fa fa-search"></i>
+                                                        </button>
+                </div>
+                <div class="col-sm-1"></div>
+                <div class="dataTables_length m-5" id="datatable2_length">
+                    <!--<label>Buscar:<input type="search" class="form-control input-sm" placeholder="Enter Terms..." aria-controls="datatable2"></label>-->
+                    <label>Estado
+                                <select name="estregistro" id="estregistro" class="form-control input-sm">
+                                    <option value="0">Seleccione...</option>
+                                        <option value="1" selected>Activo</option>
+                                        <option value="2">Inactivo</option>                                   
+                                </select> </label>
+                                </div>
+                
+            </div>
+<div class="panel-body pn"   id="divLista"> 
+    
+ <div  class="tray tray-center p10 va-t posr">
+<table class="table table-striped table-hover dataTable no-footer" id="postsTable" describedby="datatable_info" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Relación familiar</th>                        
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+               </div>
+   
+              
+                
+            </div>
+            
+        </div>
+    </div>
+
+</div>
+
+{% endblock %} 
+{% load static %} 
+{% block js %} 
+{{ block.super }} {# includes previous content in block #}
+<script src="{% static 'js/configuracion/relacionesFamiliares.js' %}"></script>
+
+{% endblock %}

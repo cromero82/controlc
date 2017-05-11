@@ -1,0 +1,336 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>Gestión de miColegio</title>
+    <meta name="keywords" content="Gestión escolar" />
+    <meta name="description" content="Gestión académica, financiera y escolar">
+    <meta name="author" content="Carlos Romero - Analista de sistemas / Desarrollo de software">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto:400,500,700,300">
+
+    <!-- Theme CSS -->
+    <!--<link rel="stylesheet" type="text/css" href="assets/skin/default_skin/css/theme.css">-->
+    <link rel="stylesheet" type="text/css" href='{% static "admindesigns/assets/skin/default_skin/css/theme.css" %}'>
+
+    <!-- Admin Forms CSS -->
+    <!--<link rel="stylesheet" type="text/css" href="assets/admin-tools/admin-forms/css/admin-forms.css">-->
+    <link rel="stylesheet" type="text/css" href='{% static "admindesigns/assets/admin-tools/admin-forms/css/admin-forms.css" %}'>
+
+    <!-- Admin Modals CSS -->
+    <link rel="stylesheet" type="text/css" href='{% static "admindesigns/assets/admin-tools/admin-plugins/admin-modal/adminmodal.css" %}'>
+
+    <!-- Datatables CSS -->
+    <link rel="stylesheet" type="text/css" href='{% static "admindesigns/vendor/plugins/datatables/media/css/dataTables.bootstrap.css" %}'>
+
+    <!-- Datatables Editor CSS -->
+    <link rel="stylesheet" type="text/css" href='{% static "admindesigns/vendor/plugins/datatables/extensions/Editor/css/dataTables.editor.css" %}'>
+
+    <!-- Font CSS (icomoon) -->
+    <link rel="stylesheet" type="text/css" href='{% static "admindesigns/assets/fonts/icomoon/icomoon.css" %}'>
+
+    <!-- Mis estilos -->
+    <link rel="stylesheet" type="text/css" href='{% static "admindesigns/personalScripts/misEstilos.css" %}'>
+
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href='{% static "admindesigns/assets/img/favicon.ico" %}'>
+    
+    <!--Alerta - Notificación-->
+    <link rel="stylesheet" href="{% static 'admindesigns/terceros/sweetalert/dist/sweetalert.css' %}">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body class="tables-basic-page" data-spy="scroll" data-target="#nav-spy" data-offset="300">
+
+    {% include "configTemaPlantilla.html" %}
+
+    <!-- Start: Main -->
+    <div id="main">
+
+        {% include "headerPlantilla.html" %}
+
+        <!-- Start: Sidebar -->
+        <aside id="sidebar_left" class="nano nano-primary">
+            <div class="nano-content">
+
+                <!-- Start: Sidebar Header -->
+                <header class="sidebar-header">
+                    <div class="user-menu">
+                        <div class="row text-center mbn">
+                            <div class="col-xs-4">
+                                <a href="dashboard.html" class="text-primary" data-toggle="tooltip" data-placement="top" title="Dashboard">
+                                    <span class="glyphicons glyphicons-home"></span>
+                                </a>
+                            </div>
+                            <div class="col-xs-4">
+                                <a href="pages_messages.html" class="text-info" data-toggle="tooltip" data-placement="top" title="Messages">
+                                    <span class="glyphicons glyphicons-inbox"></span>
+                                </a>
+                            </div>
+                            <div class="col-xs-4">
+                                <a href="pages_profile.html" class="text-alert" data-toggle="tooltip" data-placement="top" title="Tasks">
+                                    <span class="glyphicons glyphicons-bell"></span>
+                                </a>
+                            </div>
+                            <div class="col-xs-4">
+                                <a href="pages_timeline.html" class="text-system" data-toggle="tooltip" data-placement="top" title="Activity">
+                                    <span class="glyphicons glyphicons-imac"></span>
+                                </a>
+                            </div>
+                            <div class="col-xs-4">
+                                <a href="pages_profile.html" class="text-danger" data-toggle="tooltip" data-placement="top" title="Settings">
+                                    <span class="glyphicons glyphicons-settings"></span>
+                                </a>
+                            </div>
+                            <div class="col-xs-4">
+                                <a href="pages_gallery.html" class="text-warning" data-toggle="tooltip" data-placement="top" title="Cron Jobs">
+                                    <span class="glyphicons glyphicons-restart"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <!-- End: Sidebar Header -->
+
+                {% include "sliderMenuIzq.html" %}
+            </div>
+        </aside>
+
+        <!-- Start: Content-Wrapper -->
+        <section id="content_wrapper">
+
+            <!-- Start: Topbar -->
+            <header id="topbar">
+                <div class="topbar-left">
+                    <ol class="breadcrumb">
+                        {% block migaPan %}{% endblock %}
+                    </ol>
+                </div>
+
+                <div class="topbar-right">
+                    {% block panelMigaPan %}{% endblock %}
+                </div>
+            </header>
+
+            <!-- Begin: Content -->
+            <section id="content" class="table-layout animated fadeIn">
+                <!-- SubMenu Izquierda-->
+                <!-- begin: .tray-left -->
+                <aside class="tray tray-left tray320 va-t pn" data-tray-height="match">
+                    {% block subContenidoIzquierda %}{% endblock %}
+                </aside>
+                <!-- end: .tray-left -->
+                <!-- FIN - SubMenu Izquierda-->
+                <!-- begin: .tray-center -->
+
+                <!--INICIO BODY REAL-->
+                <div class="tray tray-center p40 va-t posr">
+                    {% block contenido %}{% endblock %}
+                </div>
+                <!--FIN BODY REAL-->
+                <!-- end: .tray-center -->
+
+            </section>
+            <!-- End: Content -->
+
+        </section>
+
+    </div>
+    <!-- End: Main -->
+
+    <style>
+        /*demo styles*/
+        
+        html,
+        body.admin-modals-page {
+            margin-right: 0 !important;
+            
+        }
+        
+        body {
+            min-height: 2000px;
+            overflow: visible;
+        }
+        
+        .custom-nav-animation li {
+            display: none;
+        }
+        
+        .custom-nav-animation li.animated {
+            display: block;
+        }
+        /* nav fixed settings */
+        
+        ul.tray-nav.affix {
+            width: 319px;
+            top: 80px;
+        }
+    </style>
+    {% block js %}
+    <!-- BEGIN: PAGE SCRIPTS -->
+
+    <!-- jQuery -->
+    <script type="text/javascript" src='{% static "admindesigns/vendor/jquery/jquery-1.11.1.min.js" %}'></script>
+    <script type="text/javascript" src='{% static "admindesigns/vendor/jquery/jquery_ui/jquery-ui.min.js" %}'></script>
+
+    <!-- Bootstrap -->
+    <script type="text/javascript" src='{% static "admindesigns/assets/js/bootstrap/bootstrap.min.js" %}'></script>
+
+    <!-- Sparklines CDN -->
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
+
+    <!-- Page Plugins -->
+    <script type="text/javascript" src='{% static "admindesigns/vendor/plugins/magnific/jquery.magnific-popup.js" %}'></script>
+
+    <!-- Theme Javascript -->
+    <script type="text/javascript" src='{% static "admindesigns/assets/js/utility/utility.js" %}'></script>
+    <script type="text/javascript" src='{% static "admindesigns/assets/js/main.js" %}'></script>
+    <script type="text/javascript" src='{% static "admindesigns/assets/js/demo.js" %}'></script>
+
+    <!-- Datatables -->
+    <script type="text/javascript" src='{% static "admindesigns/vendor/plugins/datatables/media/js/jquery.dataTables.js" %}'></script>
+    <script type="text/javascript" src="{% static 'admindesigns/vendor/plugins/datatables/media/js/fnReloadAjax.js' %}"></script>
+    <!-- Datatables Tabletools addon -->
+    <script type="text/javascript" src='{% static "admindesigns/vendor/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js" %}'></script>
+
+    <!-- Datatables Editor addon - READ LICENSING NOT MIT  -->
+    <!--<script type="text/javascript" src='{% static "admindesigns/vendor/plugins/datatables/extensions/Editor/js/dataTables.editor.js" %}'></script>-->
+
+    <!-- Datatables Bootstrap Modifications  -->
+    <script type="text/javascript" src='{% static "admindesigns/vendor/plugins/datatables/media/js/dataTables.bootstrap.js" %}'></script>
+    <!--<script type="text/javascript" src='{% static "admindesigns/vendor/plugins/datatables/extensions/Editor/js/editor.bootstrap.js" %}'></script>-->
+
+    <script src="{% static 'admindesigns/terceros/sweetalert/dist/sweetalert-dev.js' %}"></script>
+
+    <script type="text/javascript" src='{% static "admindesigns/assets/admin-tools/admin-forms/js/jquery.validate.min.js" %}'></script>
+
+    <!--Mi javascript-->
+    <script type="text/javascript" src='{% static "admindesigns/personalScripts/misJavascripts.js" %}'></script>
+    
+    {% endblock %}
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+
+            "use strict";
+
+            // Init Theme Core    
+            Core.init();
+
+            // Init Theme Core    
+            Demo.init();
+
+            // Init tray navigation smooth scroll
+            $('.tray-nav a').smoothScroll({
+                offset: -145
+            });
+
+            var modalContent = $('#modal-content');
+
+            modalContent.on('click', '.holder-style', function (e) {
+                e.preventDefault();
+
+                modalContent.find('.holder-style').removeClass('holder-active');
+                $(this).addClass('holder-active');
+            });
+
+            function findActive() {
+                var activeModal = modalContent.find('.holder-active').attr('href');
+                return activeModal;
+            };
+
+            // Custom tray navigation animation
+            setTimeout(function () {
+                $('.custom-nav-animation li').each(function (i, e) {
+                    var This = $(this);
+                    var timer = setTimeout(function () {
+                        This.addClass('animated zoomIn');
+                    }, 100 * i);
+                });
+            }, 600);
+
+
+            // Sparklines Plugin
+            $('.inlinesparkline').sparkline('html', {
+                type: 'line',
+                height: 30,
+                width: 100,
+
+                lineColor: bgInfoDr, // Also tooltip icon color
+                fillColor: bgInfoLr,
+
+                spotColor: bgPrimary,
+                minSpotColor: bgPrimary,
+                maxSpotColor: bgPrimary,
+
+                highlightSpotColor: bgWarningDr,
+                highlightLineColor: bgWarningLr
+            });
+
+            var barColors = $.range_map({
+                '1:6': bgWarning,
+                '7:11': bgInfo,
+                '12:': bgPrimary
+            })
+
+            $('.inlinesparkbar').sparkline('html', {
+                type: 'bar',
+                height: 25,
+                barWidth: 4,
+                barSpacing: 1,
+
+                barColor: bgPrimary, // Also tooltip icon color
+                fillColor: bgInfoLr,
+                colorMap: barColors, // Colors mapped/stored in object above
+
+                spotColor: bgPrimary,
+                minSpotColor: bgPrimary,
+                maxSpotColor: bgPrimary,
+
+                highlightSpotColor: bgWarningDr,
+                highlightLineColor: bgWarningLr
+            });
+
+            $('.inlinesparkpie').sparkline('html', {
+                type: 'pie',
+                width: 30,
+                height: 23,
+                offset: 90,
+                sliceColors: [bgPrimary, bgInfo, bgWarning, bgAlert, bgDanger]
+            });
+            $('.inlinesparkpie2').sparkline('html', {
+                type: 'pie',
+                width: 23,
+                height: 23,
+                offset: -45,
+                sliceColors: [bgPrimary, bgSuccess, bgAlert, bgDark, bgDanger]
+            });
+
+
+        });
+    </script>
+    <!-- END: PAGE SCRIPTS -->
+
+<!-- Admin Form Popup -->
+<div id="modal-form" class="modal"  data-backdrop="static" data-keyboard="false">
+    <div id="modal-box" class="modal-dialog  modal-xl">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+@media (min-width: 780px) {
+  .modal-xl {
+    width: 1024px;
+  }
+}
+
+@media (min-width: 980px) {
+  .modal-xxl {
+    width: 1280px;
+  }
+}
+
+.color_gradienteazul{
+    background: linear-gradient(to bottom right, #E9F2F2, #ffffff);
+}
