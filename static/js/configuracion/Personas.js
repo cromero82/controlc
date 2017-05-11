@@ -40,8 +40,8 @@ var formularioRegistrar = function (id) {
             $("#modal-form").modal("show");
         },
         success: function (data) {
-            if (data.transaccion) {
-                tamanioformularioModal("xxl");
+            if (data.transaccion) {                                
+                mostrarModal(data.html_form, data.titulo, "extragrande");
                 $("#modal-form .modal-content").html(data.html_form);
                 $("#tituloForm").html(data.titulo);                
                 $("#btnRegistrar").show();

@@ -53,13 +53,15 @@ class TRelacionFamiliar(models.Model):
     estregistro = models.IntegerField(default=1, blank=False)
 
 class Departamento (models.Model):
-    codigo = models.CharField(max_length=2, blank=True, unique=False)
-    nombre = models.CharField(max_length=10, blank=False)
+    codigo = models.CharField(max_length=2, blank=True, unique=True)
+    nombre = models.CharField(max_length=50, blank=False)
     estregistro = models.IntegerField(blank=False, default=1)
     def __unicode__(self):  # __unicode__ en Python 2
         return self.nombre
     def natural_key(self):
         return self.nombre
+    class Meta:
+        unique_together = (('codigo', 'nombre'))
 
 class Municipios(models.Model):
     codigo = models.CharField(max_length=3, blank=False, error_messages = my_default_errors)
