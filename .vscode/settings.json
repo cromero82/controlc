@@ -1,0 +1,11 @@
+{
+    "python.formatting.provider": "autopep8",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+         "**/pyc": true,
+        "**/.DS_Store": true
+    }
+}

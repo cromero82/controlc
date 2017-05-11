@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import datetime
 # Create your views here.
-def post_departamentos(request):
-	return render(request,'administracion/migrations/post_departamentos.html', {})
+# def post_departamentos(request):
+# 	return render(request,'administracion/migrations/post_departamentos.html', {})
 
 def holaMundo(request):
     html = "<html><body>Hola Mundo desde DJANGO</body></html>"
