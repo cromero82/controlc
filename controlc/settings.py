@@ -9,9 +9,9 @@ https://docs.djangoproject.com/en/dev/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
-
 import os
-
+from django.core.urlresolvers import reverse_lazy
+#PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -37,6 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # APPS O COMPONENTES DE TERCEROS
+    'django_tables2',
+    'widget_tweaks',
+    # 'simple_forms.apps.core',
+    # Mis aplicaciones
+    'controlc',
+    'configuracion',
     'administracion'
 ]
 
@@ -63,6 +70,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # Componentes de terceros
+                'django.template.context_processors.request'
             ],
         },
     },
@@ -84,7 +93,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
@@ -122,4 +130,31 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
+DEFAULT_CHARSET = 'utf-8'
+
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.10/howto/static-files/
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+LOGIN_REDIRECT_URL = '/'
+# LOGIN_URL = '/plantillas/cuentasUsuario/'
+# LOGIN_REDIRECT_URL = '/plantillas/cuentasUsuario/'
+# TEMPLATE_CONTEXT_PROCESSORS = (
+#     'django.core.context_processors.request'
+# )
+
+#LOGIN_URL = #reverse_lazy('login')
+#LOGIN_REDIRECT_URL = reverse_lazy('menu')
+LOGOUT_URL = reverse_lazy('logout')
+LOGIN_URL = reverse_lazy('controlc:login')
+
+
+#AUTH_USER_MODEL = 'configuracion.User'
