@@ -13,3 +13,37 @@
 .color_gradienteazul{
     background: linear-gradient(to bottom right, #E9F2F2, #ffffff);
 }
+
+/**** Reescritura de estilos de plantilla ****/
+.map .pagination .btn { 
+  height: 20px;
+}
+.btn {
+  padding: 2px 12px;
+  line-height: 1.5;
+  border-radius: 2px;
+}
+
+.pagination {
+  padding: 2px 12px;  
+  border-radius: 2px;
+}
+
+.m-2 {
+    margin-right: 2px;
+    margin-bottom: 2px;
+}
+
+#skin-toolbox {  
+  z-index: 9999;
+  top: 5px;
+  right: -230px;
+  width: 230px;  
+  padding-bottom: 0px;
+}
+
+#skin-toolbox .panel-heading {
+  width: 274px;
+  height: 40px;
+  right: 44px;
+}

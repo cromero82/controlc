@@ -129,7 +129,7 @@
             <section id="content" class="table-layout animated fadeIn">
                 <!-- SubMenu Izquierda-->
                 <!-- begin: .tray-left -->
-                <aside class="tray tray-left tray320 va-t pn" data-tray-height="match">
+                <aside class="tray tray-left tray240 va-t pn" data-tray-height="match">
                     {% block subContenidoIzquierda %}{% endblock %}
                 </aside>
                 <!-- end: .tray-left -->
@@ -137,7 +137,7 @@
                 <!-- begin: .tray-center -->
 
                 <!--INICIO BODY REAL-->
-                <div class="tray tray-center p40 va-t posr">
+                <div class="tray tray-center p5 va-t posr">
                     {% block contenido %}{% endblock %}
                 </div>
                 <!--FIN BODY REAL-->
@@ -216,6 +216,9 @@
     <script src="{% static 'admindesigns/terceros/sweetalert/dist/sweetalert-dev.js' %}"></script>
 
     <script type="text/javascript" src='{% static "admindesigns/assets/admin-tools/admin-forms/js/jquery.validate.min.js" %}'></script>
+
+    <script type="text/javascript" src='{% static "admindesigns/assets/js/utility/dataTables.fixedColumns.min.js" %}'></script>
+
 
     <!--Mi javascript-->
     <script type="text/javascript" src='{% static "admindesigns/personalScripts/misJavascripts.js" %}'></script>

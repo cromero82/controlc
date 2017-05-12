@@ -138,7 +138,9 @@ function datos() {
             { "data": "fields.estregistro" },
             {
                 "data": function (data, type, row, meta) {
-                    return '<a class="btn btn-primary itemEditar" href="#" data-id="' + data.pk + '">Editar</a>';
+                    return '<a class="btn btn-primary itemEditar" href="#" data-id="' + data.pk + '"><i class="fa fa-pencil"></i></a>';
+
+                    
                 }
             }
         ],

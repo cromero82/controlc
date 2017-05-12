@@ -111,6 +111,7 @@ function datos() {
         sDom: '<"top">tipr',
         // "dom": '<"top"i>rt<"bottom"flp><"clear">',
         "iDisplayLength": 9,
+        scrollX:        true,
         "ajax": {
             "processing": true,
             "url": "/" + modulo + "/" + admin + "Json/",
@@ -123,7 +124,7 @@ function datos() {
         "columns": [
             
             { "data": function (data, type, row, meta) {              
-                    return '<img src="/media/'+ data.fields.foto +'" class="media-object mn thumbnail mw50">';
+                    return '<img src="/media/'+ data.fields.foto +'" class="media-object mn thumbnail mw40">';
                   }},
             { "data": "fields.nombres" },
             { "data": "fields.apellidos" },
@@ -132,10 +133,19 @@ function datos() {
             { "data": "fields.correoelectronico" },            
             {
                 "data": function (data, type, row, meta) {
-                    return '<a class="btn btn-primary itemEditar" href="#" data-id="' + data.pk + '">Editar</a>';
+                    return '<a class="btn btn-primary itemEditar m-2" title="Editar persona" href="#" data-id="' + data.pk + '"><span class="fa fa-pencil"></span></a> <a class="btn btn-danger itemEliminar" title="Eliminar persona" href="#" data-id="' + data.pk + '"><span class="glyphicons glyphicons-remove_2"></span></a>';
                 }
             }
         ],
+        columnDefs: [
+            { width: 120, targets: 1 },
+            { width: 120, targets: 2 },
+            { width: 120, targets: 5 },
+            { width: 90, targets: 6 }
+        ],
+        fixedColumns:   {
+            leftColumns: 3
+        },
         "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json" }
     });
 }
