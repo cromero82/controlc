@@ -1,7 +1,7 @@
 
-var modulo = "configuracion";
-var admin = "Municipio";
-var formulario = "frmMunicipio"
+var modulo = "establecimiento";
+var admin = "Establecimientos";
+var formulario = "formEstablecimiento"
 
 // ------- Carga modal del formulario para actualizar existente
 $("#divLista").on("click", ".itemEditar", function (e) {
@@ -40,10 +40,11 @@ var formularioRegistrar = function (id) {
         },
         success: function (data) {
             if (data.transaccion) {
-                mostrarModal(data.html_form, data.titulo, "normal");
+                mostrarModal(data.html_form, data.titulo, "grande");
                 suscribirEventos();
                 $("#btnRegistrar").show();
                 $("#btnEditar").hide();
+                $("#codigo").focus();
             }
         },
         error: function (data) {
@@ -79,6 +80,24 @@ var clicRegistrarPost = function () {
     // alert($("#id_departamento").val());
     enviarPost("registrar");
 }
+
+var clicBuscarDatosCo = function () { 
+    debugger;   
+    $.ajax({
+    url: "https://www.datos.gov.co/resource/xax6-k7eu.json?codigoestablecimiento="+$("#id_codigo").val(),
+    type: "GET",
+    data: {
+      "$limit" : 10,      
+      "$$app_token" : "KLhKnhKZUVbEIcGgYN1XH8P73"
+    }
+}).done(function(data) {
+    debugger;
+    alert("Retrieved " + data.length + " records from the dataset!");
+    console.log(data);
+    });
+    //enviarPost("registrar");
+}
+
 
 // ------- ejecución del método post de envio de formularios diligenciados
 var enviarPost = function (accion) {

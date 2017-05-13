@@ -3,7 +3,7 @@
   {% csrf_token %}
   <div class="panel-heading">
 
-    <span class="panel-title" id="tituloForm"> Registro de persona </span>
+    <span class="panel-title" id="tituloForm"> Registro de establecimiento </span>
 
     <button type="button" class="close" data-dismiss="modal">
       <span class="panel-icon text-right">
@@ -14,46 +14,32 @@
   <div class="panel-body">
     <input type="hidden" id="id" name="id" value="{{form.instance.pk}}">
     <input type="hidden" id="hdEstregistro" name="estregistro" value="">
+    
+    <div class="alert alert-success">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> 
+      <strong>Proceso de Importar datos. </strong> Favor registre el <strong>código del establecimiento </strong>  y haga clic en el botón <strong>buscar</strong> para consultar datos
+       del establecimiento. Esta información proviene del sitio oficial <a href="https://www.datos.gov.co/">https://www.datos.gov.co/</a>  y fue registrada por la secretaría local y demás
+       entes que supervisan y controlan el tema administrativo de establecimientos oficiales y no oficiales en Colombia.
+    </div>
+    
     <div class="admin-form">
-      
-<div class="section row mb10">
-        <label for="account-name" class=" col-md-3 field-label text-left">{{ form.departamento.label  }}</label>
-        <div class="col-md-9">
+
+      <div class="section row mb10">
+        <label for="account-name" class=" col-md-3 field-label text-left">Código DANE</label>
+        <div class="col-md-6">
           <label class="field select">
-             {{ form.departamento }}              
+             {{ form.codigo|add_class:'gui-input'|attr:"autofocus" }}    
+             <!--<input type="text" name="codigo" id="codigo" class="gui-input" value="" placeholder="Digite el código DANE asignado por la Secretaría local o administradora">             -->
             <i class="arrow double"></i>
           </label>
-          <div id="codigoDepartamento"  class="well well-sm"></div>
+          <!--<div id="codigoDepartamento"  class="well well-sm"></div>-->
+        </div>
+        <div class="col-md-3">
+          <button type="button" id="btnRegistrar" onclick="clicBuscarDatosCo()" class="btn btn-primary">Buscar Datos</button>
         </div>
       </div>
 
-      <div class="section row mb10">
-        <label for="account-name" class=" col-md-3 field-label text-left">{{ form.codigo.label  }}</label>
-        <div class="col-md-9">
-          <label for="account-name" class="field ">
-            {{ form.codigo|add_class:'gui-input' }}               
-          </label>
-        </div>
-      </div>
 
-      <div class="section row mb10">
-        <label for="account-name" class=" col-md-3 field-label text-left">{{ form.nombre.label  }}</label>
-        <div class="col-md-9">
-          <label for="account-name" class="field ">
-            {{ form.nombre|add_class:'gui-input' }}                                             
-          </label>
-        </div>
-      </div>      
-
-      <div class="section row mb10">
-        <label for="store-timezone" class="field-label col-md-3 text-left">Estado del registro:</label>
-        <div class="col-md-9">
-          <label class="field select">
-             {{ form.estregistro }} 
-            <i class="arrow double"></i>
-          </label>
-        </div>
-      </div>
 
     </div>
 

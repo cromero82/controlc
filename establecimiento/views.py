@@ -12,6 +12,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 # Models
+from establecimiento.models import Establecimientos
 
 # Importando Forms
 from forms import EstablecimientoForm

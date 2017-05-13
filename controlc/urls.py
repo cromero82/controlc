@@ -43,9 +43,9 @@ urlpatterns = [
     # ---------
     # Administracion de Establecimientos
     url(r'^establecimiento/Establecimientos/$', viewEst.indexEstablecimientos),
-    url(r'^establecimiento/EstablecimientoJson/$', viewEst.EstablecimientosJson),
-    # url(r'^configuracion/editarEstablecimiento/(?P<id>[0-9]+)/$', views.formularioEditarEstablecimiento),
-    # url(r'^configuracion/registrarEstablecimiento/$', views.formularioRegistrarEstablecimiento),
+    url(r'^establecimiento/EstablecimientosJson/$', viewEst.EstablecimientosJson),
+    # url(r'^establecimiento/editarEstablecimiento/(?P<id>[0-9]+)/$', views.formularioEditarEstablecimiento),
+    url(r'^establecimiento/registrarEstablecimientos/$', viewEst.formularioRegistrarEstablecimiento),
 
     # ---------
     # Administracion de Municipios
