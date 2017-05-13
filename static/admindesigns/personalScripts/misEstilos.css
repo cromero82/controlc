@@ -69,3 +69,9 @@
 .sidebar-menu > li > ul > li > ul > li.active > a:after {
     background: transparent;
 }
+
+/** Evita que las tablas se salgan del modal (y de su contenedor en particular)***/
+.contenedor_tabla,
+.panel-body{
+  overflow-x: auto;
+}

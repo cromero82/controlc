@@ -2,6 +2,7 @@
 var modulo = "establecimiento";
 var admin = "Establecimientos";
 var formulario = "formEstablecimiento"
+var datosConsultados = null;
 
 // ------- Carga modal del formulario para actualizar existente
 $("#divLista").on("click", ".itemEditar", function (e) {
@@ -40,7 +41,7 @@ var formularioRegistrar = function (id) {
         },
         success: function (data) {
             if (data.transaccion) {
-                mostrarModal(data.html_form, data.titulo, "grande");
+                mostrarModal(data.html_form, data.titulo, "extragrande");
                 suscribirEventos();
                 $("#btnRegistrar").show();
                 $("#btnEditar").hide();
@@ -56,7 +57,7 @@ var formularioRegistrar = function (id) {
 // ------- Eventos del form una vez cargado
 var suscribirEventos = function () {
     $(".modal-content").on("change", $("input[name*='departamento']"), function (e) {
-        consultaModulo(modulo,'codigoDepartamento',$("#id_departamento").val());
+        consultaModulo(modulo, 'codigoDepartamento', $("#id_departamento").val());
     });
 }
 
@@ -77,24 +78,80 @@ var clicActualizarPost = function () {
     enviarPost("editar");
 }
 var clicRegistrarPost = function () {
-    // alert($("#id_departamento").val());
+    $("#divDatosConsultados").hide();
     enviarPost("registrar");
 }
 
-var clicBuscarDatosCo = function () { 
-    debugger;   
+var clicBuscarDatosCo = function () {
+    datosConsultados= null;
     $.ajax({
-    url: "https://www.datos.gov.co/resource/xax6-k7eu.json?codigoestablecimiento="+$("#id_codigo").val(),
-    type: "GET",
-    data: {
-      "$limit" : 10,      
-      "$$app_token" : "KLhKnhKZUVbEIcGgYN1XH8P73"
-    }
-}).done(function(data) {
-    //debugger;
-    alert("Retrieved " + data.length + " records from the dataset!");
-    
-    //console.log(data);
+        url: "https://www.datos.gov.co/resource/xax6-k7eu.json?codigoestablecimiento=" + $("#id_codigo").val(),
+        type: "GET",
+        data: {
+            "$limit": 200,
+            "$$app_token": "KLhKnhKZUVbEIcGgYN1XH8P73"
+        }
+    }).done(function (data) {
+        //debugger;
+        $("#divDatosConsultados").show();
+        // $("#tagCode").html(data[0])
+        datosConsultados = data;
+        debugger;
+        miTablaConsultada = $('#datosConsultados').dataTable({
+            sDom: '<"top">tipr',
+            // "dom": '<"top"i>rt<"bottom"flp><"clear">',
+            "iDisplayLength": 9,
+            data: datosConsultados,
+            "columns": [
+                { "data": "nombreestablecimiento" },
+                { "data": "nombredepartamento" },
+                { "data": "nombremunicipio" },
+                { "data": "zona" },
+                { "data": "direccion" },
+                { "data": "telefono" },            
+                    
+                {
+                    "data": function (data, type, row, meta) {
+                        if (typeof(data.nombre_rector) != 'undefined' && element != null){
+                        return  "<div>"+data.nombre_rector +"</div>";                    
+                    }else{
+                        return  "<div>"+data.codigo_etc +"</div>";
+                    }
+                    }
+                },
+
+                { "data": "tipo_establecimiento" },
+                { "data": "etnias" },
+                { "data": "sector" },
+                { "data": "genero" },
+                { "data": "niveles" },
+                { "data": "jornadas" },
+                { "data": "caracter" },
+                { "data": "especialidad" },
+                { "data": "grados" },
+                { "data": "modelos_educativos" },
+                { "data": "capacidades_excepcionales" },
+                { "data": "discapacidades" },
+                { "data": "idiomas" },
+                { "data": "numero_de_sedes" },
+                { "data": "estado" },
+                { "data": "prestador_de_servicio" },
+                { "data": "propiedad_planta_Fisica" },
+                { "data": "resguardo" },
+                { "data": "matricula_contratada" },
+                { "data": "calendario" },
+                { "data": "internado" },
+                { "data": "estrado_socio_economico" },
+                { "data": "correo_Eletronico" },
+                {
+                    "data": function (data, type, row, meta) {
+                        return '<a class="btn btn-primary itemEditar" href="#" data-id="' + data.codigoestablecimiento + '">Sincronizar</a>';
+                    }
+                }
+            ],
+            "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json" }
+        });
+
     });
     //enviarPost("registrar");
 }
@@ -132,6 +189,7 @@ var enviarPost = function (accion) {
 };
 
 var miTabla = null;
+var miTablaConsultada = null;
 datos();
 
 function datos() {
@@ -160,7 +218,7 @@ function datos() {
                 "data": function (data, type, row, meta) {
                     return '<a class="btn btn-primary itemEditar" href="#" data-id="' + data.pk + '"><i class="fa fa-pencil"></i></a>';
 
-                    
+
                 }
             }
         ],
