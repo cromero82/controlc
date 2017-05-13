@@ -33,16 +33,27 @@
                             </li>
                         </ul>
                     </li>
-                    
+
+                   <!--Sección del establecimiento -->                    
+
+                    <li class="{% if '/establecimiento/Establecimientos/' == request.path %}active menu-open{% endif %} ">
+                                        <a href="http://{{ request.get_host }}/establecimiento/Establecimientos"> 
+                                        <span class="glyphicon glyphicon-home"></span>
+                            <span class="sidebar-title">Establecimiento</span>
+                            <span class="caret"></span>
+                                        </a>
+                                    </li>
+
+                    <!--Sección configuración -->
                     <li>
-                        <a class="accordion-toggle menu-open" href="#">
+                        <a class="accordion-toggle {% if '/configuracion/Usuarios/' == request.path or '/configuracion/Personas/' == request.path or '/configuracion/relacionesFamiliares/' == request.path or '/configuracion/tiposDocumentos/' == request.path or '/configuracion/Municipios/' == request.path or '/configuracion/departamentos/' == request.path %}menu-open{% endif %}         " href="#">
                             <span class="glyphicons glyphicons-vector_path_all"></span>
                             <span class="sidebar-title">Configuración</span>
                             <span class="caret"></span>
                         </a>
                         <ul class="nav sub-nav">
                             <li>
-                                <a class="accordion-toggle menu-open" href="#">
+                                <a class="accordion-toggle {% if '/configuracion/Usuarios/' == request.path or '/configuracion/Personas/' == request.path or '/configuracion/relacionesFamiliares/' == request.path or '/configuracion/tiposDocumentos/' == request.path or '/configuracion/Municipios/' == request.path or '/configuracion/departamentos/' == request.path %}menu-open{% endif %}         " href="#">
                                     <span class="glyphicons glyphicons-table"></span> Datos paramétricos
                                     <span class="caret"></span>
                                 </a>

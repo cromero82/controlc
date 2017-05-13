@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import  include, url
 from django.contrib import admin
 from configuracion import views
+from establecimiento import views as viewEst
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -36,13 +37,16 @@ urlpatterns = [
     url(r'^login/$', views.ingresar, name='login'),
     url(r'^auth/$', views.ingresar, name='ingresar'),
     url(r'^accounts/login/$', views.ingresar, name='ingresar'),
-    # url(r'^$', 'django.contrib.auth.views.login',
-    # {'template_name':'pages_login.html'}, name="login"),
-    # url(r'^privado/$', views.privado, name='privado'),
     url(r'^cerrar/$', views.cerrar, name='cerrar'),
-    url(r'^accounts/login/$', views.ingresar, name='ingresar'),
     url(r'^ingresar/$', views.ingresar, name='ingresar'),
-    # url(r'^usuarioNuevo/$',views.usuario_nuevo, name='usuario_nuevo'),
+
+    # ---------
+    # Administracion de Establecimientos
+    url(r'^establecimiento/Establecimientos/$', viewEst.indexEstablecimientos),
+    url(r'^establecimiento/EstablecimientoJson/$', viewEst.EstablecimientosJson),
+    # url(r'^configuracion/editarEstablecimiento/(?P<id>[0-9]+)/$', views.formularioEditarEstablecimiento),
+    # url(r'^configuracion/registrarEstablecimiento/$', views.formularioRegistrarEstablecimiento),
+
     # ---------
     # Administracion de Municipios
     url(r'^configuracion/Municipios/$', views.indexMunicipios),

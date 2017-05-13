@@ -12,8 +12,6 @@
     </button>
   </div>
   <div class="panel-body">
-    <!-- general form elements -->
-    <!--<input type="hidden" id="id" name="id" value="{{form.pk.value}}">-->
     <input type="hidden" id="id" name="id" value="{{form.instance.pk}}">
     <input type="hidden" id="hdEstregistro" name="estregistro" value="">
     <div class="admin-form">
@@ -90,13 +88,7 @@
                 {{ form.correoelectronico|add_class:'gui-input' }}                      
                 <label for="account-name" class="field-icon"><i class="fa fa-envelope-o"></i>
               </label>
-                </label>
-
-                <!--{% if form.correoelectronico.errors %}
-              <span class="help-block">
-                {% for error in form.correoelectronico.errors %}{{ error }}{% endfor %}
-              </span>
-            {% endif %}         -->
+                </label>              
 
               </div>
             </div>
@@ -125,9 +117,6 @@
             </div>
           </div>
 
-          <!--<div class="section mb10">
-            <input id="tagsinput" class="bg-light" type="text" value="IBM, Software, Friend">
-          </div>-->
         </div>
         <div class="col-md-3">
           <div class="fileupload fileupload-new admin-form" data-provides="fileupload">
@@ -143,16 +132,6 @@
         </div>
       </div>
       <!-- end section row -->
-
-
-      <!--<div class="section row mb10">
-        <label for="account-name" class="field-label col-md-3 text-left">Foto:</label>
-        <div class="col-md-9">
-
-          
-        </div>
-      </div>-->
-
 
 
     </div>

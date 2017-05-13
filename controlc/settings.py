@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     # Mis aplicaciones
     'controlc',
     'configuracion',
-    'administracion'
+    'administracion',
+    'establecimiento'
 ]
 
 MIDDLEWARE = [
@@ -65,6 +66,7 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(BASE_DIR, 'plantillas/'),
             os.path.join(BASE_DIR, 'configuracion/vistas/'),
+            os.path.join(BASE_DIR, 'establecimiento/vistas/')
             ],
         'APP_DIRS': True,
         'OPTIONS': {
