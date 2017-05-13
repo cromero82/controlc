@@ -34,6 +34,7 @@
     margin-bottom: 2px;
 }
 
+/** Reubicación del boton de configuracion del tema **/
 #skin-toolbox {  
   z-index: 9999;
   top: 5px;
@@ -46,4 +47,25 @@
   width: 274px;
   height: 40px;
   right: 44px;
+}
+
+.sidebar-menu > li > ul > li > ul > li.active > a ,
+.sidebar-menu > li.active > a {  
+  color: gold;
+  border-top: 0;
+  background-color: #416079;
+  border-radius: 12px;
+  left: 8px;
+  box-shadow: none;
+}
+
+/** Color de los iconos en el span **/
+.sidebar-menu > li > ul > li > ul > li.active > a > span:nth-child(1),
+.sidebar-menu > li.active > a > span:nth-child(1) {
+    color: #70ca63;
+}
+
+/** Oculta la barra vertical del menu ***/
+.sidebar-menu > li > ul > li > ul > li.active > a:after {
+    background: transparent;
 }

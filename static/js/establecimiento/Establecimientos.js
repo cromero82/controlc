@@ -91,9 +91,10 @@ var clicBuscarDatosCo = function () {
       "$$app_token" : "KLhKnhKZUVbEIcGgYN1XH8P73"
     }
 }).done(function(data) {
-    debugger;
+    //debugger;
     alert("Retrieved " + data.length + " records from the dataset!");
-    console.log(data);
+    
+    //console.log(data);
     });
     //enviarPost("registrar");
 }

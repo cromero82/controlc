@@ -36,11 +36,11 @@
 
                    <!--Sección del establecimiento -->                    
 
-                    <li class="{% if '/establecimiento/Establecimientos/' == request.path %}active menu-open{% endif %} ">
-                                        <a href="http://{{ request.get_host }}/establecimiento/Establecimientos"> 
+                    <li class="{% if '/establecimiento/Establecimientos/' == request.path %}active{% endif %} ">
+                                        <a class="menu-open" href="http://{{ request.get_host }}/establecimiento/Establecimientos"> 
                                         <span class="glyphicon glyphicon-home"></span>
                             <span class="sidebar-title">Establecimiento</span>
-                            <span class="caret"></span>
+                            {% comment %}<span class="caret"></span>{% endcomment %}
                                         </a>
                                     </li>
 
@@ -62,7 +62,14 @@
                                         <a href="http://{{ request.get_host }}/configuracion/Usuarios"> Usuarios</a>
                                     </li>
                                     <li class="{% if '/configuracion/Personas/' == request.path %}active{% endif %}">
-                                        <a href="http://{{ request.get_host }}/configuracion/Personas"> Personas</a>
+                                        {% comment %}<a href="http://{{ request.get_host }}/configuracion/Personas"> Personas</a>    {% endcomment %}
+
+                                        <a class="menu-open" href="http://{{ request.get_host }}/configuracion/Personas"> 
+                                        <span class="glyphicon glyphicon-user"></span>
+                            <span class="sidebar-title">Personas</span>
+                            {% comment %}<span class="caret"></span>{% endcomment %}
+                                        </a>
+
                                     </li>                                                                      
                                     <li class="{% if '/configuracion/relacionesFamiliares/' == request.path %}active{% endif %}">
                                         <a href="http://{{ request.get_host }}/configuracion/relacionesFamiliares"> Relaciones familiares </a>
