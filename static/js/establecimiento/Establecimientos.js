@@ -45,8 +45,7 @@ var formularioRegistrar = function (id) {
                 suscribirEventos();
                 $("#btnRegistrar").show();
                 $("#btnEditar").hide();
-                $('#divDatosConsultados').hide()
-                $('#datosConsultados').hide()
+                $('#divDatosConsultados').hide()               
             }
         },
         error: function (data) {
@@ -92,8 +91,7 @@ var clicBuscarDatosCo = function () {
             "$$app_token": "KLhKnhKZUVbEIcGgYN1XH8P73"
         }
     }).done(function (data) {
-        $("#divDatosConsultados").show();         
-        $('#datosConsultados').show()
+        $("#divDatosConsultados").show();                
         datosConsultados = data;                      
         miTablaConsultada = $('#datosConsultados').dataTable({
             sDom: '<"top">t',           
