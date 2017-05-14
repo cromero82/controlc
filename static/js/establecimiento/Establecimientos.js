@@ -45,7 +45,8 @@ var formularioRegistrar = function (id) {
                 suscribirEventos();
                 $("#btnRegistrar").show();
                 $("#btnEditar").hide();
-                $("#codigo").focus();
+                $('#divDatosConsultados').hide()
+                $('#datosConsultados').hide()
             }
         },
         error: function (data) {
@@ -77,9 +78,8 @@ function resultadoConsultaSimple(result) {
 var clicActualizarPost = function () {
     enviarPost("editar");
 }
-var clicRegistrarPost = function () {
-    $("#divDatosConsultados").hide();
-    enviarPost("registrar");
+var clicRegistrarPost = function () {                
+    //enviarPost("registrar");    
 }
 
 var clicBuscarDatosCo = function () {
@@ -92,14 +92,11 @@ var clicBuscarDatosCo = function () {
             "$$app_token": "KLhKnhKZUVbEIcGgYN1XH8P73"
         }
     }).done(function (data) {
-        //debugger;
-        $("#divDatosConsultados").show();
-        // $("#tagCode").html(data[0])
+        $("#divDatosConsultados").show();         
+        $('#datosConsultados').show()
         datosConsultados = data;                      
         miTablaConsultada = $('#datosConsultados').dataTable({
-            sDom: '<"top">t',
-            // "dom": '<"top"i>rt<"bottom"flp><"clear">',
-            // "iDisplayLength": 9,
+            sDom: '<"top">t',           
             "sPaginationType": "bootstrap",
             "sScrollX": "100%",
             data: datosConsultados,
