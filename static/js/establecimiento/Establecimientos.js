@@ -95,21 +95,22 @@ var clicBuscarDatosCo = function () {
         //debugger;
         $("#divDatosConsultados").show();
         // $("#tagCode").html(data[0])
-        datosConsultados = data;
-        debugger;
+        datosConsultados = data;                      
         miTablaConsultada = $('#datosConsultados').dataTable({
-            sDom: '<"top">tipr',
+            sDom: '<"top">t',
             // "dom": '<"top"i>rt<"bottom"flp><"clear">',
-            "iDisplayLength": 9,
+            // "iDisplayLength": 9,
+            "sPaginationType": "bootstrap",
+            "sScrollX": "100%",
             data: datosConsultados,
-            "columns": [
+            "columns": [                
+                {
+                    "data": function (data, type, row, meta) {
+                        return '<a class="btn btn-primary itemEditar" href="#" data-id="' + data.codigoestablecimiento + '">Seleccionar</a>';
+                    }
+                },
                 { "data": "nombreestablecimiento" },
-                { "data": "nombredepartamento" },
                 { "data": "nombremunicipio" },
-                { "data": "zona" },
-                { "data": "direccion" },
-                { "data": "telefono" },            
-                    
                 {
                     "data": function (data, type, row, meta) {
                         if (typeof(data.nombre_rector) != 'undefined' && element != null){
@@ -119,8 +120,11 @@ var clicBuscarDatosCo = function () {
                     }
                     }
                 },
-
                 { "data": "tipo_establecimiento" },
+                { "data": "nombredepartamento" },                
+                { "data": "zona" },
+                { "data": "direccion" },
+                { "data": "telefono" },                                                
                 { "data": "etnias" },
                 { "data": "sector" },
                 { "data": "genero" },
@@ -142,16 +146,45 @@ var clicBuscarDatosCo = function () {
                 { "data": "calendario" },
                 { "data": "internado" },
                 { "data": "estrado_socio_economico" },
-                { "data": "correo_Eletronico" },
-                {
-                    "data": function (data, type, row, meta) {
-                        return '<a class="btn btn-primary itemEditar" href="#" data-id="' + data.codigoestablecimiento + '">Sincronizar</a>';
-                    }
-                }
-            ],
+                { "data": "correo_electronico" }
+            ],                     
+            columnDefs: [
+            { width: 320, targets: 1 ,defaultContent:"-"},
+            { width: 200, targets: 2 ,defaultContent:"-"},
+            { width: 200, targets: 3 ,defaultContent:"-"},
+            { width: 120, targets: 4 ,defaultContent:"-"},
+            { width: 120, targets: 5 ,defaultContent:"-"},
+            { width: 120, targets: 6 ,defaultContent:"-"},
+            { width: 120, targets: 7 ,defaultContent:"-"},
+            { width: 120, targets: 8 ,defaultContent:"-"},
+            { width: 120, targets: 9 ,defaultContent:"-"},
+            { width: 120, targets: 10 ,defaultContent:"-"},
+            { width: 120, targets: 11 ,defaultContent:"-"},
+            { width: 120, targets: 12 ,defaultContent:"-"},
+            { width: 380, targets: 13 ,defaultContent:"-"},
+            { width: 120, targets: 14 ,defaultContent:"-"},
+            { width: 120, targets: 15 ,defaultContent:"-"},
+            { width: 120, targets: 16 ,defaultContent:"-"},
+            { width: 320, targets: 17 ,defaultContent:"-"},
+            { width: 140, targets: 18 ,defaultContent:"-"},
+            { width: 320, targets: 19 ,defaultContent:"-"},
+            { width: 120, targets: 20 ,defaultContent:"-"},
+            { width: 90, targets: 21 ,defaultContent:"-"},            
+            { width: 120, targets: 22 ,defaultContent:"-"},
+            { width: 120, targets: 23 ,defaultContent:"-"},
+            { width: 120, targets: 24 ,defaultContent:"-"},
+            { width: 120, targets: 25 ,defaultContent:"-"},
+            { width: 120, targets: 26 ,defaultContent:"-"},
+            { width: 120, targets: 27 ,defaultContent:"-"},
+            { width: 120, targets: 28 ,defaultContent:"-"},
+            { width: 160, targets: 29 ,defaultContent:"-"}            
+        ],
+        fixedColumns:   {
+            leftColumns: 3
+        },
             "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json" }
         });
-
+$.fn.dataTableExt.sErrMode = 'throw';
     });
     //enviarPost("registrar");
 }

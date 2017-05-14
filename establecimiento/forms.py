@@ -4,7 +4,6 @@ from django.utils.translation import gettext_lazy as _
 from django.forms import Field
 from django.utils.translation import ugettext
 
-
 class EstablecimientoForm(forms.ModelForm):
     class Meta:
         model = Establecimientos
