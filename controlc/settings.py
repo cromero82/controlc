@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # APPS O COMPONENTES DE TERCEROS
     'django_tables2',
     'widget_tweaks',
+    'crispy_forms',
     # 'simple_forms.apps.core',
     # Mis aplicaciones
     'controlc',
@@ -161,5 +162,5 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_URL = reverse_lazy('logout')
 LOGIN_URL = reverse_lazy('controlc:login')
 
-
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 #AUTH_USER_MODEL = 'configuracion.User'

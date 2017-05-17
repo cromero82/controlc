@@ -33,6 +33,10 @@ function mostrarModal(htmlForm, tituloForm, medidaForm) {
     $("#tituloForm").html(tituloForm);
 }
 
+function actualizarModal(htmlForm){
+    $("#modal-form .modal-content").html(htmlForm);
+}
+
 function consultaModulo(modulo, consultaObjetivo, dato) {
     var token = $('input[name="csrfmiddlewaretoken"]').prop('value');
     var data = {

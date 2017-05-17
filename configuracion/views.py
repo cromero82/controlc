@@ -21,6 +21,7 @@ from models import Departamento, Persona, Municipios, Metodologia
 from forms import DepartamentoForm, PersonaForm, MunicipioForm, MetodologiaForm
 import sys
 import miUtils
+from miUtils import ejecucionAdminDataBaseVal
 from miUtils import ejecucionAdminDataBase, formularioAdmin, remove_accents
 from django.contrib import messages
 from django.http import JsonResponse
@@ -43,7 +44,7 @@ def formularioEditarMetodologia(request, id):
 def formularioRegistrarMetodologia(request):
     if request.method == 'POST':
         form = MetodologiaForm(request.POST, request.FILES or None)
-        data = ejecucionAdminDataBase(form, request, "Registrar metodologia", request.POST['nombre'])
+        data = ejecucionAdminDataBaseVal(form, request, "Registrar metodologia", request.POST['nombre'],"formMetodologia.html")
         return JsonResponse(data)
     else:
         form = MetodologiaForm()

@@ -28,6 +28,28 @@ def ejecucionAdminDataBase(form, request, accion, datoReferencia):
         messages.error(request, "Error")
     return data
 
+def ejecucionAdminDataBaseVal(form, request, accion, datoReferencia, nombreFormulario):
+    data = dict()
+    data['transaccion'] = True
+    if (form.is_valid()):
+        try:
+            form.save()
+            data['mensaje'] = "La operacion " + accion + \
+                " " + datoReferencia + " se ha ejecutado correctamente."
+        except IntegrityError, err:
+            data['transaccion'] = False
+            data['mensaje'] = "ya existe"
+        except Exception,  err:
+            data['transaccion'] = False
+            data['mensaje'] = err.message
+    else:
+        data['transaccion'] = False
+        messages.error(request, "Error")
+        context = {'form': form}
+        data['html_form'] = render_to_string(
+        nombreFormulario, context, request=request)
+    return data
+
 def mensajeSalida(datos):
     data = dict()
     data['transaccion'] = True

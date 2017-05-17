@@ -109,6 +109,7 @@ var enviarPost = function (accion) {
                 }
                 else {
                     alerta("Confirmando error", data.mensaje, "error");
+                    actualizarModal(data.html_form);
                 }
             }
         });
