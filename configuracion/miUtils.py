@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from django.template.loader import render_to_string
 import unicodedata
+from django.db import IntegrityError
 
 def remove_accents(input_str):
     nfkd_form = unicodedata.normalize('NFKD', input_str)
@@ -11,12 +12,15 @@ def remove_accents(input_str):
 def ejecucionAdminDataBase(form, request, accion, datoReferencia):
     data = dict()
     data['transaccion'] = True
-    if form.is_valid:
+    if (form.is_valid()):
         try:
             form.save()
             data['mensaje'] = "La operacion " + accion + \
                 " " + datoReferencia + " se ha ejecutado correctamente."
-        except Exception, err:
+        except IntegrityError, err:
+            data['transaccion'] = False
+            data['mensaje'] = "ya existe"
+        except Exception,  err:
             data['transaccion'] = False
             data['mensaje'] = err.message
     else:

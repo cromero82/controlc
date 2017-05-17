@@ -9,9 +9,26 @@ my_default_errors = {
     'invalid': 'Ingreseeeeee un valor valido'
 }
 
-class Estregistro(models.Model):
-    nombre = models.CharField(max_length=10, default='normal')
+class Especialidad(models.Model):
+    codigo = models.CharField(max_length=2, blank=False,  unique=True)
+    nombre = models.CharField(max_length=40, blank=False, unique=True)
+    estregistro = models.IntegerField(default=1, blank=False)
+    class Meta:
+        default_related_name = 'especialidad'
+    def __unicode__(self):  
+        return self.nombre
 
+class Metodologia(models.Model):
+    codigo = models.CharField(max_length=2, blank=False,  unique=True, error_messages={'unique':"This email has already been registered."})
+    nombre = models.CharField(max_length=40, blank=False, unique=True)
+    estregistro = models.IntegerField(default=1, blank=False)
+    class Meta:
+        default_related_name = 'metodologia'
+    def __unicode__(self):  
+        return self.nombre
+
+class Estregistro(models.Model):
+    nombre = models.CharField(max_length=10, default='normal')    
     def __unicode__(self):  # __unicode__ en Python 2
         return self.nombre
 

@@ -16,15 +16,55 @@ from datetime import datetime
 # from models import Persona
 from models import Tdocumento
 from models import TRelacionFamiliar
-from models import Departamento, Persona, Municipios
+from models import Departamento, Persona, Municipios, Metodologia
 # Importando Forms
-from forms import DepartamentoForm, PersonaForm, MunicipioForm
+from forms import DepartamentoForm, PersonaForm, MunicipioForm, MetodologiaForm
 import sys
 import miUtils
 from miUtils import ejecucionAdminDataBase, formularioAdmin, remove_accents
 from django.contrib import messages
 from django.http import JsonResponse
 from django.template.context_processors import csrf
+
+# ---------
+# Administracion de parametricas EE
+@login_required(login_url='/accounts/login/')
+def formularioEditarMetodologia(request, id):   
+    if request.method == 'POST': 
+        metodologia = get_object_or_404(Metodologia, pk=id)
+        form = MetodologiaForm(request.POST,  request.FILES or None,instance=metodologia)
+        data = ejecucionAdminDataBase(form, request, "Edicion metodologia", request.POST['nombre'])
+        return JsonResponse(data)
+    else:  
+        metodologia = get_object_or_404(Metodologia, pk=id)
+        form = MetodologiaForm(instance=metodologia)      
+        return JsonResponse(formularioAdmin(form, "formMetodologia.html", "Edicion de metodologia", request))
+
+def formularioRegistrarMetodologia(request):
+    if request.method == 'POST':
+        form = MetodologiaForm(request.POST, request.FILES or None)
+        data = ejecucionAdminDataBase(form, request, "Registrar metodologia", request.POST['nombre'])
+        return JsonResponse(data)
+    else:
+        form = MetodologiaForm()
+        return JsonResponse(formularioAdmin(form, "formMetodologia.html", "Registre datos metodologia", request))
+
+def MetodologiasJson(request):
+    if request.GET['nombre'] != '':
+        lista_datos = Metodologia.objects.filter(
+            estregistro=request.GET['estregistro'],
+            nombre__contains=remove_accents(request.GET['nombre'].upper())
+        )
+    else:
+        lista_datos = Metodologia.objects.filter(
+            estregistro=request.GET['estregistro']
+        )        
+    json = serializers.serialize('json', lista_datos,  use_natural_foreign_keys=True)
+    return HttpResponse(json, content_type='application/json')
+
+@login_required(login_url='/accounts/login/')
+def indexMetodologias(request):    
+    return render(request, 'Metodologias.html', context = { 'datos': '' })
 
 # ---------
 # Control de inicio de sesion

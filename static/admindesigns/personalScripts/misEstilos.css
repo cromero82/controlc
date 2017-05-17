@@ -75,3 +75,7 @@
 .panel-body{
   overflow-x: auto;
 }
+
+.alineacionVertical {
+  vertical-align: middle;
+}

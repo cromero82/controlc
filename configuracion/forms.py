@@ -1,5 +1,5 @@
 from django import forms
-from models import Persona, Municipios
+from models import Persona, Municipios, Metodologia
 from models import Departamento
 from django.utils.translation import gettext_lazy as _
 from django.forms import Field
@@ -45,8 +45,6 @@ class MunicipioForm(forms.ModelForm):
             }
         }
 
-
-
 class DepartamentoForm(forms.ModelForm):
     estregistro = forms.ChoiceField(
         required=True, label='Estado del registro', choices=ESTREGISTRO_TYPES)
@@ -57,4 +55,16 @@ class DepartamentoForm(forms.ModelForm):
         labels = {
             'codigo': _('Codigo DANE'),
             'nombre': _('Nombres'), 'estregistro': _('Estado registro'),
+        }
+
+class MetodologiaForm(forms.ModelForm):
+    estregistro = forms.ChoiceField(
+        required=True, label='Estado del registro', choices=ESTREGISTRO_TYPES)
+
+    class Meta:
+        model = Metodologia
+        fields = ['codigo','nombre', 'estregistro']
+        labels = {
+            'codigo': _('Id'),
+            'nombre': _('Nombre'), 'estregistro': _('Estado registro'),
         }

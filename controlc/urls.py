@@ -41,6 +41,13 @@ urlpatterns = [
     url(r'^ingresar/$', views.ingresar, name='ingresar'),
 
     # ---------
+    # Parametricas Establecimientos
+    url(r'^configuracion/Metodologias/$', views.indexMetodologias),
+    url(r'^configuracion/MetodologiasJson/$', views.MetodologiasJson),
+    url(r'^configuracion/editarMetodologia/(?P<id>[0-9]+)/$', views.formularioEditarMetodologia),
+    url(r'^configuracion/registrarMetodologia/$', views.formularioRegistrarMetodologia),
+
+    # ---------
     # Administracion de Establecimientos
     url(r'^establecimiento/Establecimientos/$', viewEst.indexEstablecimientos),
     url(r'^establecimiento/EstablecimientosJson/$', viewEst.EstablecimientosJson),
