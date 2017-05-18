@@ -34,7 +34,7 @@ def formularioEditarMetodologia(request, id):
     if request.method == 'POST': 
         metodologia = get_object_or_404(Metodologia, pk=id)
         form = MetodologiaForm(request.POST,  request.FILES or None,instance=metodologia)
-        data = ejecucionAdminDataBase(form, request, "Edicion metodologia", request.POST['nombre'])
+        data = ejecucionAdminDataBaseVal(form, request, "Edicion metodologia", request.POST['nombre'],"formMetodologia.html")
         return JsonResponse(data)
     else:  
         metodologia = get_object_or_404(Metodologia, pk=id)
@@ -55,11 +55,11 @@ def MetodologiasJson(request):
         lista_datos = Metodologia.objects.filter(
             estregistro=request.GET['estregistro'],
             nombre__contains=remove_accents(request.GET['nombre'].upper())
-        )
+        ).order_by('codigo')
     else:
         lista_datos = Metodologia.objects.filter(
             estregistro=request.GET['estregistro']
-        )        
+        ).order_by('codigo')
     json = serializers.serialize('json', lista_datos,  use_natural_foreign_keys=True)
     return HttpResponse(json, content_type='application/json')
 

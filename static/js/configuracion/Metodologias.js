@@ -6,7 +6,7 @@ var continuacion = false;
 
 // ------- Carga modal del formulario para actualizar existente
 $("#divLista").on("click", ".itemEditar", function (e) {
-    e.preventDefault();
+    e.preventDefault();    
     var id = $(this).data('id');
     $.ajax({
         url: "/" + modulo + "/editar" + admin + "/" + id,  // <-- AND HERE
@@ -16,12 +16,8 @@ $("#divLista").on("click", ".itemEditar", function (e) {
             $("#modal-form").modal("show");
         },
         success: function (data) {
-            if (data.transaccion) {
-                mostrarModal(data.html_form, data.titulo, "normal")
-                $("#btnRegistrar").hide();
-                $("#btnRegistrarContinuar").hide();
-                $("#btnEditar").show();
-                $('#estregistro option[value="' + $("#hdEstregistro").val() + '"]').attr('selected', true);
+            if (data.transaccion) {                
+                mostrarModal(data.html_form, data.titulo, "normal","no");                
             }
         },
         error: function (data) {
@@ -41,12 +37,8 @@ var formularioRegistrar = function (id) {
             $("#modal-form").modal("show");
         },
         success: function (data) {
-            if (data.transaccion) {
-                mostrarModal(data.html_form, data.titulo, "normal");
-                $("#btnRegistrar").show();
-                $("#btnRegistrarContinuar").show();                
-                $("#btnEditar").hide();
-                $('#divDatosConsultados').hide()               
+            if (data.transaccion) {                
+                mostrarModal(data.html_form, data.titulo, "normal","si");                
             }
         },
         error: function (data) {
@@ -70,7 +62,7 @@ function resultadoConsultaSimple(result) {
 
 // ------- Eventos clic de envio de formularios diligenciados
 var clicActualizarPost = function () {
-    continuacion = false;
+    continuacion = false;    
     enviarPost("editar");
 }
 var clicRegistrarPost = function () {                
@@ -85,6 +77,8 @@ var clicRegistrarContinuarPost = function () {
 // ------- ejecución del método post de envio de formularios diligenciados
 var enviarPost = function (accion) {
     var url;
+    // Controla el tipo de formulario para efecto de ocultar botones (Editar - Registrar)
+    tipoForm = accion;
     if (accion == "editar") {
         url = "/" + modulo + "/" + accion + admin + "/" + $("#id").val() + "/";
     } else {
@@ -107,9 +101,8 @@ var enviarPost = function (accion) {
                         formularioRegistrar();
                     }
                 }
-                else {
-                    alerta("Confirmando error", data.mensaje, "error");
-                    actualizarModal(data.html_form);
+                else {                    
+                    actualizarModal(data.html_form);                    
                 }
             }
         });
@@ -150,26 +143,25 @@ function datos() {
     });
 }
 
-function iniciarModal() {
-    $("#codigoDepartamento").hide();
-    var reglas = {
-        nombre: {
-            required: true
-        },
-        estregistro: {
-            required: true
-        }
-    };
+function iniciarModal() {  
+    // var reglas = {
+    //     nombre: {
+    //         required: true
+    //     },
+    //     estregistro: {
+    //         required: true
+    //     }
+    // };
 
-    var mensajes = {
-        nombre: {
-            required: 'Ingrese el nombre de la metodología'
-        },
-        estregistro: {
-            required: 'Seleccione estado del registro'
-        }
-    };
-    validarFormulario(formulario, reglas, mensajes);
+    // var mensajes = {
+    //     nombre: {
+    //         required: 'Ingrese el nombre de la metodología'
+    //     },
+    //     estregistro: {
+    //         required: 'Seleccione estado del registro'
+    //     }
+    // };
+    // validarFormulario(formulario, reglas, mensajes);
 }
 
 // ---- Activacion de filtros de la tabla

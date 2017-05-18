@@ -1,3 +1,5 @@
+var titulo = "";
+var tipoForm = "";
 function alerta(titulo, mensaje, tipoAlerta) {
     switch (tipoAlerta) {
         case "success":
@@ -13,8 +15,12 @@ function alerta(titulo, mensaje, tipoAlerta) {
 
 }
 
-function mostrarModal(htmlForm, tituloForm, medidaForm) {
-
+function mostrarModal(htmlForm, tituloForm, medidaForm, esRegistrar) { 
+    if(esRegistrar=="si" || esRegistrar =="SI"){
+        tipoForm = "registrar";
+    }else{
+        tipoForm = "editar";
+    }   
     switch (medidaForm) {
         case "grande":
             $("#modal-box").removeClass("modal-xxl");
@@ -28,13 +34,23 @@ function mostrarModal(htmlForm, tituloForm, medidaForm) {
             $("#modal-box").removeClass("modal-xl");
             $("#modal-box").addClass("modal-xxl");
             break;
-    }
-    $("#modal-form .modal-content").html(htmlForm);
-    $("#tituloForm").html(tituloForm);
+    }    
+    titulo = tituloForm;  
+    actualizarModal(htmlForm);          
 }
 
-function actualizarModal(htmlForm){
+function actualizarModal(htmlForm){    
     $("#modal-form .modal-content").html(htmlForm);
+    $("#tituloForm").html(titulo);
+    if ( tipoForm == "registrar" ){
+        $("#btnRegistrar").show();
+        $("#btnRegistrarContinuar").show();                
+        $("#btnEditar").hide();   
+    }else{
+        $("#btnRegistrar").hide();
+        $("#btnRegistrarContinuar").hide();                
+        $("#btnEditar").show();   
+    }
 }
 
 function consultaModulo(modulo, consultaObjetivo, dato) {

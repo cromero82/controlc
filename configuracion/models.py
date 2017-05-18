@@ -5,8 +5,9 @@ from decimal import Decimal
 
 # Create your models here.
 my_default_errors = {
-    'required': 'Esteeeeeee campo es requerido.',
-    'invalid': 'Ingreseeeeee un valor valido'
+    'required': 'Este campo es requerido.',
+    'invalid': 'El valor ingresado no es valido',
+    'unique':"Ya se encuentra registrado en el sistema."
 }
 
 class Especialidad(models.Model):
@@ -19,9 +20,9 @@ class Especialidad(models.Model):
         return self.nombre
 
 class Metodologia(models.Model):
-    codigo = models.CharField(max_length=2, blank=False,  unique=True, error_messages={'unique':"This email has already been registered."})
-    nombre = models.CharField(max_length=40, blank=False, unique=True)
-    estregistro = models.IntegerField(default=1, blank=False)
+    codigo = models.CharField(max_length=2, blank=False,  unique=True, error_messages=my_default_errors)
+    nombre = models.CharField(max_length=40, blank=False, unique=True, error_messages=my_default_errors)
+    estregistro = models.IntegerField(default=1, blank=False, error_messages=my_default_errors)
     class Meta:
         default_related_name = 'metodologia'
     def __unicode__(self):  

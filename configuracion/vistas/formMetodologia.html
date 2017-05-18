@@ -1,5 +1,5 @@
-<!--{% load widget_tweaks %}-->
-{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+<!--{% load crispy_forms_tags %}-->
 <form method="post" id="formMetodologia" class="js-update-form" autocomplete="off">
   {% csrf_token %}
   <div class="panel-heading">
@@ -13,11 +13,19 @@
     </button>
   </div>
   <div class="panel-body">
-    <input type="hidden" id="id" name="id" value="{{form.instance.pk}}">
-    <input type="hidden" id="hdEstregistro" name="estregistro" value="">
+    <input type="hidden" id="id" name="id" value="{{form.instance.pk}}">    
     <div class="admin-form">
 
-    {{ form|crispy }}
+    <!--{{ form|crispy }}-->
+{% for field in form %}
+       <div class="form-group{% if field.errors %} has-error{% endif %}">
+         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+         {% render_field field class="form-control" %}
+         {% for error in field.errors %}
+           <p class="help-block">{{ error }}</p>
+         {% endfor %}
+       </div>
+     {% endfor %}
 
     </div>
 
