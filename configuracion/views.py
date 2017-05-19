@@ -16,9 +16,9 @@ from datetime import datetime
 # from models import Persona
 from models import Tdocumento
 from models import TRelacionFamiliar
-from models import Departamento, Persona, Municipios, Metodologia
+from models import Departamento, Persona, Municipios, Metodologia, Especialidad
 # Importando Forms
-from forms import DepartamentoForm, PersonaForm, MunicipioForm, MetodologiaForm
+from forms import DepartamentoForm, PersonaForm, MunicipioForm, MetodologiaForm, EspecialidadForm
 import sys
 import miUtils
 from miUtils import ejecucionAdminDataBaseVal
@@ -26,6 +26,53 @@ from miUtils import ejecucionAdminDataBase, formularioAdmin, remove_accents
 from django.contrib import messages
 from django.http import JsonResponse
 from django.template.context_processors import csrf
+
+# ---------
+# Administracion de parametricas EE
+@login_required(login_url='/accounts/login/')
+def formularioEditarEspecialidad(request, id):   
+    if request.method == 'POST': 
+        especialidad = get_object_or_404(Especialidad, pk=id)
+        form = EspecialidadForm(request.POST,  request.FILES or None,instance=especialidad)
+        data = ejecucionAdminDataBaseVal(form, request, "Edicion especialidad", request.POST['nombre'],"formEspecialidad.html")
+        return JsonResponse(data)
+    else:  
+        especialidad = get_object_or_404(Especialidad, pk=id)
+        form = EspecialidadForm(instance=especialidad)      
+        return JsonResponse(formularioAdmin(form, "formEspecialidad.html", "Edicion de especialidad", request))
+
+@login_required(login_url='/accounts/login/')
+def formularioRegistrarEspecialidad(request):
+    if request.method == 'POST':
+        form = EspecialidadForm(request.POST, request.FILES or None)
+        data = ejecucionAdminDataBaseVal(form, request, "Registrar especialidad", request.POST['nombre'],"formEspecialidad.html")
+        return JsonResponse(data)
+    else:
+        form = EspecialidadForm()
+        return JsonResponse(formularioAdmin(form, "formEspecialidad.html", "Registre datos especialidad", request))
+
+@login_required(login_url='/accounts/login/')
+def EspecialidadsJson(request):
+    if request.GET['nombre'] != '':
+        lista_datos = Especialidad.objects.filter(
+            estregistro=request.GET['estregistro'],
+            nombre__contains=remove_accents(request.GET['nombre'].upper())
+        ).order_by('codigo')
+    else:
+        lista_datos = Especialidad.objects.filter(
+            estregistro=request.GET['estregistro']
+        ).order_by('codigo')
+    json = serializers.serialize('json', lista_datos,  use_natural_foreign_keys=True)
+    return HttpResponse(json, content_type='application/json')
+
+@login_required(login_url='/accounts/login/')
+def indexEspecialidades(request):    
+    return render(request, 'Especialidades.html', context = { 'datos': '' })
+
+
+
+
+
 
 # ---------
 # Administracion de parametricas EE
@@ -41,6 +88,7 @@ def formularioEditarMetodologia(request, id):
         form = MetodologiaForm(instance=metodologia)      
         return JsonResponse(formularioAdmin(form, "formMetodologia.html", "Edicion de metodologia", request))
 
+@login_required(login_url='/accounts/login/')
 def formularioRegistrarMetodologia(request):
     if request.method == 'POST':
         form = MetodologiaForm(request.POST, request.FILES or None)
@@ -50,6 +98,7 @@ def formularioRegistrarMetodologia(request):
         form = MetodologiaForm()
         return JsonResponse(formularioAdmin(form, "formMetodologia.html", "Registre datos metodologia", request))
 
+@login_required(login_url='/accounts/login/')
 def MetodologiasJson(request):
     if request.GET['nombre'] != '':
         lista_datos = Metodologia.objects.filter(

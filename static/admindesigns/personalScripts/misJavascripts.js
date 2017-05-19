@@ -12,7 +12,17 @@ function alerta(titulo, mensaje, tipoAlerta) {
             swal(titulo, mensaje, "error");
             break;
     }
+}
 
+function notificacion (titulo, mensaje){
+    new PNotify({
+                    title: titulo,
+                    text: mensaje,
+                    type: 'success',
+                    shadow: true,
+                    width: 380,
+                    delay: 3000
+                });
 }
 
 function mostrarModal(htmlForm, tituloForm, medidaForm, esRegistrar) { 

@@ -11,8 +11,8 @@ my_default_errors = {
 }
 
 class Especialidad(models.Model):
-    codigo = models.CharField(max_length=2, blank=False,  unique=True)
-    nombre = models.CharField(max_length=40, blank=False, unique=True)
+    codigo = models.CharField(max_length=2, blank=False,  unique=True, error_messages=my_default_errors)
+    nombre = models.CharField(max_length=40, blank=False, unique=True, error_messages=my_default_errors)
     estregistro = models.IntegerField(default=1, blank=False)
     class Meta:
         default_related_name = 'especialidad'

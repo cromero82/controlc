@@ -46,7 +46,7 @@
 
     <!--Sección configuración -->
     <li>
-        <a class="accordion-toggle {% if '/configuracion/Metodologias/' == request.path or '/configuracion/Usuarios/' == request.path or '/configuracion/Personas/' == request.path or '/configuracion/relacionesFamiliares/' == request.path or '/configuracion/tiposDocumentos/' == request.path or '/configuracion/Municipios/' == request.path or '/configuracion/departamentos/' == request.path %}menu-open{% endif %}         "
+        <a class="accordion-toggle {% if '/configuracion/Especialidades/' == request.path or '/configuracion/Metodologias/' == request.path or '/configuracion/Usuarios/' == request.path or '/configuracion/Personas/' == request.path or '/configuracion/relacionesFamiliares/' == request.path or '/configuracion/tiposDocumentos/' == request.path or '/configuracion/Municipios/' == request.path or '/configuracion/departamentos/' == request.path %}menu-open{% endif %}         "
             href="#">
                             <span class="glyphicons glyphicons-vector_path_all"></span>
                             <span class="sidebar-title">Configuración</span>
@@ -54,7 +54,7 @@
                         </a>
         <ul class="nav sub-nav">
             <li>
-                <a class="accordion-toggle {% if '/configuracion/Metodologias/' == request.path or '/configuracion/Usuarios/' == request.path or '/configuracion/Personas/' == request.path or '/configuracion/relacionesFamiliares/' == request.path or '/configuracion/tiposDocumentos/' == request.path or '/configuracion/Municipios/' == request.path or '/configuracion/departamentos/' == request.path %}menu-open{% endif %}         "
+                <a class="accordion-toggle {% if '/configuracion/Especialidades/' == request.path or '/configuracion/Metodologias/' == request.path or '/configuracion/Usuarios/' == request.path or '/configuracion/Personas/' == request.path or '/configuracion/relacionesFamiliares/' == request.path or '/configuracion/tiposDocumentos/' == request.path or '/configuracion/Municipios/' == request.path or '/configuracion/departamentos/' == request.path %}menu-open{% endif %}         "
                     href="#">
                                     <span class="glyphicons glyphicons-table"></span> Datos paramétricos
                                     <span class="caret"></span>
@@ -75,6 +75,10 @@
 
                     </li>
                     
+                    <li class="{% if '/configuracion/Especialidades/' == request.path %}active{% endif %}">
+                        <a href="http://{{ request.get_host }}/configuracion/Especialidades"> Especialidades de la media </a>
+                    </li>
+
                     <li class="{% if '/configuracion/Metodologias/' == request.path %}active{% endif %}">
                         <a href="http://{{ request.get_host }}/configuracion/Metodologias"> Metodologías plan estudio </a>
                     </li>
