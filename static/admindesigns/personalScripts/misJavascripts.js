@@ -49,6 +49,11 @@ function mostrarModal(htmlForm, tituloForm, medidaForm, esRegistrar) {
     actualizarModal(htmlForm);          
 }
 
+function cerrarModal(){
+    $("#modal-form").modal("hide");
+    $("#modal-form").html("");
+}
+
 function actualizarModal(htmlForm){    
     $("#modal-form .modal-content").html(htmlForm);
     $("#tituloForm").html(titulo);

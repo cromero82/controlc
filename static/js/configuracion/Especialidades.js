@@ -122,6 +122,10 @@ function datos() {
     if (miTabla != undefined) {
         miTabla.dataTable().fnDestroy();
     }
+    var table_data = [
+    [ "Tiger Nixon", "System Architect", "$3,120", "2011/04/25", "Edinburgh", 5421 ],
+    [ "Garrett Winters", "Director", "$8,422", "2011/07/25", "Edinburgh", 8422 ]
+    ];
     miTabla = $('#postsTable').dataTable({
         sDom: '<"top">tipr',        
         "iDisplayLength": 9,
@@ -143,7 +147,9 @@ function datos() {
             { "data": "fields.codigo" },
             { "data": "fields.nombre" }            
         ],
-        "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json" }
+        "language": {
+                "url": "../../static/admindesigns/vendor/plugins/datatables/espaniol.js"
+            }
     });
 }
 

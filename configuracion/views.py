@@ -66,7 +66,8 @@ def EspecialidadsJson(request):
     return HttpResponse(json, content_type='application/json')
 
 @login_required(login_url='/accounts/login/')
-def indexEspecialidades(request):    
+def indexEspecialidades(request):   
+    # request.session['pageActual'] = 'Especialidades' 
     return render(request, 'Especialidades.html', context = { 'datos': '' })
 
 
