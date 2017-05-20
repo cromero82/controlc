@@ -14,11 +14,12 @@ from django.template import RequestContext
 # Models
 from datetime import datetime
 # from models import Persona
-from models import Tdocumento
-from models import TRelacionFamiliar
-from models import Departamento, Persona, Municipios, Metodologia, Especialidad
+from models import Tdocumento, TRelacionFamiliar
+from models import Departamento, Persona, Municipios, Metodologia, Especialidad, Tjornada 
+from models import Tcaracter, TfuenteRecursos
 # Importando Forms
-from forms import DepartamentoForm, PersonaForm, MunicipioForm, MetodologiaForm, EspecialidadForm
+from forms import DepartamentoForm, PersonaForm, MunicipioForm, MetodologiaForm
+from forms import EspecialidadForm, TjornadaForm, TcaracterForm, TfuenteRecursosForm
 import sys
 import miUtils
 from miUtils import ejecucionAdminDataBaseVal
@@ -27,29 +28,186 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.template.context_processors import csrf
 
-# ---------
-# Administracion de parametricas EE
+# ----------------------------------------------
+# Administracion de Tipos de fuentes de recursos
+
 @login_required(login_url='/accounts/login/')
-def formularioEditarEspecialidad(request, id):   
-    if request.method == 'POST': 
-        especialidad = get_object_or_404(Especialidad, pk=id)
-        form = EspecialidadForm(request.POST,  request.FILES or None,instance=especialidad)
-        data = ejecucionAdminDataBaseVal(form, request, "Edicion especialidad", request.POST['nombre'],"formEspecialidad.html")
+def formularioEditarTfuenteRecursos(request, id):
+    if request.method == 'POST':
+        tcaracter = get_object_or_404(TfuenteRecursos, pk=id)
+        form = TfuenteRecursosForm(
+            request.POST,  request.FILES or None, instance=tcaracter)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Edicion tcaracter", request.POST['nombre'], "formTfuenteRecursos.html")
         return JsonResponse(data)
-    else:  
+    else:
+        tcaracter = get_object_or_404(TfuenteRecursos, pk=id)
+        form = TfuenteRecursosForm(instance=tcaracter)
+        return JsonResponse(formularioAdmin(form, "formTfuenteRecursos.html", "Edicion de tipo de caracter", request))
+
+
+@login_required(login_url='/accounts/login/')
+def formularioRegistrarTfuenteRecursos(request):
+    if request.method == 'POST':
+        form = TfuenteRecursosForm(request.POST, request.FILES or None)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Registrar tipo de caracter", request.POST['nombre'], "formTfuenteRecursos.html")
+        return JsonResponse(data)
+    else:
+        form = TfuenteRecursosForm()
+        return JsonResponse(formularioAdmin(form, "formTfuenteRecursos.html", "Registre datos de tipo de caracter", request))
+
+
+@login_required(login_url='/accounts/login/')
+def TfuenteRecursosJson(request):
+    if request.GET['nombre'] != '':
+        lista_datos = TfuenteRecursos.objects.filter(
+            estregistro=request.GET['estregistro'],
+            nombre__contains=remove_accents(request.GET['nombre'].upper())
+        ).order_by('codigo')
+    else:
+        lista_datos = TfuenteRecursos.objects.filter(
+            estregistro=request.GET['estregistro']
+        ).order_by('codigo')
+    json = serializers.serialize(
+        'json', lista_datos,  use_natural_foreign_keys=True)
+    return HttpResponse(json, content_type='application/json')
+
+
+@login_required(login_url='/accounts/login/')
+def indexTfuenteRecursos(request):
+    return render(request, 'TfuenteRecursos.html', context={'datos': ''})
+
+
+# ----------------------------------------------
+# Administracion de Tipos de caracter ( realmente son 3 registros)
+
+@login_required(login_url='/accounts/login/')
+def formularioEditarTcaracter(request, id):
+    if request.method == 'POST':
+        tcaracter = get_object_or_404(Tcaracter, pk=id)
+        form = TcaracterForm(
+            request.POST,  request.FILES or None, instance=tcaracter)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Edicion tcaracter", request.POST['nombre'], "formTcaracter.html")
+        return JsonResponse(data)
+    else:
+        tcaracter = get_object_or_404(Tcaracter, pk=id)
+        form = TcaracterForm(instance=tcaracter)
+        return JsonResponse(formularioAdmin(form, "formTcaracter.html", "Edicion de tipo de caracter", request))
+
+
+@login_required(login_url='/accounts/login/')
+def formularioRegistrarTcaracter(request):
+    if request.method == 'POST':
+        form = TcaracterForm(request.POST, request.FILES or None)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Registrar tipo de caracter", request.POST['nombre'], "formTcaracter.html")
+        return JsonResponse(data)
+    else:
+        form = TcaracterForm()
+        return JsonResponse(formularioAdmin(form, "formTcaracter.html", "Registre datos de tipo de caracter", request))
+
+
+@login_required(login_url='/accounts/login/')
+def TcaracteresJson(request):
+    if request.GET['nombre'] != '':
+        lista_datos = Tcaracter.objects.filter(
+            estregistro=request.GET['estregistro'],
+            nombre__contains=remove_accents(request.GET['nombre'].upper())
+        ).order_by('codigo')
+    else:
+        lista_datos = Tcaracter.objects.filter(
+            estregistro=request.GET['estregistro']
+        ).order_by('codigo')
+    json = serializers.serialize(
+        'json', lista_datos,  use_natural_foreign_keys=True)
+    return HttpResponse(json, content_type='application/json')
+
+
+@login_required(login_url='/accounts/login/')
+def indexTcaracteres(request):
+    return render(request, 'Tcaracteres.html', context={'datos': ''})
+
+# --------------------------------------
+# Administracion de Tipos de jornadas EE
+@login_required(login_url='/accounts/login/')
+def formularioEditarTjornada(request, id):
+    if request.method == 'POST':
+        tjornada = get_object_or_404(Tjornada, pk=id)
+        form = TjornadaForm(
+            request.POST,  request.FILES or None, instance=tjornada)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Edicion tjornada", request.POST['nombre'], "formTjornada.html")
+        return JsonResponse(data)
+    else:
+        tjornada = get_object_or_404(Tjornada, pk=id)
+        form = TjornadaForm(instance=tjornada)
+        return JsonResponse(formularioAdmin(form, "formTjornada.html", "Edicion de tipo de jornada", request))
+
+
+@login_required(login_url='/accounts/login/')
+def formularioRegistrarTjornada(request):
+    if request.method == 'POST':
+        form = TjornadaForm(request.POST, request.FILES or None)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Registrar tjornada", request.POST['nombre'], "formTjornada.html")
+        return JsonResponse(data)
+    else:
+        form = TjornadaForm()
+        return JsonResponse(formularioAdmin(form, "formTjornada.html", "Registre datos de tipo de jornada", request))
+
+
+@login_required(login_url='/accounts/login/')
+def TjornadasJson(request):
+    if request.GET['nombre'] != '':
+        lista_datos = Tjornada.objects.filter(
+            estregistro=request.GET['estregistro'],
+            nombre__contains=remove_accents(request.GET['nombre'].upper())
+        ).order_by('codigo')
+    else:
+        lista_datos = Tjornada.objects.filter(
+            estregistro=request.GET['estregistro']
+        ).order_by('codigo')
+    json = serializers.serialize(
+        'json', lista_datos,  use_natural_foreign_keys=True)
+    return HttpResponse(json, content_type='application/json')
+
+
+@login_required(login_url='/accounts/login/')
+def indexTjornadas(request):
+    return render(request, 'Tjornadas.html', context={'datos': ''})
+
+# ---------
+# Administracion de Especialidades
+
+
+@login_required(login_url='/accounts/login/')
+def formularioEditarEspecialidad(request, id):
+    if request.method == 'POST':
         especialidad = get_object_or_404(Especialidad, pk=id)
-        form = EspecialidadForm(instance=especialidad)      
+        form = EspecialidadForm(
+            request.POST,  request.FILES or None, instance=especialidad)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Edicion especialidad", request.POST['nombre'], "formEspecialidad.html")
+        return JsonResponse(data)
+    else:
+        especialidad = get_object_or_404(Especialidad, pk=id)
+        form = EspecialidadForm(instance=especialidad)
         return JsonResponse(formularioAdmin(form, "formEspecialidad.html", "Edicion de especialidad", request))
+
 
 @login_required(login_url='/accounts/login/')
 def formularioRegistrarEspecialidad(request):
     if request.method == 'POST':
         form = EspecialidadForm(request.POST, request.FILES or None)
-        data = ejecucionAdminDataBaseVal(form, request, "Registrar especialidad", request.POST['nombre'],"formEspecialidad.html")
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Registrar especialidad", request.POST['nombre'], "formEspecialidad.html")
         return JsonResponse(data)
     else:
         form = EspecialidadForm()
         return JsonResponse(formularioAdmin(form, "formEspecialidad.html", "Registre datos especialidad", request))
+
 
 @login_required(login_url='/accounts/login/')
 def EspecialidadsJson(request):
@@ -62,42 +220,46 @@ def EspecialidadsJson(request):
         lista_datos = Especialidad.objects.filter(
             estregistro=request.GET['estregistro']
         ).order_by('codigo')
-    json = serializers.serialize('json', lista_datos,  use_natural_foreign_keys=True)
+    json = serializers.serialize(
+        'json', lista_datos,  use_natural_foreign_keys=True)
     return HttpResponse(json, content_type='application/json')
 
+
 @login_required(login_url='/accounts/login/')
-def indexEspecialidades(request):   
-    # request.session['pageActual'] = 'Especialidades' 
-    return render(request, 'Especialidades.html', context = { 'datos': '' })
-
-
-
-
-
+def indexEspecialidades(request):
+    # request.session['pageActual'] = 'Especialidades'
+    return render(request, 'Especialidades.html', context={'datos': ''})
 
 # ---------
 # Administracion de parametricas EE
+
+
 @login_required(login_url='/accounts/login/')
-def formularioEditarMetodologia(request, id):   
-    if request.method == 'POST': 
+def formularioEditarMetodologia(request, id):
+    if request.method == 'POST':
         metodologia = get_object_or_404(Metodologia, pk=id)
-        form = MetodologiaForm(request.POST,  request.FILES or None,instance=metodologia)
-        data = ejecucionAdminDataBaseVal(form, request, "Edicion metodologia", request.POST['nombre'],"formMetodologia.html")
+        form = MetodologiaForm(
+            request.POST,  request.FILES or None, instance=metodologia)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Edicion metodologia", request.POST['nombre'], "formMetodologia.html")
         return JsonResponse(data)
-    else:  
+    else:
         metodologia = get_object_or_404(Metodologia, pk=id)
-        form = MetodologiaForm(instance=metodologia)      
+        form = MetodologiaForm(instance=metodologia)
         return JsonResponse(formularioAdmin(form, "formMetodologia.html", "Edicion de metodologia", request))
+
 
 @login_required(login_url='/accounts/login/')
 def formularioRegistrarMetodologia(request):
     if request.method == 'POST':
         form = MetodologiaForm(request.POST, request.FILES or None)
-        data = ejecucionAdminDataBaseVal(form, request, "Registrar metodologia", request.POST['nombre'],"formMetodologia.html")
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Registrar metodologia", request.POST['nombre'], "formMetodologia.html")
         return JsonResponse(data)
     else:
         form = MetodologiaForm()
         return JsonResponse(formularioAdmin(form, "formMetodologia.html", "Registre datos metodologia", request))
+
 
 @login_required(login_url='/accounts/login/')
 def MetodologiasJson(request):
@@ -110,20 +272,25 @@ def MetodologiasJson(request):
         lista_datos = Metodologia.objects.filter(
             estregistro=request.GET['estregistro']
         ).order_by('codigo')
-    json = serializers.serialize('json', lista_datos,  use_natural_foreign_keys=True)
+    json = serializers.serialize(
+        'json', lista_datos,  use_natural_foreign_keys=True)
     return HttpResponse(json, content_type='application/json')
 
+
 @login_required(login_url='/accounts/login/')
-def indexMetodologias(request):    
-    return render(request, 'Metodologias.html', context = { 'datos': '' })
+def indexMetodologias(request):
+    return render(request, 'Metodologias.html', context={'datos': ''})
 
 # ---------
 # Control de inicio de sesion
+
+
 def cerrar(request):
     logout(request)
     #render(request, 'afiliados/salida.html')
     return HttpResponseRedirect('/ingresar')
-    
+
+
 def ingresar(request):
     if not request.user.is_anonymous():
         return HttpResponseRedirect('/configuracion/Personas')
@@ -147,55 +314,67 @@ def ingresar(request):
     return render(request, 'cuentasUsuario/pages_login.html', context)
 
 # Formulario de login
+
+
 def milogin(request):
     formulario = AuthenticationForm()
     context = {'formulario': formulario}
     return render(request, 'cuentasUsuario/pages_login.html', context)
-    
-def index(request):    
-    return render(request, 'Municipios.html', context = { 'datos': '' })
+
+
+def index(request):
+    return render(request, 'Municipios.html', context={'datos': ''})
 
 
 # ---------
 # Consultas personalizadas
-def consulta_configuracion(request):   
+def consulta_configuracion(request):
     data = dict()
-    data['transaccion'] = True    
+    data['transaccion'] = True
     try:
         if request.POST["tipoConsulta"] == 'codigoDepartamento':
             datos = get_object_or_404(Departamento, pk=request.POST["dato"])
-            data['datos'] =  {'misDatos': datos.codigo}
+            data['datos'] = {'misDatos': datos.codigo}
         elif request.POST["tipoConsulta"] == 'otra cosa':
-            datos = get_object_or_404(Departamento, pk=request.POST["dato"])       
+            datos = get_object_or_404(Departamento, pk=request.POST["dato"])
     except Exception, err:
         data['transaccion'] = False
         data['mensaje'] = err.message
-    return  JsonResponse(data)
-    
+    return JsonResponse(data)
+
 # ---------
 # Administracion de Municipio
+
+
 @login_required(login_url='/accounts/login/')
-def formularioEditarMunicipio(request, id):   
-    if request.method == 'POST': 
+def formularioEditarMunicipio(request, id):
+    if request.method == 'POST':
         municipio = get_object_or_404(Municipios, pk=id)
-        form = MunicipioForm(request.POST,  request.FILES or None,instance=municipio)
-        data = ejecucionAdminDataBase(form, request, "Edicion municipio", request.POST['nombre'])
+        form = MunicipioForm(
+            request.POST,  request.FILES or None, instance=municipio)
+        data = ejecucionAdminDataBase(
+            form, request, "Edicion municipio", request.POST['nombre'])
         return JsonResponse(data)
-    else:  
+    else:
         municipio = get_object_or_404(Municipios, pk=id)
-        form = MunicipioForm(instance=municipio)      
+        form = MunicipioForm(instance=municipio)
         return JsonResponse(formularioAdmin(form, "formMunicipio.html", "Edicion de municipio", request))
+
 
 def formularioRegistrarMunicipio(request):
     if request.method == 'POST':
         form = MunicipioForm(request.POST, request.FILES or None)
-        data = ejecucionAdminDataBase(form, request, "Registrar municipio", request.POST['nombre'])
+        data = ejecucionAdminDataBase(
+            form, request, "Registrar municipio", request.POST['nombre'])
         return JsonResponse(data)
     else:
         form = MunicipioForm()
         return JsonResponse(formularioAdmin(form, "formMunicipio.html", "Registre datos generales", request))
+
+
 def ValuesQuerySetToDict(vqs):
     return [item for item in vqs]
+
 
 def MunicipiosJson(request):
     if request.GET['nombre'] != '':
@@ -206,35 +385,44 @@ def MunicipiosJson(request):
     else:
         lista_datos = Municipios.objects.filter(
             estregistro=request.GET['estregistro']
-        )        
-    json = serializers.serialize('json', lista_datos,  use_natural_foreign_keys=True)
+        )
+    json = serializers.serialize(
+        'json', lista_datos,  use_natural_foreign_keys=True)
     return HttpResponse(json, content_type='application/json')
 
+
 @login_required(login_url='/accounts/login/')
-def indexMunicipios(request):    
-    return render(request, 'Municipios.html', context = { 'datos': '' })
+def indexMunicipios(request):
+    return render(request, 'Municipios.html', context={'datos': ''})
 
 # ---------
 # Administracion de Personas
-def formularioEditarPersonas(request, id):   
-    if request.method == 'POST': 
+
+
+def formularioEditarPersonas(request, id):
+    if request.method == 'POST':
         persona = get_object_or_404(Persona, pk=id)
-        form = PersonaForm(request.POST,  request.FILES or None,instance=persona)
-        data = ejecucionAdminDataBase(form, request, "Edicion datos personales", request.POST['nombres'])
+        form = PersonaForm(
+            request.POST,  request.FILES or None, instance=persona)
+        data = ejecucionAdminDataBase(
+            form, request, "Edicion datos personales", request.POST['nombres'])
         return JsonResponse(data)
-    else:  
+    else:
         persona = get_object_or_404(Persona, pk=id)
-        form = PersonaForm(instance=persona)      
+        form = PersonaForm(instance=persona)
         return JsonResponse(formularioAdmin(form, "registrarPersona.html", "Edicion de datos personales", request))
+
 
 def formularioRegistrarPersonas(request):
     if request.method == 'POST':
         form = PersonaForm(request.POST, request.FILES or None)
-        data = ejecucionAdminDataBase(form, request, "Registrar persona", request.POST['nombres'])
+        data = ejecucionAdminDataBase(
+            form, request, "Registrar persona", request.POST['nombres'])
         return JsonResponse(data)
     else:
         form = PersonaForm()
         return JsonResponse(formularioAdmin(form, "registrarPersona.html", "Registre datos generales", request))
+
 
 def PersonasJson(request):
     if request.GET['nombre'] != '':
@@ -248,6 +436,7 @@ def PersonasJson(request):
         )
     json = serializers.serialize('json', lista_datos)
     return HttpResponse(json, content_type='application/json')
+
 
 @login_required(login_url='/accounts/login/')
 def Personas(request):

@@ -1,0 +1,114 @@
+{% extends 'basePlantilla.html' %} {% block migaPan %}
+<li class="crumb-active">
+    <a href="dashboard.html">Dashboard</a>
+</li>
+<li class="crumb-icon">
+    <a href="dashboard.html">
+        <span class="glyphicon glyphicon-home"></span>
+    </a>
+</li>
+<li class="crumb-link">
+    <a href="index.html">Configuración</a>
+</li>
+<li class="crumb-trail"> Tipos de caracter </li>
+{% endblock %} {% block panelMigaPan %}
+
+{% endblock %} {% block subContenidoIzquierda %}
+<div class="animated-delay p20" data-animate='["300","fadeIn"]'>
+    <h4 class="mt5 mb20"> Tipos de caracter<span class="fs13 fw400 text-muted"> 
+        Caracter registrado en los establecimientos educativos en Colombia. por defecto son 3.</span></h4>
+
+<div class="table-layout bg-light">
+                                    <!--<div class="col-xs-3 text-center va-m">
+                                        <span class="fa fa-slideshare fs80 text-warning-light"></span>
+                                    </div>-->
+                                    <div class="col-xs-12 br-l text-warning-light">
+                                        <h5 class="text-muted pl5 mt20 mb20"> Recent Answers </h5>
+                                        <ul class="fs15 list-divide-items mb30">
+                                            <li>
+                                                <a class="link-unstyled" href="#" title="">
+                                                    <i class="fa fa-exclamation-circle text-primary fa-lg pr10"></i> How do I recover or change my password?</a>
+                                            </li>
+                                            <li>
+                                                <a class="link-unstyled" href="#" title="">
+                                                    <i class="fa fa-exclamation-circle text-primary fa-lg pr10"></i> How do I track a subdomain?</a>
+                                            </li>
+                                            <li>
+                                                <a class="link-unstyled" href="#" title="">
+                                                    <i class="fa fa-exclamation-circle text-primary fa-lg pr10"></i> Can I use my data outside of AdminDesigns?</a>
+                                            </li>
+                                            <li>
+                                                <a class="link-unstyled" href="#" title="">
+                                                    <i class="fa fa-exclamation-circle text-primary fa-lg pr10"></i> What does it mean when my Data doesn't ...</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+   
+
+</div>
+
+{% endblock %} {% block contenido %}
+<div class="row" id="spy1">
+    <div class="col-md-12">
+        <div class="panel panel-visible" id="spy2">
+            <div class="panel-heading">
+                <div class="panel-title hidden-xs">
+                    <span class="glyphicon glyphicon-tasks"></span>Tipos de caracter
+                    <div class="alineacionVertical pull-right">
+<a  class="btn btn-success btn-sm light fw600 ml10 " onclick="formularioRegistrar()" title="Nuevo tipo de caracter">
+                    <span class="fa fa-plus pr5"></span> Nuevo</a>     
+                    </div>
+                    
+
+                    </div>
+            </div>
+            <div class="dt-panelmenu clearfix">
+                <div id="dataTables_filter" class="dataTables_filter" style="float:left;">
+                    <label>Buscar:<input type="search" name="nombre" id="nombre" class="form-control input-sm" style="width: 200px; " placeholder="Escriba nombre" aria-controls="datatable2"></label>
+                    <button type="button" onclick="filtrarNombre()" class="button btn-primary"> <i class="fa fa-search"></i>
+                                                        </button>
+                </div>
+                <div class="col-sm-1"></div>
+                <div class="dataTables_length m-5" id="datatable2_length">
+                    <!--<label>Buscar:<input type="search" class="form-control input-sm" placeholder="Enter Terms..." aria-controls="datatable2"></label>-->
+                    <label>Estado
+                                <select name="estregistro" id="estregistro" class="form-control input-sm">
+                                    <option value="0">Seleccione...</option>
+                                        <option value="1" selected>Activo</option>
+                                        <option value="2">Inactivo</option>                                   
+                                </select> </label>
+                </div>
+
+            </div>
+            <div class="panel-body pn" id="divLista">
+
+                <div class="tray tray-center p10 va-t posr">
+                    <table class="table table-striped table-hover dataTable no-footer" id="postsTable" describedby="datatable_info" cellspacing="0"
+                        width="100%">
+                        <thead>
+                            <tr>
+                                <th>Acciones</th>                                
+                                <th>Código</th>
+                                <th>Nombre</th>                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %} {% load static %} {% block js %} {{ block.super }} {# includes previous content in block #}
+<script src="{% static 'js/configuracion/Tcaracteres.js' %}"></script>
+
+{% endblock %}

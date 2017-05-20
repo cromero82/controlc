@@ -10,6 +10,33 @@ my_default_errors = {
     'unique':"Ya se encuentra registrado en el sistema."
 }
 
+class TfuenteRecursos(models.Model):
+    codigo = models.CharField(max_length=2, blank=False,  unique=True, error_messages=my_default_errors)
+    nombre = models.CharField(max_length=200, blank=False, unique=True, error_messages=my_default_errors)
+    estregistro = models.IntegerField(default=1, blank=False)
+    class Meta:
+        default_related_name = 'Tfuenterecursos'
+    def __unicode__(self):  
+        return self.nombre
+
+class Tcaracter(models.Model):
+    codigo = models.CharField(max_length=2, blank=False,  unique=True, error_messages=my_default_errors)
+    nombre = models.CharField(max_length=200, blank=False, unique=True, error_messages=my_default_errors)
+    estregistro = models.IntegerField(default=1, blank=False)
+    class Meta:
+        default_related_name = 'Tcaracter'
+    def __unicode__(self):  
+        return self.nombre
+
+class Tjornada(models.Model):
+    codigo = models.CharField(max_length=2, blank=False,  unique=True, error_messages=my_default_errors)
+    nombre = models.CharField(max_length=40, blank=False, unique=True, error_messages=my_default_errors)
+    estregistro = models.IntegerField(default=1, blank=False)
+    class Meta:
+        default_related_name = 'Tjornada'
+    def __unicode__(self):  
+        return self.nombre
+
 class Especialidad(models.Model):
     codigo = models.CharField(max_length=2, blank=False,  unique=True, error_messages=my_default_errors)
     nombre = models.CharField(max_length=40, blank=False, unique=True, error_messages=my_default_errors)

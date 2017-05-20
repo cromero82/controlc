@@ -1,5 +1,6 @@
 from django import forms
-from models import Persona, Municipios, Metodologia, Especialidad
+from models import Persona, Municipios, Metodologia, Especialidad, Tjornada, Tcaracter
+from models import TfuenteRecursos
 from models import Departamento
 from django.utils.translation import gettext_lazy as _
 from django.forms import Field
@@ -75,6 +76,54 @@ class EspecialidadForm(forms.ModelForm):
 
     class Meta:
         model = Especialidad
+        fields = ['codigo','nombre', 'estregistro']
+        labels = {
+            'codigo': _('Id'),
+            'nombre': _('Nombre'), 'estregistro': _('Estado registro'),
+        }
+        widgets = {
+            'codigo': forms.TextInput({'placeholder': 'Ingrese id'}),
+            'nombre': forms.TextInput({'placeholder': 'Ingrese nombre'})
+        }
+
+class TjornadaForm(forms.ModelForm):
+    estregistro = forms.ChoiceField(
+        required=True, label='Estado del registro', choices=ESTREGISTRO_TYPES)
+
+    class Meta:
+        model = Tjornada
+        fields = ['codigo','nombre', 'estregistro']
+        labels = {
+            'codigo': _('Id'),
+            'nombre': _('Nombre'), 'estregistro': _('Estado registro'),
+        }
+        widgets = {
+            'codigo': forms.TextInput({'placeholder': 'Ingrese id'}),
+            'nombre': forms.TextInput({'placeholder': 'Ingrese nombre'})
+        }
+
+class TcaracterForm(forms.ModelForm):
+    estregistro = forms.ChoiceField(
+        required=True, label='Estado del registro', choices=ESTREGISTRO_TYPES)
+
+    class Meta:
+        model = Tcaracter
+        fields = ['codigo','nombre', 'estregistro']
+        labels = {
+            'codigo': _('Id'),
+            'nombre': _('Nombre'), 'estregistro': _('Estado registro'),
+        }
+        widgets = {
+            'codigo': forms.TextInput({'placeholder': 'Ingrese id'}),
+            'nombre': forms.TextInput({'placeholder': 'Ingrese nombre'})
+        }
+
+class TfuenteRecursosForm(forms.ModelForm):
+    estregistro = forms.ChoiceField(
+        required=True, label='Estado del registro', choices=ESTREGISTRO_TYPES)
+
+    class Meta:
+        model = TfuenteRecursos
         fields = ['codigo','nombre', 'estregistro']
         labels = {
             'codigo': _('Id'),

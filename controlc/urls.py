@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import  include, url
 from django.contrib import admin
-from configuracion import views
+from configuracion import views as viewConf
 from establecimiento import views as viewEst
 from django.conf import settings
 from django.conf.urls.static import static
@@ -34,72 +34,93 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),   
     #----------
     # Inicio de sesion
-    url(r'^login/$', views.ingresar, name='login'),
-    url(r'^auth/$', views.ingresar, name='ingresar'),
-    url(r'^accounts/login/$', views.ingresar, name='ingresar'),
-    url(r'^cerrar/$', views.cerrar, name='cerrar'),
-    url(r'^ingresar/$', views.ingresar, name='ingresar'),
+    url(r'^login/$', viewConf.ingresar, name='login'),
+    url(r'^auth/$', viewConf.ingresar, name='ingresar'),
+    url(r'^accounts/login/$', viewConf.ingresar, name='ingresar'),
+    url(r'^cerrar/$', viewConf.cerrar, name='cerrar'),
+    url(r'^ingresar/$', viewConf.ingresar, name='ingresar'),
+
+        # ---------
+    # Parametricas Tipo de jornadas impartidas
+    url(r'^configuracion/TfuenteRecursos/$', viewConf.indexTfuenteRecursos),
+    url(r'^configuracion/TfuenteRecursosJson/$', viewConf.TfuenteRecursosJson),
+    url(r'^configuracion/editarTfuenteRecursos/(?P<id>[0-9]+)/$', viewConf.formularioEditarTfuenteRecursos),
+    url(r'^configuracion/registrarTfuenteRecursos/$', viewConf.formularioRegistrarTfuenteRecursos),
+
+    # ---------
+    # Parametricas Tipo de jornadas impartidas
+    url(r'^configuracion/Tcaracteres/$', viewConf.indexTcaracteres),
+    url(r'^configuracion/TcaracteresJson/$', viewConf.TcaracteresJson),
+    url(r'^configuracion/editarTcaracter/(?P<id>[0-9]+)/$', viewConf.formularioEditarTcaracter),
+    url(r'^configuracion/registrarTcaracter/$', viewConf.formularioRegistrarTcaracter),
+
+    # ---------
+    # Parametricas Tipo de jornadas impartidas
+    url(r'^configuracion/Tjornadas/$', viewConf.indexTjornadas),
+    url(r'^configuracion/TjornadasJson/$', viewConf.TjornadasJson),
+    url(r'^configuracion/editarTjornada/(?P<id>[0-9]+)/$', viewConf.formularioEditarTjornada),
+    url(r'^configuracion/registrarTjornada/$', viewConf.formularioRegistrarTjornada),
 
     # ---------
     # Parametricas Especialidad de la media
-    url(r'^configuracion/Especialidades/$', views.indexEspecialidades),
-    url(r'^configuracion/EspecialidadesJson/$', views.EspecialidadsJson),
-    url(r'^configuracion/editarEspecialidad/(?P<id>[0-9]+)/$', views.formularioEditarEspecialidad),
-    url(r'^configuracion/registrarEspecialidad/$', views.formularioRegistrarEspecialidad),
+    url(r'^configuracion/Especialidades/$', viewConf.indexEspecialidades),
+    url(r'^configuracion/EspecialidadesJson/$', viewConf.EspecialidadsJson),
+    url(r'^configuracion/editarEspecialidad/(?P<id>[0-9]+)/$', viewConf.formularioEditarEspecialidad),
+    url(r'^configuracion/registrarEspecialidad/$', viewConf.formularioRegistrarEspecialidad),
 
     # ---------
     # Parametricas Metodologias
-    url(r'^configuracion/Metodologias/$', views.indexMetodologias),
-    url(r'^configuracion/MetodologiasJson/$', views.MetodologiasJson),
-    url(r'^configuracion/editarMetodologia/(?P<id>[0-9]+)/$', views.formularioEditarMetodologia),
-    url(r'^configuracion/registrarMetodologia/$', views.formularioRegistrarMetodologia),
+    url(r'^configuracion/Metodologias/$', viewConf.indexMetodologias),
+    url(r'^configuracion/MetodologiasJson/$', viewConf.MetodologiasJson),
+    url(r'^configuracion/editarMetodologia/(?P<id>[0-9]+)/$', viewConf.formularioEditarMetodologia),
+    url(r'^configuracion/registrarMetodologia/$', viewConf.formularioRegistrarMetodologia),
 
     # ---------
     # Administracion de Establecimientos
     url(r'^establecimiento/Establecimientos/$', viewEst.indexEstablecimientos),
     url(r'^establecimiento/EstablecimientosJson/$', viewEst.EstablecimientosJson),
-    # url(r'^establecimiento/editarEstablecimiento/(?P<id>[0-9]+)/$', views.formularioEditarEstablecimiento),
+    # url(r'^establecimiento/editarEstablecimiento/(?P<id>[0-9]+)/$', viewConf.formularioEditarEstablecimiento),
     url(r'^establecimiento/registrarEstablecimientos/$', viewEst.formularioRegistrarEstablecimiento),
 
     # ---------
     # Administracion de Municipios
-    url(r'^configuracion/Municipios/$', views.indexMunicipios),
-    url(r'^configuracion/MunicipioJson/$', views.MunicipiosJson),
-    url(r'^configuracion/editarMunicipio/(?P<id>[0-9]+)/$', views.formularioEditarMunicipio),
-    url(r'^configuracion/registrarMunicipio/$', views.formularioRegistrarMunicipio),
+    url(r'^configuracion/Municipios/$', viewConf.indexMunicipios),
+    url(r'^configuracion/MunicipioJson/$', viewConf.MunicipiosJson),
+    url(r'^configuracion/editarMunicipio/(?P<id>[0-9]+)/$', viewConf.formularioEditarMunicipio),
+    url(r'^configuracion/registrarMunicipio/$', viewConf.formularioRegistrarMunicipio),
     # ---------
     # Administracion de tipos relaciones familiares
-    url(r'^configuracion/Personas/$', views.Personas),
-    url(r'^configuracion/PersonasJson/$', views.PersonasJson),
-    url(r'^configuracion/editarPersonas/(?P<id>[0-9]+)/$', views.formularioEditarPersonas),
-    url(r'^configuracion/registrarPersonas/$', views.formularioRegistrarPersonas),
+    url(r'^configuracion/Personas/$', viewConf.Personas),
+    url(r'^configuracion/PersonasJson/$', viewConf.PersonasJson),
+    url(r'^configuracion/editarPersonas/(?P<id>[0-9]+)/$', viewConf.formularioEditarPersonas),
+    url(r'^configuracion/registrarPersonas/$', viewConf.formularioRegistrarPersonas),
     # ---------
     # Administracion de tipos relaciones familiares
-    url(r'^configuracion/departamentos/$', views.departamentos),
-    url(r'^configuracion/departamentosJson/$', views.departamentosJson),
-    url(r'^configuracion/editardepartamentos/(?P<id>[0-9]+)/$', views.editardepartamentos),
-    url(r'^configuracion/editardepartamentosPost/$', views.editardepartamentosPost),
-    url(r'^configuracion/nuevodepartamentos/$', views.formNuevodepartamentos),
-    url(r'^configuracion/nuevodepartamentosPost/$', views.nuevodepartamentosPost),    
+    url(r'^configuracion/departamentos/$', viewConf.departamentos),
+    url(r'^configuracion/departamentosJson/$', viewConf.departamentosJson),
+    url(r'^configuracion/editardepartamentos/(?P<id>[0-9]+)/$', viewConf.editardepartamentos),
+    url(r'^configuracion/editardepartamentosPost/$', viewConf.editardepartamentosPost),
+    url(r'^configuracion/nuevodepartamentos/$', viewConf.formNuevodepartamentos),
+    url(r'^configuracion/nuevodepartamentosPost/$', viewConf.nuevodepartamentosPost),    
     # ---------
     # Administracion de tipos relaciones familiares
-    url(r'^configuracion/relacionesFamiliares/$', views.relacionesFamiliares),
-    url(r'^configuracion/relacionesFamiliaresJson/$', views.relacionesFamiliaresJson),
-    url(r'^configuracion/editarrelacionesFamiliares/(?P<id>[0-9]+)/$', views.editarrelacionesFamiliares),
-    url(r'^configuracion/editarrelacionesFamiliaresPost/$', views.editarrelacionesFamiliaresPost),
-    url(r'^configuracion/nuevorelacionesFamiliares/$', views.formNuevorelacionesFamiliares),
-    url(r'^configuracion/nuevorelacionesFamiliaresPost/$', views.nuevorelacionesFamiliaresPost),
+    url(r'^configuracion/relacionesFamiliares/$', viewConf.relacionesFamiliares),
+    url(r'^configuracion/relacionesFamiliaresJson/$', viewConf.relacionesFamiliaresJson),
+    url(r'^configuracion/editarrelacionesFamiliares/(?P<id>[0-9]+)/$', viewConf.editarrelacionesFamiliares),
+    url(r'^configuracion/editarrelacionesFamiliaresPost/$', viewConf.editarrelacionesFamiliaresPost),
+    url(r'^configuracion/nuevorelacionesFamiliares/$', viewConf.formNuevorelacionesFamiliares),
+    url(r'^configuracion/nuevorelacionesFamiliaresPost/$', viewConf.nuevorelacionesFamiliaresPost),
     # ---------
     # Administracion de tipos de documentos
-    url(r'^configuracion/tiposDocumentos/$', views.tiposDocumentos),
-    url(r'^configuracion/tiposDocumentosJson/$', views.tiposDocumentosJson),
-    url(r'^configuracion/editartiposDocumentos/(?P<id>[0-9]+)/$', views.editartiposDocumentos),
-    url(r'^configuracion/editartiposDocumentosPost/$', views.editartiposDocumentosPost),
-    url(r'^configuracion/nuevotiposDocumentos/$', views.formNuevoTipoDocumento),
-    url(r'^configuracion/nuevotiposDocumentosPost/$', views.nuevotiposDocumentosPost),
+    url(r'^configuracion/tiposDocumentos/$', viewConf.tiposDocumentos),
+    url(r'^configuracion/tiposDocumentosJson/$', viewConf.tiposDocumentosJson),
+    url(r'^configuracion/editartiposDocumentos/(?P<id>[0-9]+)/$', viewConf.editartiposDocumentos),
+    url(r'^configuracion/editartiposDocumentosPost/$', viewConf.editartiposDocumentosPost),
+    url(r'^configuracion/nuevotiposDocumentos/$', viewConf.formNuevoTipoDocumento),
+    url(r'^configuracion/nuevotiposDocumentosPost/$', viewConf.nuevotiposDocumentosPost),
     # --------
     # Consultas comunes
-    url(r'^configuracion/consulta/$', views.consulta_configuracion)
+    url(r'^configuracion/consulta/$', viewConf.consulta_configuracion)
 ] 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
