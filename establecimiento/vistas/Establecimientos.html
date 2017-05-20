@@ -12,8 +12,6 @@
 </li>
 <li class="crumb-trail"> Datos básicos</li>
 {% endblock %} {% block panelMigaPan %}
-<a class="btn btn-default btn-sm light fw600 ml10" onclick="formularioRegistrar()" title="Nuevo establecimiento">
-    <span class="fa fa-plus pr5"></span> Nuevo</a>
 {% endblock %} {% block subContenidoIzquierda %}
 <div class="animated-delay p20" data-animate='["300","fadeIn"]'>
     <h4 class="mt5 mb20"> Establecimiento - <span class="fs13 fw400 text-muted"> 
@@ -84,10 +82,23 @@
 <div class="row" id="spy1">
     <div class="col-md-12">
         <div class="panel panel-visible" id="spy2">
-            <div class="panel-heading">
+
+<div class="panel-heading">
+                <div class="panel-title hidden-xs">
+                    <span class="glyphicon glyphicon-home"></span>Establecimientos educativos
+                    <div class="alineacionVertical pull-right">
+<a  class="btn btn-success btn-sm light fw600 ml10 " href="http://{{ request.get_host }}/establecimiento/nuevoEstablecimiento" title="Nuevo establecimiento">
+                    <span class="fa fa-plus pr5"></span> Nuevo</a>     
+                    </div>
+                    
+
+                    </div>
+            </div>
+
+            <!--<div class="panel-heading">
                 <div class="panel-title hidden-xs">
                     <span class="glyphicon glyphicon-home"></span>Establecimientos educativos</div>
-            </div>
+            </div>-->
             <div class="dt-panelmenu clearfix">
                 <div id="dataTables_filter" class="dataTables_filter" style="float:left;">
                     <label>Buscar:<input type="search" name="nombre" id="nombre" class="form-control input-sm" style="width: 200px; " placeholder="Escriba nombre" aria-controls="datatable2"></label>

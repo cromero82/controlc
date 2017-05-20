@@ -77,10 +77,11 @@ urlpatterns = [
 
     # ---------
     # Administracion de Establecimientos
+    url(r'^establecimiento/nuevoEstablecimiento/$', viewEst.formularioNuevoEstablecimientos),
     url(r'^establecimiento/Establecimientos/$', viewEst.indexEstablecimientos),
     url(r'^establecimiento/EstablecimientosJson/$', viewEst.EstablecimientosJson),
     # url(r'^establecimiento/editarEstablecimiento/(?P<id>[0-9]+)/$', viewConf.formularioEditarEstablecimiento),
-    url(r'^establecimiento/registrarEstablecimientos/$', viewEst.formularioRegistrarEstablecimiento),
+    url(r'^establecimiento/registrarEstablecimientos/$', viewEst.formularioNuevoEstablecimientos),
 
     # ---------
     # Administracion de Municipios

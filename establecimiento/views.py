@@ -26,6 +26,9 @@ from django.template.context_processors import csrf
 # ---------
 # Administracion de Establecimiento
 
+@login_required(login_url='/accounts/login/')
+def formularioNuevoEstablecimientos(request):
+    return render(request, 'formNuevoEstablecimiento.html', context={'datos': ''})
 
 @login_required(login_url='/accounts/login/')
 def formularioEditarEstablecimiento(request, id):
