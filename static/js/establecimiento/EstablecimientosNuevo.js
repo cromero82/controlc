@@ -3,7 +3,7 @@ var modulo = "establecimiento";
 var admin = "Establecimientos";
 var formulario = "formEstablecimiento"
 var datosConsultados = null;
-
+$('#divDatosConsultados').hide()  
 // ------- Carga modal del formulario para actualizar existente
 $("#divLista").on("click", ".itemEditar", function (e) {
     e.preventDefault();
@@ -144,8 +144,8 @@ var clicBuscarDatosCo = function () {
                 { "data": "correo_electronico" }
             ],                     
             columnDefs: [
-            { width: 320, targets: 1 ,defaultContent:"-"},
-            { width: 200, targets: 2 ,defaultContent:"-"},
+            { width: 220, targets: 1 ,defaultContent:"-"},
+            { width: 140, targets: 2 ,defaultContent:"-"},
             { width: 200, targets: 3 ,defaultContent:"-"},
             { width: 120, targets: 4 ,defaultContent:"-"},
             { width: 120, targets: 5 ,defaultContent:"-"},
@@ -215,44 +215,7 @@ var enviarPost = function (accion) {
     }
     return false;
 };
-
-var miTabla = null;
 var miTablaConsultada = null;
-datos();
-
-function datos() {
-    if (miTabla != undefined) {
-        miTabla.dataTable().fnDestroy();
-    }
-    // miTabla = $('#postsTable').dataTable({
-    //     sDom: '<"top">tipr',
-    //     // "dom": '<"top"i>rt<"bottom"flp><"clear">',
-    //     "iDisplayLength": 9,
-    //     "ajax": {
-    //         "processing": true,
-    //         "url": "/" + modulo + "/" + admin + "Json/",
-    //         "data": {
-    //             "estregistro": $("#estregistro").val(),
-    //             "nombre": $("#nombre").val()
-    //         },
-    //         "dataSrc": ""
-    //     },
-    //     "columns": [
-    //         { "data": "fields.codigo" },
-    //         { "data": "fields.nombre" },
-    //         { "data": "fields.departamento" },
-    //         { "data": "fields.estregistro" },
-    //         {
-    //             "data": function (data, type, row, meta) {
-    //                 return '<a class="btn btn-primary itemEditar" href="#" data-id="' + data.pk + '"><i class="fa fa-pencil"></i></a>';
-
-
-    //             }
-    //         }
-    //     ],
-    //     "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json" }
-    // });
-}
 
 function iniciarModal() {
     $("#codigoDepartamento").hide();
@@ -277,7 +240,7 @@ function iniciarModal() {
 }
 
 jQuery(document).ready(function() {
-
+    var tituloInicialBoton = "Registrar como establecimiento nuevo";   
             "use strict";
 
             // Init Theme Core    
@@ -297,11 +260,18 @@ jQuery(document).ready(function() {
                         equalTo: "#password"
                     }
                 }
-            });
+            });            
+            //  
             form.children(".wizard").steps({
                 headerTag: ".wizard-section-title",
-                bodyTag: ".wizard-section",
-                onStepChanging: function(event, currentIndex, newIndex) {
+                bodyTag: ".wizard-section",                                
+                onStepChanging: function(event, currentIndex, newIndex) {                   
+                       if(newIndex==0){
+                          $('a[href$="next"]').text(tituloInicialBoton);
+                       }else{
+                           $('a[href$="next"]').text("Siguiente");
+                       }
+                   
                     form.validate().settings.ignore = ":disabled,:hidden";
                     return form.valid();
                 },
@@ -317,6 +287,10 @@ jQuery(document).ready(function() {
             // Demo Wizard Functionality
             var formWizard = $('.wizard');
             var formSteps = formWizard.find('.steps');
+            // Boton al inicializar el wirzard
+            $('a[href$="next"]').text(tituloInicialBoton);
+            $('a[href$="previous"]').text("Anterior");
+            $('a[href$="finish"]').text("Finalizar");
 
             $('.wizard-options .holder-style').on('click', function(e) {
                 e.preventDefault();
@@ -349,6 +323,7 @@ jQuery(document).ready(function() {
                 } else {
                     formWizard.addClass(stepStyle);
                 }
+// formWizard.find(".actions a:eq(1)").text("Next Oneee")
 
                 // Assign new active holder
                 $(this).toggleClass('holder-active');

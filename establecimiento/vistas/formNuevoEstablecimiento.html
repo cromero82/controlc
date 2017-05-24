@@ -16,185 +16,190 @@
     <div class="col-md-12">
 
 
-<!-- Begin: Content -->
-            <section id="content" class="animated fadeIn">
+        <!-- Begin: Content -->
 
-                <h2 class="lh30 mt15 text-center"><b class="text-primary">Mix and Match</b> settings with our Admin Wizard</h2>
-                <p class="lead mb20 text-center">Built in options that make creating a new form wizard easier and faster than ever.</p>
+        <h2 class="lh30 mt15 text-center"><b class="text-primary">Registro de establecimiento</b> y compruebe lo fácil que es adminitrar tu colegio</h2>
+        <p class="lead mb20 text-center">Formulario de registro ultrarápido de establecimiento educativo.</p>
 
-                <div class="row">
-                    <div class="col-md-9 center-block">
-                        <div class="bg-light br-a br-light p15 mb20 text-center text-muted">
-                            <div class="row wizard-options">
-                                <div class="col-xs-4 col-sm-2 ph10">
-                                    <a class="holder-style p15 holder-active" data-steps-style="steps-left">
-                                        <span class="fa fa-align-left holder-icon"></span>
-                                        <br> Steps Left
-                                    </a>
-                                </div>
-                                <div class="col-xs-4 col-sm-2 ph10">
-                                    <a class="holder-style p15" data-steps-style="steps-right">
-                                        <span class="fa fa-align-right holder-icon"></span>
-                                        <br> Steps Right
-                                    </a>
-                                </div>
-                                <div class="col-xs-4 col-sm-2 ph10">
-                                    <a class="holder-style p15 holder-active" data-steps-style="steps-bg">
-                                        <span class="fa fa-eyedropper holder-icon"></span>
-                                        <br> Background
-                                    </a>
-                                </div>
-                                <div class="col-xs-4 col-sm-2 ph10">
-                                    <a class="holder-style p15" data-steps-style="steps-tabs">
-                                        <span class="fa fa-bookmark holder-icon"></span>
-                                        <br> As Tabs
-                                    </a>
-                                </div>
-                                <div class="col-xs-4 col-sm-2 ph10">
-                                    <a class="holder-style p15" data-steps-style="steps-justified">
-                                        <span class="fa fa-arrows-h holder-icon"></span>
-                                        <br> Justified
-                                    </a>
-                                </div>
-                                <div class="col-xs-4 col-sm-2 ph10">
-                                    <a class="holder-style p15 steps-type" data-steps-style="steps-show-icons">
-                                        <span class="fa fa-rocket holder-icon"></span>
-                                        <br> With Icons
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+        <div class="row">
+            <div class="col-md-10 center-block">
 
-                        <!-- Form Wizard -->
-                        <div class="admin-form">
 
-                            <form method="post" action="/" id="form-wizard">
-                                <div class="wizard steps-bg steps-left">
+                <!-- Form Wizard -->
+                <div class="admin-form">
 
-                                    <!-- Wizard step 1 -->
-                                    <h4 class="wizard-section-title"><i class="fa fa-user pr5"></i> User Details</h4>
-                                    <section class="wizard-section">
+                    <form method="post" action="/" id="form-wizard">
+                        <div class="wizard  steps-bg steps-tabs steps-justified steps-show-icons">
 
-                                        <div class="section">
-                                            <label for="username" class="field-label">Choose your username</label>
-                                            <div class="smart-widget sm-right smr-120">
-                                                <label for="username" class="field prepend-icon">
-                                                    <input type="text" name="username" id="username" class="gui-input" placeholder="john-doe">
-                                                    <label for="username" class="field-icon"><i class="fa fa-user"></i>
-                                                    </label>
+                            <!-- Wizard step 1 -->
+                            <h4 class="wizard-section-title"><i class="glyphicons glyphicons-cloud-download pr5"></i> Importar datos</h4>
+                            <section class="wizard-section">
+
+                                <div class="section">
+                                    <div class="alert alert-success">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <strong>Proceso de Importar datos. </strong> Favor ingrese el <strong>código del establecimiento </strong>                                        y haga clic en el botón <strong>buscar</strong> para consultar datos del establecimiento.
+                                        Esta información proviene del sitio oficial <a href="https://www.datos.gov.co/">https://www.datos.gov.co/</a>                                        y fue registrada por la secretaría local y demás entes que supervisan y controlan
+                                        el tema administrativo de establecimientos oficiales y no oficiales en Colombia.
+                                    </div>
+
+
+                                    <div class="section row alineacionVertical ">
+                                        <label class=" col-md-2  text-left ">
+                                                    Código DANE
                                                 </label>
-                                                <label for="username" class="button">.envato.com</label>
-                                            </div>
-                                            <!-- end .smart-widget section -->
+                                        <div class="col-md-3 ">
+                                            <label class="field select">
+                                                    {{ form.codigo}}    
+                                                    <!--<input type="text" name="codigo" id="codigo" class="gui-input" value="" placeholder="Digite el código DANE asignado por la Secretaría local o administradora">             -->
+                                                    
+                                                </label>
+                                            <!--<div id="codigoDepartamento"  class="well well-sm"></div>-->
                                         </div>
-                                        <!-- end section -->
+                                        <div class="col-md-3 ">
+                                            <button type="button" id="btnRegistrar" onclick="clicBuscarDatosCo()" class="btn btn-primary">Buscar Datos</button>
+                                        </div>
+                                    </div>
 
-                                        <div class="section">
-                                            <label for="password" class="field-label">Create a password</label>
-                                            <label for="password" class="field prepend-icon">
+                                    <div class="panel  " id="divDatosConsultados">
+                                        <table class="table table-striped table-hover dataTable no-footer" id="datosConsultados" describedby="datatable_info" cellspacing="0"
+                                            width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Acciones</th>
+                                                    <th>Nombre</th>
+                                                    <th>Municipio</th>
+                                                    <th>Nombre del Rector (a)</th>
+                                                    <th>Tipo de establecimiento</th>
+                                                    <th>Departamento</th>
+                                                    <th>zona</th>
+                                                    <th>Dirección</th>
+                                                    <th>telefono</th>
+
+                                                    <th>Etnias</th>
+                                                    <th>Sector</th>
+                                                    <th>Genero</th>
+                                                    <th>Niveles</th>
+                                                    <th>Jornadas</th>
+                                                    <th>Caracter</th>
+                                                    <th>Especialidad</th>
+                                                    <th>Grados</th>
+                                                    <th>Modelos Educativos</th>
+                                                    <th>Capacidades Excepcionales</th>
+                                                    <th>Discapacidades</th>
+                                                    <th>Idiomas</th>
+                                                    <th>Número de sedes</th>
+                                                    <th>Estado del establecimiento</th>
+                                                    <th>Prestador de servicio</th>
+                                                    <th>propiedad planta física</th>
+                                                    <th>Resguardo</th>
+                                                    <th>Matricula contratada</th>
+                                                    <th>Calendario</th>
+                                                    <th>Internado</th>
+                                                    <th>Estrado socio económico</th>
+                                                    <th>Correo eletrónico</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <!-- end .smart-widget section -->
+                                </div>
+                                <!-- end section -->
+
+                                {% comment %}
+                                <div class="section">
+                                    <label for="password" class="field-label">Create a password</label>
+                                    <label for="password" class="field prepend-icon">
                                                 <input type="password" name="password" id="password" class="gui-input">
                                                 <label for="password" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
-                                            </label>
-                                        </div>
-                                        <!-- end section -->
+                                    </label>
+                                </div>
+                                <!-- end section -->{% endcomment %}
 
-                                    </section>
+                            </section>
 
-                                    <!-- Wizard step 2 -->
-                                    <h4 class="wizard-section-title"><i class="fa fa-dollar pr5"></i> Payment</h4>
-                                    <section class="wizard-section">
+                            <!-- Wizard step 2 -->
+                            <h4 class="wizard-section-title"><i class="fa fa-dollar pr5"></i> Datos generales</h4>
+                            <section class="wizard-section">
 
-                                        <div class="section">
-                                            <label for="firstname" class="field prepend-icon">
+                                <div class="section">
+                                    <label for="firstname" class="field prepend-icon">
                                                 <input type="text" name="firstname" id="firstname" class="gui-input" placeholder="First name...">
                                                 <label for="firstname" class="field-icon"><i class="fa fa-user"></i>
                                                 </label>
-                                            </label>
-                                        </div>
-                                        <!-- end section -->
+                                    </label>
+                                </div>
+                                <!-- end section -->
 
-                                        <div class="section">
-                                            <label for="lastname" class="field prepend-icon">
+                                <div class="section">
+                                    <label for="lastname" class="field prepend-icon">
                                                 <input type="text" name="lastname" id="lastname" class="gui-input" placeholder="Last name...">
                                                 <label for="lastname" class="field-icon"><i class="fa fa-user"></i>
                                                 </label>
-                                            </label>
-                                        </div>
-                                        <!-- end section -->
+                                    </label>
+                                </div>
+                                <!-- end section -->
 
-                                    </section>
+                            </section>
 
-                                    <!-- Wizard step 3 -->
-                                    <h4 class="wizard-section-title"><i class="fa fa-shopping-cart pr5"></i> Checkout</h4>
-                                    <section class="wizard-section">
+                            <!-- Wizard step 3 -->
+                            <h4 class="wizard-section-title"><i class="fa fa-shopping-cart pr5"></i> Checkout</h4>
+                            <section class="wizard-section">
 
-                                        <div class="section">
-                                            <label for="email" class="field prepend-icon">
+                                <div class="section">
+                                    <label for="email" class="field prepend-icon">
                                                 <input type="email" name="email" id="email" class="gui-input" placeholder="Email address">
                                                 <label for="email" class="field-icon"><i class="fa fa-envelope"></i>
                                                 </label>
-                                            </label>
-                                        </div>
-                                        <!-- end section -->
+                                    </label>
+                                </div>
+                                <!-- end section -->
 
-                                        <div class="section">
-                                            <label for="mobile" class="field prepend-icon">
+                                <div class="section">
+                                    <label for="mobile" class="field prepend-icon">
                                                 <input type="tel" name="mobile" id="mobile" class="gui-input" placeholder="Telephone / moble number">
                                                 <label for="mobile" class="field-icon"><i class="fa fa-phone-square"></i>
                                                 </label>
-                                            </label>
-                                        </div>
-                                        <!-- end section -->
-
-                                    </section>
+                                    </label>
                                 </div>
-                                <!-- End: Wizard -->
+                                <!-- end section -->
 
-                            </form>
-                            <!-- End Account2 Form -->
-
+                            </section>
                         </div>
-                        <!-- end: .admin-form -->
+                        <!-- End: Wizard -->
 
-                    </div>
+                    </form>
+                    <!-- End Account2 Form -->
 
                 </div>
-
-            </section>
-            <!-- End: Content -->
-
-        <!--<div class="panel panel-visible">
-
-            <div class="panel-heading">
-                <div class="panel-title hidden-xs">
-                    <span class="glyphicon glyphicon-home"></span>Registro nuevo establecimiento
-                </div>
-            </div>
-
-            <div class="panel-body pn" id="divLista">
-               
-
+                <!-- end: .admin-form -->
 
             </div>
 
-        </div>-->
+        </div>
+
+
+
     </div>
 
 </div>
- <style>
-    
+<style>
     /*page demo styles*/
+
     .wizard .steps .fa,
     .wizard .steps .glyphicon,
     .wizard .steps .glyphicon {
         display: none;
     }
-    </style>
+</style>
 {% endblock %} {% load static %} {% block js %} {{ block.super }} {# includes previous content in block #}
 <script src="{% static 'admindesigns/assets/admin-tools/admin-forms/js/advanced/steps/jquery.steps.js' %}"></script>
-<script type="text/javascript" src="{% static 'admindesigns/assets/js/main.js' %}"></script>
-<script type="text/javascript" src="{% static 'admindesigns/assets/js/demo.js' %}"></script>
+{% comment %}<script type="text/javascript" src="{% static 'admindesigns/assets/js/main.js' %}"></script>
+<script type="text/javascript" src="{% static 'admindesigns/assets/js/demo.js' %}"></script>{% endcomment %}
 <script src="{% static 'js/establecimiento/EstablecimientosNuevo.js' %}"></script>
 <!-- Page Plugins -->
 {% endblock %}

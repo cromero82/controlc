@@ -79,3 +79,10 @@
 .alineacionVertical {
   vertical-align: middle;
 }
+
+/**  Controlar alineación en form wizard*/
+
+
+.admin-form .field-label[class*='col-'] {
+  line-height: 0;
+}
