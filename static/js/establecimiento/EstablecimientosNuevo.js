@@ -3,31 +3,37 @@ var modulo = "establecimiento";
 var admin = "Establecimientos";
 var formulario = "formEstablecimiento"
 var datosConsultados = null;
-$('#divDatosConsultados').hide()  
+var codigoEstablecimiento = null;
+$('#divDatosConsultados').hide()
 // ------- Carga modal del formulario para actualizar existente
-$("#divLista").on("click", ".itemEditar", function (e) {
-    e.preventDefault();
-    var id = $(this).data('id');
-    $.ajax({
-        url: "/" + modulo + "/editar" + admin + "/" + id,  // <-- AND HERE
-        type: 'get',
-        dataType: 'json',
-        beforeSend: function () {
-            $("#modal-form").modal("show");
-        },
-        success: function (data) {
-            if (data.transaccion) {
-                mostrarModal(data.html_form, data.titulo, "normal")
-                $("#btnRegistrar").hide();
-                $("#btnEditar").show();
-                $('#estregistro option[value="' + $("#hdEstregistro").val() + '"]').attr('selected', true);
-            }
-        },
-        error: function (data) {
-            $("#modal-form").modal("hide");
-            alerta("Error al intentar conectarse con el servidor", data.mensaje, "error");
-        }
-    });
+//$("#divLista").on("click", ".itemEditar", function (e) {
+$("#divDatosConsultados").on("click", ".itemEditar", function (e) {
+    debugger;
+    // form.next(0)
+    //form.steps.next
+    form.steps("setStep", 1);
+    // e.preventDefault();
+    // var id = $(this).data('id');
+    // $.ajax({
+    //     url: "/" + modulo + "/editar" + admin + "/" + id,  // <-- AND HERE
+    //     type: 'get',
+    //     dataType: 'json',
+    //     beforeSend: function () {
+    //         $("#modal-form").modal("show");
+    //     },
+    //     success: function (data) {
+    //         if (data.transaccion) {
+    //             mostrarModal(data.html_form, data.titulo, "normal")
+    //             $("#btnRegistrar").hide();
+    //             $("#btnEditar").show();
+    //             $('#estregistro option[value="' + $("#hdEstregistro").val() + '"]').attr('selected', true);
+    //         }
+    //     },
+    //     error: function (data) {
+    //         $("#modal-form").modal("hide");
+    //         alerta("Error al intentar conectarse con el servidor", data.mensaje, "error");
+    //     }
+    // });
 });
 
 // ------- Carga modal del formulario para registrar nuevo 
@@ -45,7 +51,7 @@ var formularioRegistrar = function (id) {
                 suscribirEventos();
                 $("#btnRegistrar").show();
                 $("#btnEditar").hide();
-                $('#divDatosConsultados').hide()               
+                $('#divDatosConsultados').hide()
             }
         },
         error: function (data) {
@@ -77,12 +83,12 @@ function resultadoConsultaSimple(result) {
 var clicActualizarPost = function () {
     enviarPost("editar");
 }
-var clicRegistrarPost = function () {                
+var clicRegistrarPost = function () {
     //enviarPost("registrar");    
 }
 
 var clicBuscarDatosCo = function () {
-    datosConsultados= null;
+    datosConsultados = null;
     $.ajax({
         url: "https://www.datos.gov.co/resource/xax6-k7eu.json?codigoestablecimiento=" + $("#id_codigo").val(),
         type: "GET",
@@ -91,95 +97,97 @@ var clicBuscarDatosCo = function () {
             "$$app_token": "KLhKnhKZUVbEIcGgYN1XH8P73"
         }
     }).done(function (data) {
-        $("#divDatosConsultados").show();                
-        datosConsultados = data;                      
-        miTablaConsultada = $('#datosConsultados').dataTable({
-            sDom: '<"top">t',           
-            "sPaginationType": "bootstrap",
-            "sScrollX": "100%",
-            data: datosConsultados,
-            "columns": [                
-                {
-                    "data": function (data, type, row, meta) {
-                        return '<a class="btn btn-primary itemEditar" href="#" data-id="' + data.codigoestablecimiento + '">Seleccionar</a>';
-                    }
+        if (data.length > 0) {  // Si se encuentra un colegio
+            $("#divDatosConsultados").show();
+            datosConsultados = data;
+            codigoEstablecimiento = data[0].codigoestablecimiento;
+            $('a[href$="next"]').show();
+
+            miTablaConsultada = $('#datosConsultados').dataTable({
+                sDom: '<"top">t',
+                "sPaginationType": "bootstrap",
+                "sScrollX": "100%",
+                data: datosConsultados,
+                "columns": [                    
+                    { "data": "nombreestablecimiento" },
+                    { "data": "nombremunicipio" },
+                    {
+                        "data": function (data, type, row, meta) {
+                            if (typeof (data.nombre_rector) != 'undefined' && element != null) {
+                                return "<div>" + data.nombre_rector + "</div>";
+                            } else {
+                                return "<div>" + data.codigo_etc + "</div>";
+                            }
+                        }
+                    },
+                    { "data": "tipo_establecimiento" },
+                    { "data": "nombredepartamento" },
+                    { "data": "zona" },
+                    { "data": "direccion" },
+                    { "data": "telefono" },
+                    { "data": "etnias" },
+                    { "data": "sector" },
+                    { "data": "genero" },
+                    { "data": "niveles" },
+                    { "data": "jornadas" },
+                    { "data": "caracter" },
+                    { "data": "especialidad" },
+                    { "data": "grados" },
+                    { "data": "modelos_educativos" },
+                    { "data": "capacidades_excepcionales" },
+                    { "data": "discapacidades" },
+                    { "data": "idiomas" },
+                    { "data": "numero_de_sedes" },
+                    { "data": "estado" },
+                    { "data": "prestador_de_servicio" },
+                    { "data": "propiedad_planta_Fisica" },
+                    { "data": "resguardo" },
+                    { "data": "matricula_contratada" },
+                    { "data": "calendario" },
+                    { "data": "internado" },
+                    { "data": "estrado_socio_economico" },
+                    { "data": "correo_electronico" }
+                ],
+                columnDefs: [
+                    { width: 220, targets: 1, defaultContent: "-" },
+                    { width: 140, targets: 2, defaultContent: "-" },
+                    { width: 200, targets: 3, defaultContent: "-" },
+                    { width: 120, targets: 4, defaultContent: "-" },
+                    { width: 120, targets: 5, defaultContent: "-" },
+                    { width: 120, targets: 6, defaultContent: "-" },
+                    { width: 120, targets: 7, defaultContent: "-" },
+                    { width: 120, targets: 8, defaultContent: "-" },
+                    { width: 120, targets: 9, defaultContent: "-" },
+                    { width: 120, targets: 10, defaultContent: "-" },
+                    { width: 120, targets: 11, defaultContent: "-" },
+                    { width: 120, targets: 12, defaultContent: "-" },
+                    { width: 380, targets: 13, defaultContent: "-" },
+                    { width: 120, targets: 14, defaultContent: "-" },
+                    { width: 120, targets: 15, defaultContent: "-" },
+                    { width: 120, targets: 16, defaultContent: "-" },
+                    { width: 320, targets: 17, defaultContent: "-" },
+                    { width: 140, targets: 18, defaultContent: "-" },
+                    { width: 320, targets: 19, defaultContent: "-" },
+                    { width: 120, targets: 20, defaultContent: "-" },
+                    { width: 90, targets: 21, defaultContent: "-" },
+                    { width: 120, targets: 22, defaultContent: "-" },
+                    { width: 120, targets: 23, defaultContent: "-" },
+                    { width: 120, targets: 24, defaultContent: "-" },
+                    { width: 120, targets: 25, defaultContent: "-" },
+                    { width: 120, targets: 26, defaultContent: "-" },
+                    { width: 120, targets: 27, defaultContent: "-" },
+                    { width: 120, targets: 28, defaultContent: "-" },
+                    { width: 160, targets: 29, defaultContent: "-" }
+                ],
+                fixedColumns: {
+                    leftColumns: 3
                 },
-                { "data": "nombreestablecimiento" },
-                { "data": "nombremunicipio" },
-                {
-                    "data": function (data, type, row, meta) {
-                        if (typeof(data.nombre_rector) != 'undefined' && element != null){
-                        return  "<div>"+data.nombre_rector +"</div>";                    
-                    }else{
-                        return  "<div>"+data.codigo_etc +"</div>";
-                    }
-                    }
-                },
-                { "data": "tipo_establecimiento" },
-                { "data": "nombredepartamento" },                
-                { "data": "zona" },
-                { "data": "direccion" },
-                { "data": "telefono" },                                                
-                { "data": "etnias" },
-                { "data": "sector" },
-                { "data": "genero" },
-                { "data": "niveles" },
-                { "data": "jornadas" },
-                { "data": "caracter" },
-                { "data": "especialidad" },
-                { "data": "grados" },
-                { "data": "modelos_educativos" },
-                { "data": "capacidades_excepcionales" },
-                { "data": "discapacidades" },
-                { "data": "idiomas" },
-                { "data": "numero_de_sedes" },
-                { "data": "estado" },
-                { "data": "prestador_de_servicio" },
-                { "data": "propiedad_planta_Fisica" },
-                { "data": "resguardo" },
-                { "data": "matricula_contratada" },
-                { "data": "calendario" },
-                { "data": "internado" },
-                { "data": "estrado_socio_economico" },
-                { "data": "correo_electronico" }
-            ],                     
-            columnDefs: [
-            { width: 220, targets: 1 ,defaultContent:"-"},
-            { width: 140, targets: 2 ,defaultContent:"-"},
-            { width: 200, targets: 3 ,defaultContent:"-"},
-            { width: 120, targets: 4 ,defaultContent:"-"},
-            { width: 120, targets: 5 ,defaultContent:"-"},
-            { width: 120, targets: 6 ,defaultContent:"-"},
-            { width: 120, targets: 7 ,defaultContent:"-"},
-            { width: 120, targets: 8 ,defaultContent:"-"},
-            { width: 120, targets: 9 ,defaultContent:"-"},
-            { width: 120, targets: 10 ,defaultContent:"-"},
-            { width: 120, targets: 11 ,defaultContent:"-"},
-            { width: 120, targets: 12 ,defaultContent:"-"},
-            { width: 380, targets: 13 ,defaultContent:"-"},
-            { width: 120, targets: 14 ,defaultContent:"-"},
-            { width: 120, targets: 15 ,defaultContent:"-"},
-            { width: 120, targets: 16 ,defaultContent:"-"},
-            { width: 320, targets: 17 ,defaultContent:"-"},
-            { width: 140, targets: 18 ,defaultContent:"-"},
-            { width: 320, targets: 19 ,defaultContent:"-"},
-            { width: 120, targets: 20 ,defaultContent:"-"},
-            { width: 90, targets: 21 ,defaultContent:"-"},            
-            { width: 120, targets: 22 ,defaultContent:"-"},
-            { width: 120, targets: 23 ,defaultContent:"-"},
-            { width: 120, targets: 24 ,defaultContent:"-"},
-            { width: 120, targets: 25 ,defaultContent:"-"},
-            { width: 120, targets: 26 ,defaultContent:"-"},
-            { width: 120, targets: 27 ,defaultContent:"-"},
-            { width: 120, targets: 28 ,defaultContent:"-"},
-            { width: 160, targets: 29 ,defaultContent:"-"}            
-        ],
-        fixedColumns:   {
-            leftColumns: 3
-        },
-            "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json" }
-        });
-$.fn.dataTableExt.sErrMode = 'throw';
+                "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json" }
+            });
+            $.fn.dataTableExt.sErrMode = 'throw';
+        } else {
+            alerta("Consulta de datos oficiales", "No se encontró ningún establecimiento. Verifique el código DANE e inténtelo nuevamente", "warning");
+        }
     });
     //enviarPost("registrar");
 }
@@ -239,99 +247,110 @@ function iniciarModal() {
     validarFormulario(formulario, reglas, mensajes);
 }
 
-jQuery(document).ready(function() {
-    var tituloInicialBoton = "Registrar como establecimiento nuevo";   
-            "use strict";
+var form = null;
+jQuery(document).ready(function () {
+    var tituloInicialBoton = "Siguiente";
+    "use strict";
 
-            // Init Theme Core    
-            Core.init();
+    // Init Theme Core    
+    Core.init();
 
-            // Init Demo JS     
-            Demo.init();
+    // Init Demo JS     
+    Demo.init();
 
-            // Form Wizard 
-            var form = $("#form-wizard");
-            form.validate({
-                errorPlacement: function errorPlacement(error, element) {
-                    element.before(error);
-                },
-                rules: {
-                    confirm: {
-                        equalTo: "#password"
-                    }
-                }
-            });            
-            //  
-            form.children(".wizard").steps({
-                headerTag: ".wizard-section-title",
-                bodyTag: ".wizard-section",                                
-                onStepChanging: function(event, currentIndex, newIndex) {                   
-                       if(newIndex==0){
-                          $('a[href$="next"]').text(tituloInicialBoton);
-                       }else{
-                           $('a[href$="next"]').text("Siguiente");
-                       }
-                   
-                    form.validate().settings.ignore = ":disabled,:hidden";
-                    return form.valid();
-                },
-                onFinishing: function(event, currentIndex) {
-                    form.validate().settings.ignore = ":disabled";
-                    return form.valid();
-                },
-                onFinished: function(event, currentIndex) {
-                    alert("Submitted!");
-                }
-            });
-
-            // Demo Wizard Functionality
-            var formWizard = $('.wizard');
-            var formSteps = formWizard.find('.steps');
-            // Boton al inicializar el wirzard
-            $('a[href$="next"]').text(tituloInicialBoton);
-            $('a[href$="previous"]').text("Anterior");
-            $('a[href$="finish"]').text("Finalizar");
-
-            $('.wizard-options .holder-style').on('click', function(e) {
-                e.preventDefault();
-
-                var stepStyle = $(this).data('steps-style');
-
-                var stepRight = $('.holder-style[data-steps-style="steps-right"');
-                var stepLeft = $('.holder-style[data-steps-style="steps-left"');
-                var stepJustified = $('.holder-style[data-steps-style="steps-justified"');
-
-                if (stepStyle === "steps-left") {
-                    stepRight.removeClass('holder-active');
-                    stepJustified.removeClass('holder-active');
-                    formWizard.removeClass('steps-right steps-justified');
-                }
-                if (stepStyle === "steps-right") {
-                    stepLeft.removeClass('holder-active');
-                    stepJustified.removeClass('holder-active');
-                    formWizard.removeClass('steps-left steps-justified');
-                }
-                if (stepStyle === "steps-justified") {
-                    stepLeft.removeClass('holder-active');
-                    stepRight.removeClass('holder-active');
-                    formWizard.removeClass('steps-left steps-right');
-                }
-
-                // Assign new style 
-                if ($(this).hasClass('holder-active')) {
-                    formWizard.removeClass(stepStyle);
+    // Form Wizard 
+    form = $("#form-wizard");
+    form.validate({
+        errorPlacement: function errorPlacement(error, element) {
+            element.before(error);
+        },
+        rules: {
+            confirm: {
+                equalTo: "#password"
+            }
+        }
+    });
+    //  
+    form.children(".wizard").steps({
+        headerTag: ".wizard-section-title",
+        bodyTag: ".wizard-section",
+        onStepChanging: function (event, currentIndex, newIndex) {
+            if (newIndex == 0) {
+                $('a[href$="previous"]').hide();
+                if (datosConsultados == null) {
+                    $('a[href$="next"]').hide();
                 } else {
-                    formWizard.addClass(stepStyle);
+                    $('a[href$="next"]').show();
                 }
-// formWizard.find(".actions a:eq(1)").text("Next Oneee")
+                //   $('a[href$="next"]').text(tituloInicialBoton);
+            } else {
+                $('a[href$="previous"]').show();
+                $('a[href$="next"]').text("Siguiente");
+            }
 
-                // Assign new active holder
-                $(this).toggleClass('holder-active');
-            });
+            form.validate().settings.ignore = ":disabled,:hidden";
+            return form.valid();
+        },
+        onFinishing: function (event, currentIndex) {
+            form.validate().settings.ignore = ":disabled";
+            return form.valid();
+        },
+        onFinished: function (event, currentIndex) {
+            alert("Submitted!");
+        }
+    });
+
+    // Demo Wizard Functionality
+    var formWizard = $('.wizard');
+    var formSteps = formWizard.find('.steps');
+    //---------------------------------------
+    // Boton al inicializar el wirzard
+    $('a[href$="next"]').text(tituloInicialBoton);
+    $('a[href$="previous"]').text("Anterior");
+    $('a[href$="finish"]').text("Finalizar");
+    $('a[href$="next"]').hide();
+    $('a[href$="previous"]').hide();
+
+    $('.wizard-options .holder-style').on('click', function (e) {
+        e.preventDefault();
+
+        var stepStyle = $(this).data('steps-style');
+
+        var stepRight = $('.holder-style[data-steps-style="steps-right"');
+        var stepLeft = $('.holder-style[data-steps-style="steps-left"');
+        var stepJustified = $('.holder-style[data-steps-style="steps-justified"');
+
+        if (stepStyle === "steps-left") {
+            stepRight.removeClass('holder-active');
+            stepJustified.removeClass('holder-active');
+            formWizard.removeClass('steps-right steps-justified');
+        }
+        if (stepStyle === "steps-right") {
+            stepLeft.removeClass('holder-active');
+            stepJustified.removeClass('holder-active');
+            formWizard.removeClass('steps-left steps-justified');
+        }
+        if (stepStyle === "steps-justified") {
+            stepLeft.removeClass('holder-active');
+            stepRight.removeClass('holder-active');
+            formWizard.removeClass('steps-left steps-right');
+        }
+
+        // Assign new style 
+        if ($(this).hasClass('holder-active')) {
+            formWizard.removeClass(stepStyle);
+        } else {
+            formWizard.addClass(stepStyle);
+        }
+        // formWizard.find(".actions a:eq(1)").text("Next Oneee")
+
+        // Assign new active holder
+        $(this).toggleClass('holder-active');
+    });
 
 
-        });
-    
+});
+
 
 // ---- Activacion de filtros de la tabla
 $('#estregistro').change(function (e) { datos(); });
