@@ -129,7 +129,7 @@ function datos() {
         "columns": [
             {
                 "data": function (data, type, row, meta) {
-                    return '<a class="btn btn-primary itemEditar" href="#" data-id="' + data.pk + '"><i class="fa fa-pencil"></i></a>';
+                    return '<a class="btn btn-xs  btn-primary itemEditar" href="#" data-id="' + data.pk + '"><i class="fa fa-pencil"></i></a>';
                 }
             },
             { "data": "fields.codigo" },

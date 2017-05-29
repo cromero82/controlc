@@ -335,6 +335,12 @@ def consulta_configuracion(request):
         if request.POST["tipoConsulta"] == 'codigoDepartamento':
             datos = get_object_or_404(Departamento, pk=request.POST["dato"])
             data['datos'] = {'misDatos': datos.codigo}
+        elif request.POST["tipoConsulta"] == 'getCodigoMunicipio':
+            codCompletoMun = request.POST["dato"]
+            datos = Municipios.objects.filter( departamento__codigo = codCompletoMun[0:2], codigo = codCompletoMun[2:5])            
+            # problema devolver listas de datos (queryset) https://stackoverflow.com/questions/30243101/return-queryset-as-json
+            # data['datos'] = {'misDatos': list(datos)}
+            data['datos'] = {'misDatos': datos[0].id}            
         elif request.POST["tipoConsulta"] == 'otra cosa':
             datos = get_object_or_404(Departamento, pk=request.POST["dato"])
     except Exception, err:
@@ -345,6 +351,26 @@ def consulta_configuracion(request):
 # ---------
 # Administracion de Municipio
 
+@login_required(login_url='/accounts/login/')
+def getMunicipio(request, nombreMunicipio):
+    datos = Municipios.objects.filter(
+            codigo=nombreMunicipio
+    )
+       
+    json = serializers.serialize(
+        'json', datos,  use_natural_foreign_keys=True)
+    return HttpResponse(json, content_type='application/json')
+    # if request.method == 'POST':
+    #     municipio = get_object_or_404(Municipios, nombre=nombreMunicipio.upper())
+    #     form = MunicipioForm(
+    #         request.POST,  request.FILES or None, instance=municipio)
+    #     data = ejecucionAdminDataBase(
+    #         form, request, "Edicion municipio", request.POST['nombre'])
+    #     return JsonResponse(data)
+    # else:
+    #     municipio = get_object_or_404(Municipios, pk=id)
+    #     form = MunicipioForm(instance=municipio)
+    #     return JsonResponse(formularioAdmin(form, "formMunicipio.html", "Edicion de municipio", request))
 
 @login_required(login_url='/accounts/login/')
 def formularioEditarMunicipio(request, id):

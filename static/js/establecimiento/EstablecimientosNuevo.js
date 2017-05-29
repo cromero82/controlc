@@ -7,33 +7,8 @@ var codigoEstablecimiento = null;
 $('#divDatosConsultados').hide()
 // ------- Carga modal del formulario para actualizar existente
 //$("#divLista").on("click", ".itemEditar", function (e) {
-$("#divDatosConsultados").on("click", ".itemEditar", function (e) {
-    debugger;
-    // form.next(0)
-    //form.steps.next
+$("#divDatosConsultados").on("click", ".itemEditar", function (e) {   
     form.steps("setStep", 1);
-    // e.preventDefault();
-    // var id = $(this).data('id');
-    // $.ajax({
-    //     url: "/" + modulo + "/editar" + admin + "/" + id,  // <-- AND HERE
-    //     type: 'get',
-    //     dataType: 'json',
-    //     beforeSend: function () {
-    //         $("#modal-form").modal("show");
-    //     },
-    //     success: function (data) {
-    //         if (data.transaccion) {
-    //             mostrarModal(data.html_form, data.titulo, "normal")
-    //             $("#btnRegistrar").hide();
-    //             $("#btnEditar").show();
-    //             $('#estregistro option[value="' + $("#hdEstregistro").val() + '"]').attr('selected', true);
-    //         }
-    //     },
-    //     error: function (data) {
-    //         $("#modal-form").modal("hide");
-    //         alerta("Error al intentar conectarse con el servidor", data.mensaje, "error");
-    //     }
-    // });
 });
 
 // ------- Carga modal del formulario para registrar nuevo 
@@ -69,9 +44,8 @@ var suscribirEventos = function () {
 
 // ------- Resultado de consulta JSON al servidor
 function resultadoConsultaSimple(result) {
-    if (result.transaccion) {
-        $("#codigoDepartamento").html(" Código departamento: <code>" + result.datos.misDatos + "</code>");
-        $("#codigoDepartamento").show();
+    if (result.transaccion) {    
+        $("#id_municipio").val(result.datos.misDatos);   
     }
     else {
         alerta("Error al intentar consultar código de departamento", result.mensaje, "error");
@@ -102,6 +76,14 @@ var clicBuscarDatosCo = function () {
             datosConsultados = data;
             codigoEstablecimiento = data[0].codigoestablecimiento;
             $('a[href$="next"]').show();
+            //--- Asignación de datos del establecimiento provenientes de datos.gov.co            
+            $("#id_nombre").val(datosConsultados[0].nombreestablecimiento);
+            $("#id_direccion").val(datosConsultados[0].direccion);
+            $("#id_telefono").val(datosConsultados[0].telefono);
+            $("#id_correoelectronico").val(datosConsultados[0].correo_electronico);
+            $("#id_nombreRector").val(datosConsultados[0].codigo_etc);
+            
+            consultaModulo('configuracion','getCodigoMunicipio',datosConsultados[0].codigomunicipio);
 
             miTablaConsultada = $('#datosConsultados').dataTable({
                 sDom: '<"top">t',
@@ -359,6 +341,8 @@ $("#nombre").on("keydown", function (event) {
     if (event.which == 13)
         datos();
 });
+
+
 
 
 

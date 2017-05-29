@@ -133,7 +133,7 @@ function datos() {
             { "data": "fields.correoelectronico" },            
             {
                 "data": function (data, type, row, meta) {
-                    return '<a class="btn btn-primary itemEditar m-2" title="Editar persona" href="#" data-id="' + data.pk + '"><span class="fa fa-pencil"></span></a> <a class="btn btn-danger itemEliminar" title="Eliminar persona" href="#" data-id="' + data.pk + '"><span class="glyphicons glyphicons-remove_2"></span></a>';
+                    return '<a class="btn btn-xs btn-primary itemEditar m-2" title="Editar persona" href="#" data-id="' + data.pk + '"><span class="fa fa-pencil"></span></a> <a class="btn btn-xs  btn-danger itemEliminar" title="Eliminar persona" href="#" data-id="' + data.pk + '"><span class="glyphicons glyphicons-remove_2"></span></a>';
                 }
             }
         ],

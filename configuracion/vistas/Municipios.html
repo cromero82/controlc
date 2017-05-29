@@ -12,9 +12,7 @@
 </li>
 <li class="crumb-trail"> Municipios</li>
 {% endblock %} {% block panelMigaPan %}
-<a class="btn btn-default btn-sm light fw600 ml10" onclick="formularioRegistrar()" title="Nueva persona">
-    <span class="fa fa-plus pr5"></span> Nueva</a>
-{% endblock %} {% block subContenidoIzquierda %}
+ {% endblock %} {% block subContenidoIzquierda %}
 <div class="animated-delay p20" data-animate='["300","fadeIn"]'>
     <h4 class="mt5 mb20"> Municipios - <span class="fs14 fw400 text-muted"> 
         Registro de todas las ciudades (municipios) del pais.</span></h4>
@@ -33,7 +31,7 @@
             <a href="#p0">
                 <span class="imoon imoon-user3"></span> Registrar departamentos</a>
         </li>
-    </ul>    
+    </ul>
 </div>
 
 {% endblock %} {% block contenido %}
@@ -42,7 +40,13 @@
         <div class="panel panel-visible" id="spy2">
             <div class="panel-heading">
                 <div class="panel-title hidden-xs">
-                    <span class="glyphicon glyphicon-tasks"></span>Ciudades o municipios de Colombia</div>
+                    <span class="glyphicon glyphicon-tasks"></span>Ciudades o municipios de Colombia
+                    <div class="alineacionVertical pull-right">
+                        <a class="btn btn-success btn-sm light fw600 ml10 "onclick="formularioRegistrar()"
+                            title="Nuevo establecimiento">
+                    <span class="fa fa-plus pr5"></span> Nuevo</a>
+                    </div>
+                </div>
             </div>
             <div class="dt-panelmenu clearfix">
                 <div id="dataTables_filter" class="dataTables_filter" style="float:left;">
@@ -68,8 +72,8 @@
                     <table class="table table-striped table-hover dataTable no-footer" id="postsTable" describedby="datatable_info" cellspacing="0"
                         width="100%">
                         <thead>
-                            <tr> 
-                                <th>Código</th>                              
+                            <tr>
+                                <th>Código</th>
                                 <th>Municipio</th>
                                 <th>Departamento</th>
                                 <th>Estado</th>

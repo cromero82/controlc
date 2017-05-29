@@ -1,6 +1,4 @@
-{% extends 'basePlantillaWide.html' %} {% block migaPan %}
-
-{% load widget_tweaks %}
+{% extends 'basePlantillaWide.html' %} {% block migaPan %} {% load widget_tweaks %}
 
 <li class="crumb-active">
   <a href="dashboard.html">Dashboard</a>
@@ -32,35 +30,34 @@
         <div class="admin-form">
 
           <form method="post" action="/" id="form-wizard">
+          {% csrf_token %}
             <div class="wizard  steps-bg steps-tabs steps-justified steps-show-icons">
 
               <!-- Wizard step 1 -->
-              <h4 class="wizard-section-title"><i class="glyphicons glyphicons-cloud-download pr5"></i> Importar datos</h4>
+              <h4 class="wizard-section-title">1.  Importar datos <i class="glyphicons glyphicons-cloud-download pr5"></i></h4>
               <section class="wizard-section">
 
                 <div class="section">
-                  <div class="alert alert-success">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+
+                  <div class="alert alert-default light alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <strong>Proceso de Importar datos. </strong> Favor ingrese el <strong>código del establecimiento </strong>                    y haga clic en el botón <strong>buscar</strong> para consultar datos del establecimiento. Esta información
                     proviene del sitio oficial <a href="https://www.datos.gov.co/">https://www.datos.gov.co/</a> y fue registrada
                     por la secretaría local y demás entes que supervisan y controlan el tema administrativo de establecimientos
                     oficiales y no oficiales en Colombia.
-                  </div>
+                            </div>                 
 
-
-                  <div class="section row alineacionVertical ">
-                    <label class=" col-md-2 field  text-left ">
-                                                    Código DANE
+                  <div class="panel-body form-horizontal">
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label">Código DANE</label>
+                      <div class="col-lg-3">
+                        <label class="field select">
+                                                    {{ form.codigo  | add_class:'gui-input' }}                                                                                                            
                                                 </label>
-                    <div class="col-md-3 ">
-                      <label class="field select">
-                                                    {{ form.codigo  | add_class:'gui-input' }}                                                        
-                                                    
-                                                </label>
-                      
-                    </div>
-                    <div class="col-md-3 ">
-                      <button type="button" id="btnRegistrar" onclick="clicBuscarDatosCo()" class="btn btn-primary">Buscar Datos</button>
+                      </div>
+                      <div class="col-md-3 ">
+                        <button type="button" id="btnRegistrar" onclick="clicBuscarDatosCo()" class="btn btn-primary">Buscar Datos</button>
+                      </div>
                     </div>
                   </div>
 
@@ -110,68 +107,85 @@
                   <!-- end .smart-widget section -->
                 </div>
                 <!-- end section -->
-               
+
               </section>
 
               <!-- Wizard step 2 -->
-              <h4 class="wizard-section-title"><i class="fa fa-dollar pr5"></i> Datos generales</h4>
+              <h4 class="wizard-section-title">2. Datos generales <i class="glyphicon glyphicon-home pr5"></i></h4>
               <section class="wizard-section">
 
 
                 <div class="section">
-                  
-                          <div class="panel-body form-horizontal">
-                                <form class="form-horizontal" role="form">
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">Static Field</label>
-                                        <div class="col-lg-8">
-                                            <p class="form-control-static text-muted">email@example.com</p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputStandard" class="col-lg-3 control-label">Standard</label>
-                                        <div class="col-lg-8">
-                                            <input type="text" id="inputStandard" class="form-control" placeholder="Type Here...">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputPassword" class="col-lg-3 control-label">Password</label>
-                                        <div class="col-lg-8">
-                                            <input type="text" class="form-control" id="inputPassword" placeholder="Password">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="disabledInput" class="col-lg-3 control-label">Disabled</label>
-                                        <div class="col-lg-8">
-                                            <input class="form-control" id="disabledInput" type="text" placeholder="A Disabled Form" disabled="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label" for="textArea1">Text Area Expand</label>
-                                        <div class="col-lg-8">
-                                            <textarea class="form-control textarea-grow" id="textArea1" rows="4"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label" for="textArea2">Text Area</label>
-                                        <div class="col-lg-8">
-                                            <textarea class="form-control" id="textArea2" rows="3"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label" for="textArea3">Disabled Text Area</label>
-                                        <div class="col-lg-8">
-                                            <textarea class="form-control" id="textArea3" rows="3" disabled=""></textarea>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-              
 
-                
+                  <div class="panel-body form-horizontal">
+                    <form class="form-horizontal" role="form">                     
+                      <div class="form-group">
+                        {% comment %}<label for="inputStandard" class="col-lg-3 control-label">Standard</label>{% endcomment %}
+                        <label class=" col-md-3 control-label">{{ form.nombre.label  }}</label>
+                        <div class="col-lg-8">
+                           {{ form.nombre  | add_class:'gui-input' }}    
+                        </div>
+                      </div>
+                      <div class="form-group">                        
+                        <label class=" col-md-3 control-label">{{ form.direccion.label  }}</label>
+                        <div class="col-lg-8">
+                           {{ form.direccion  | add_class:'gui-input' }}    
+                        </div>
+                      </div>
+                      <div class="form-group">                        
+                        <label class=" col-md-3 control-label">{{ form.telefono.label  }}</label>
+                        <div class="col-lg-8">
+                           {{ form.telefono  | add_class:'gui-input' }}    
+                        </div>
+                      </div>
+                      <div class="form-group">                        
+                        <label class=" col-md-3 control-label">{{ form.correoelectronico.label  }}</label>
+                        <div class="col-lg-8">
+                           {{ form.correoelectronico  | add_class:'gui-input' }}    
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">                        
+                        <label class=" col-md-3 control-label">{{ form.nombreRector.label  }}</label>
+                        <div class="col-lg-8">
+                           {{ form.nombreRector  | add_class:'gui-input' }}    
+                        </div>
+                      </div>
+
+                      <div class="form-group">                        
+                        <label class=" col-md-3 control-label">{{ form.municipio.label  }}</label>
+                        <div class="col-lg-8">
+                           {{ form.municipio  | add_class:'gui-input' }}    
+                        </div>
+                      </div>
+                      <div class="form-group">                        
+                        <label class=" col-md-3 control-label">{{ form.numsedes.label  }}</label>
+                        <div class="col-lg-8">
+                           {{ form.numsedes  | add_class:'gui-input' }}    
+                        </div>
+                      </div>
+                      
+
+                      <div class="form-group">
+                        <label class="col-lg-3 control-label" for="textArea2">Text Area</label>
+                        <div class="col-lg-8">
+                          <textarea class="form-control" id="textArea2" rows="3"></textarea>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-lg-3 control-label" for="textArea3">Disabled Text Area</label>
+                        <div class="col-lg-8">
+                          <textarea class="form-control" id="textArea3" rows="3" disabled=""></textarea>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
 
 
-                
+
+
+
+
                 </div>
                 <!-- end section -->
 
@@ -187,7 +201,7 @@
               </section>
 
               <!-- Wizard step 3 -->
-              <h4 class="wizard-section-title"><i class="fa fa-shopping-cart pr5"></i> Checkout</h4>
+              <h4 class="wizard-section-title">3. Documentación <i class="glyphicons glyphicons-suitcase pr5"></i></h4>
               <section class="wizard-section">
 
                 <div class="section">

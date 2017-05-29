@@ -90,6 +90,7 @@ urlpatterns = [
     url(r'^configuracion/MunicipioJson/$', viewConf.MunicipiosJson),
     url(r'^configuracion/editarMunicipio/(?P<id>[0-9]+)/$', viewConf.formularioEditarMunicipio),
     url(r'^configuracion/registrarMunicipio/$', viewConf.formularioRegistrarMunicipio),
+    url(r'^configuracion/getCodigoMunicipio/(?P<nombreMunicipio>[0-9]+)/$', viewConf.getMunicipio),
     # ---------
     # Administracion de tipos relaciones familiares
     url(r'^configuracion/Personas/$', viewConf.Personas),
