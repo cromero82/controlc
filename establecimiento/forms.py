@@ -11,6 +11,6 @@ class EstablecimientoForm(forms.ModelForm):
         labels = {'nombre': _('Nombre establecimiento educativo'), 
         'codigo': _('Codigo DANE'), 'direccion': _('Direccion'),
         'telefono': _('Telefono'), 'correoelectronico': _('Correo electronico'),
-        'nombreRector': _('Nombre del rector'), 'municipio': _('Municipiio / Ciudad'),
+        'nombreRector': _('Nombre del rector'), 'municipio': _('Municipio / Ciudad'),
         'numsedes': _('Numero de sedes')
         }

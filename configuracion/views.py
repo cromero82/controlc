@@ -16,10 +16,11 @@ from datetime import datetime
 # from models import Persona
 from models import Tdocumento, TRelacionFamiliar
 from models import Departamento, Persona, Municipios, Metodologia, Especialidad, Tjornada 
-from models import Tcaracter, TfuenteRecursos
+from models import Tcaracter, TfuenteRecursos, Niveles, Grados
 # Importando Forms
 from forms import DepartamentoForm, PersonaForm, MunicipioForm, MetodologiaForm
-from forms import EspecialidadForm, TjornadaForm, TcaracterForm, TfuenteRecursosForm
+from forms import EspecialidadForm, TjornadaForm, TcaracterForm, TfuenteRecursosForm, NivelesForm
+from forms import GradosForm
 import sys
 import miUtils
 from miUtils import ejecucionAdminDataBaseVal
@@ -27,6 +28,103 @@ from miUtils import ejecucionAdminDataBase, formularioAdmin, remove_accents
 from django.contrib import messages
 from django.http import JsonResponse
 from django.template.context_processors import csrf
+
+# ----------------------------------------------
+# Administracion de Tipos de fuentes de recursos
+
+@login_required(login_url='/accounts/login/')
+def formularioEditarGrados(request, id):
+    if request.method == 'POST':
+        datos = get_object_or_404(Grados, pk=id)
+        form = GradosForm(
+            request.POST,  request.FILES or None, instance=datos)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Edicion grado", request.POST['nombre'], "formGrados.html")
+        return JsonResponse(data)
+    else:
+        datos = get_object_or_404(Grados, pk=id)
+        form = GradosForm(instance=datos)
+        return JsonResponse(formularioAdmin(form, "formGrados.html", "Edicion de grado", request))
+
+@login_required(login_url='/accounts/login/')
+def formularioRegistrarGrados(request):
+    if request.method == 'POST':
+        form = GradosForm(request.POST, request.FILES or None)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Registrar grado", request.POST['nombre'], "formGrados.html")
+        return JsonResponse(data)
+    else:
+        form = GradosForm()
+        return JsonResponse(formularioAdmin(form, "formGrados.html", "Registre datos de grado", request))
+
+@login_required(login_url='/accounts/login/')
+def GradosJson(request):
+    if request.GET['nombre'] != '':
+        lista_datos = Grados.objects.filter(
+            estregistro=request.GET['estregistro'],
+            nombre__contains=remove_accents(request.GET['nombre'].upper())
+        ).order_by('codigo')
+    else:
+        lista_datos = Grados.objects.filter(
+            estregistro=request.GET['estregistro']
+        ).order_by('codigo')
+    json = serializers.serialize('json', lista_datos, use_natural_foreign_keys=True)
+    return HttpResponse(json, content_type='application/json')
+
+
+@login_required(login_url='/accounts/login/')
+def indexGrados(request):
+    return render(request, 'Grados.html', context={'datos': ''})
+
+
+
+# ----------------------------------------------
+# Administracion de Tipos de fuentes de recursos
+
+@login_required(login_url='/accounts/login/')
+def formularioEditarNiveles(request, id):
+    if request.method == 'POST':
+        datos = get_object_or_404(Niveles, pk=id)
+        form = NivelesForm(
+            request.POST,  request.FILES or None, instance=datos)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Edicion nivel academico", request.POST['nombre'], "formNiveles.html")
+        return JsonResponse(data)
+    else:
+        datos = get_object_or_404(Niveles, pk=id)
+        form = NivelesForm(instance=datos)
+        return JsonResponse(formularioAdmin(form, "formNiveles.html", "Edicion de nivel academico", request))
+
+@login_required(login_url='/accounts/login/')
+def formularioRegistrarNiveles(request):
+    if request.method == 'POST':
+        form = NivelesForm(request.POST, request.FILES or None)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Registrar nivel academico", request.POST['nombre'], "formNiveles.html")
+        return JsonResponse(data)
+    else:
+        form = NivelesForm()
+        return JsonResponse(formularioAdmin(form, "formNiveles.html", "Registre datos de nivel academico", request))
+
+@login_required(login_url='/accounts/login/')
+def NivelesJson(request):
+    if request.GET['nombre'] != '':
+        lista_datos = Niveles.objects.filter(
+            estregistro=request.GET['estregistro'],
+            nombre__contains=remove_accents(request.GET['nombre'].upper())
+        ).order_by('codigo')
+    else:
+        lista_datos = Niveles.objects.filter(
+            estregistro=request.GET['estregistro']
+        ).order_by('codigo')
+    json = serializers.serialize(
+        'json', lista_datos,  use_natural_foreign_keys=True)
+    return HttpResponse(json, content_type='application/json')
+
+
+@login_required(login_url='/accounts/login/')
+def indexNiveles(request):
+    return render(request, 'Niveles.html', context={'datos': ''})
 
 # ----------------------------------------------
 # Administracion de Tipos de fuentes de recursos
@@ -45,7 +143,6 @@ def formularioEditarTfuenteRecursos(request, id):
         form = TfuenteRecursosForm(instance=tcaracter)
         return JsonResponse(formularioAdmin(form, "formTfuenteRecursos.html", "Edicion de tipo de caracter", request))
 
-
 @login_required(login_url='/accounts/login/')
 def formularioRegistrarTfuenteRecursos(request):
     if request.method == 'POST':
@@ -56,7 +153,6 @@ def formularioRegistrarTfuenteRecursos(request):
     else:
         form = TfuenteRecursosForm()
         return JsonResponse(formularioAdmin(form, "formTfuenteRecursos.html", "Registre datos de tipo de caracter", request))
-
 
 @login_required(login_url='/accounts/login/')
 def TfuenteRecursosJson(request):
@@ -77,7 +173,6 @@ def TfuenteRecursosJson(request):
 @login_required(login_url='/accounts/login/')
 def indexTfuenteRecursos(request):
     return render(request, 'TfuenteRecursos.html', context={'datos': ''})
-
 
 # ----------------------------------------------
 # Administracion de Tipos de caracter ( realmente son 3 registros)
@@ -553,8 +648,6 @@ def departamentos(request):
 
 # ---------
 # Administracion de tipos relaciones familiares
-
-
 def nuevorelacionesFamiliaresPost(request):
     data = dict()
     data['transaccion'] = True

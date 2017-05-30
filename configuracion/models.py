@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from decimal import Decimal
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 my_default_errors = {
@@ -9,6 +10,28 @@ my_default_errors = {
     'invalid': 'El valor ingresado no es valido',
     'unique':"Ya se encuentra registrado en el sistema."
 }
+
+class Niveles(models.Model):    
+    codigo = models.CharField(max_length=2, blank=False,  unique=True, error_messages=my_default_errors)
+    nombre = models.CharField(max_length=200, blank=False, unique=True, error_messages=my_default_errors)
+    estregistro = models.IntegerField(default=1, blank=False)
+    class Meta:
+        default_related_name = 'Niveles'
+    def __unicode__(self):  
+        return self.nombre
+    def natural_key(self):
+        return self.nombre
+
+class Grados(models.Model):
+    nivel = models.ForeignKey(Niveles, related_query_name='Niveles')
+    codigo = models.IntegerField( blank=False,  unique=True, validators=[MinValueValidator(-3),
+                                       MaxValueValidator(100)], error_messages=my_default_errors)
+    nombre = models.CharField(max_length=200, blank=False, unique=True, error_messages=my_default_errors)
+    estregistro = models.IntegerField(default=1, blank=False)
+    class Meta:
+        default_related_name = 'Grados'
+    def __unicode__(self):  
+        return self.nombre  
 
 class TfuenteRecursos(models.Model):
     codigo = models.CharField(max_length=2, blank=False,  unique=True, error_messages=my_default_errors)

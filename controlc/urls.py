@@ -40,12 +40,26 @@ urlpatterns = [
     url(r'^cerrar/$', viewConf.cerrar, name='cerrar'),
     url(r'^ingresar/$', viewConf.ingresar, name='ingresar'),
 
-        # ---------
+    # ---------
     # Parametricas Tipo de jornadas impartidas
     url(r'^configuracion/TfuenteRecursos/$', viewConf.indexTfuenteRecursos),
     url(r'^configuracion/TfuenteRecursosJson/$', viewConf.TfuenteRecursosJson),
     url(r'^configuracion/editarTfuenteRecursos/(?P<id>[0-9]+)/$', viewConf.formularioEditarTfuenteRecursos),
     url(r'^configuracion/registrarTfuenteRecursos/$', viewConf.formularioRegistrarTfuenteRecursos),
+
+    # ---------
+    # Parametricas Niveles educativos
+    url(r'^configuracion/Niveles/$', viewConf.indexNiveles),
+    url(r'^configuracion/NivelesJson/$', viewConf.NivelesJson),
+    url(r'^configuracion/editarNiveles/(?P<id>[0-9]+)/$', viewConf.formularioEditarNiveles),
+    url(r'^configuracion/registrarNiveles/$', viewConf.formularioRegistrarNiveles),
+
+    # ---------
+    # Parametricas Grados
+    url(r'^configuracion/Grados/$', viewConf.indexGrados),
+    url(r'^configuracion/GradosJson/$', viewConf.GradosJson),
+    url(r'^configuracion/editarGrados/(?P<id>[0-9]+)/$', viewConf.formularioEditarGrados),
+    url(r'^configuracion/registrarGrados/$', viewConf.formularioRegistrarGrados),
 
     # ---------
     # Parametricas Tipo de jornadas impartidas
