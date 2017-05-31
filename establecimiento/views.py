@@ -30,10 +30,10 @@ def formularioRapidoEstablecimiento(request):
     form = EstablecimientoForm()
     return render(request, 'formRapidoEstablecimiento.html', context = {'form': form})
 
-@login_required(login_url='/accounts/login/')
+
 def formularioNuevoEstablecimientos(request):
     form = EstablecimientoForm()
-    return render(request, 'formNuevoEstablecimiento.html', context = {'form': form})
+    return render(request, 'formModoRegistroEstablecimiento.html', context = {'form': form})
 
 @login_required(login_url='/accounts/login/')
 def formularioEditarEstablecimiento(request, id):

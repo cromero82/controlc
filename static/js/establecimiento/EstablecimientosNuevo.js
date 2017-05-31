@@ -1,7 +1,7 @@
 
 var modulo = "establecimiento";
 var admin = "Establecimientos";
-var formulario = "formEstablecimiento"
+var formulario = "form-wizard"
 var datosConsultados = null;
 var codigoEstablecimiento = null;
 $('#divDatosConsultados').hide()
@@ -76,7 +76,8 @@ var clicBuscarDatosCo = function () {
             datosConsultados = data;
             codigoEstablecimiento = data[0].codigoestablecimiento;
             $('a[href$="next"]').show();
-            //--- Asignación de datos del establecimiento provenientes de datos.gov.co            
+            //--- Asignación de datos del establecimiento provenientes de datos.gov.co 
+            //$("#id_codigoestablecimiento").val(datosConsultados[0].codigoestablecimiento);           
             $("#id_nombre").val(datosConsultados[0].nombreestablecimiento);
             $("#id_direccion").val(datosConsultados[0].direccion);
             $("#id_telefono").val(datosConsultados[0].telefono);
@@ -181,7 +182,7 @@ var enviarPost = function (accion) {
     if (accion == "editar") {
         url = "/" + modulo + "/" + accion + admin + "/" + $("#id").val() + "/";
     } else {
-        url = "/" + modulo + "/" + accion + admin + "/";
+        url = "/" + modulo + "/RegistrarRapidoEstablecimiento/";
     }
     if ($("#" + formulario).valid()) {
         $("#" + formulario).attr("action", url);
@@ -193,8 +194,8 @@ var enviarPost = function (accion) {
             dataType: 'json',
             success: function (data) {
                 if (data.transaccion) {
-                    miTabla.fnReloadAjax(null, null, true);
-                    $("#modal-form").modal("hide");
+                    // miTabla.fnReloadAjax(null, null, true);
+                    // $("#modal-form").modal("hide");
                     alerta("Confirmando transacción", data.mensaje, "success");
                 }
                 else {
@@ -257,6 +258,7 @@ jQuery(document).ready(function () {
         headerTag: ".wizard-section-title",
         bodyTag: ".wizard-section",
         onStepChanging: function (event, currentIndex, newIndex) {
+            // Gestión del boton siguiente y atras (Se deshabilita para la primera parte del paso a paso)
             if (newIndex == 0) {
                 $('a[href$="previous"]').hide();
                 if (datosConsultados == null) {
@@ -265,10 +267,15 @@ jQuery(document).ready(function () {
                     $('a[href$="next"]').show();
                 }
                 //   $('a[href$="next"]').text(tituloInicialBoton);
-            } else {
+            } else {                
                 $('a[href$="previous"]').show();
                 $('a[href$="next"]').text("Siguiente");
-            }
+                // Si se realiza clic en boton "siguiente" de datos generales. entonces se registra
+                // o actualiza el establecimiento
+                if(currentIndex==1 && newIndex == 2){
+                    enviarPost("registrar");
+                }
+            }            
 
             form.validate().settings.ignore = ":disabled,:hidden";
             return form.valid();

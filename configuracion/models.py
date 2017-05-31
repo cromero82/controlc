@@ -138,5 +138,7 @@ class Municipios(models.Model):
     departamento = models.ForeignKey(Departamento, related_query_name='Departamento')
     def __unicode__(self):  # __unicode__ en Python 2
         return self.nombre
+    def natural_key(self):
+        return self.nombre
     class Meta:
         unique_together = (('codigo', 'departamento'))

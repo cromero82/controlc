@@ -13,13 +13,14 @@ class Establecimientos (models.Model):
     direccion = models.CharField(max_length=100, blank=True, verbose_name='Direccion')
     telefono = models.CharField(max_length=50, blank=True, verbose_name='Telefono')
     fechafundacion = models.DateField(verbose_name='Fecha de fundacion', blank=False, default=date.today)
-    numsedes = models.IntegerField(default=1, blank=False)
+    numsedes = models.IntegerField(default=1, blank=True)
     tieneMatriculaContrada = models.CharField(max_length=1, choices=(('S', 'Si'), ('N', 'No')), verbose_name='tiene matricula contratada', blank=True)
     #caracter    
     #tipoPropietario #OFICIAL, PERSONA NATURAL (FALTA TIPO DE PRESTADOR DE SERVICIO)
     correoelectronico = models.EmailField(unique=True, verbose_name='Correo electronico', blank=True)
     # calendario # A - B - OTRO
     municipio = models.ForeignKey(Municipios, related_query_name='Municipio', default= 1)
+    escudo = models.ImageField(upload_to='institucional/', default='institucional/escudo_defecto2.png', blank=False)
     estregistro = models.IntegerField(default=1, blank=False)
     def __unicode__(self):  # __unicode__ en Python 2
         return self.nombre 

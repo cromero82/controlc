@@ -118,12 +118,14 @@
                 <div class="section">
 
                   <div class="panel-body form-horizontal">
-                    <form class="form-horizontal" role="form">                     
+                    <form class="form-horizontal" role="form">                         
+
                       <div class="form-group">
-                        {% comment %}<label for="inputStandard" class="col-lg-3 control-label">Standard</label>{% endcomment %}
                         <label class=" col-md-3 control-label">{{ form.nombre.label  }}</label>
                         <div class="col-lg-8">
                            {{ form.nombre  | add_class:'gui-input' }}    
+                            {{ form.nombre.errors }}
+                            {% comment %}NO FUNCIONO - SEGUIR INVENSTIGANDO{% endcomment %}
                         </div>
                       </div>
                       <div class="form-group">                        
@@ -158,26 +160,30 @@
                            {{ form.municipio  | add_class:'gui-input' }}    
                         </div>
                       </div>
-                      <div class="form-group">                        
-                        <label class=" col-md-3 control-label">{{ form.numsedes.label  }}</label>
-                        <div class="col-lg-8">
-                           {{ form.numsedes  | add_class:'gui-input' }}    
-                        </div>
-                      </div>
                       
+               
+                      
+                      <div class="form-group">                        
+                        <label class=" col-md-3 control-label">{{ form.fechafundacion.label  }}</label>
+                        <div class="col-lg-8">
+                           {{ form.fechafundacion  | add_class:'gui-input' }}    
+                        </div>
+                      </div>
 
-                      <div class="form-group">
-                        <label class="col-lg-3 control-label" for="textArea2">Text Area</label>
-                        <div class="col-lg-8">
-                          <textarea class="form-control" id="textArea2" rows="3"></textarea>
+                       <div class="form-group">                        
+                         <div class="fileupload fileupload-new admin-form" data-provides="fileupload">
+                            <div class="fileupload-preview thumbnail mb15">
+                              <label for="account-name" class="field">
+                              <img src="{{ form.instance.escudo.url }} " class="h-170" >
+                                {{ form.escudo}} 
+
+                              </label>
+                            </div>
                         </div>
+                   
                       </div>
-                      <div class="form-group">
-                        <label class="col-lg-3 control-label" for="textArea3">Disabled Text Area</label>
-                        <div class="col-lg-8">
-                          <textarea class="form-control" id="textArea3" rows="3" disabled=""></textarea>
-                        </div>
-                      </div>
+
+             
                     </form>
                   </div>
 
@@ -187,15 +193,7 @@
 
 
                 </div>
-                <!-- end section -->
 
-                <div class="section">
-                  <label for="lastname" class="field prepend-icon">
-                                                <input type="text" name="lastname" id="lastname" class="gui-input" placeholder="Last name...">
-                                                <label for="lastname" class="field-icon"><i class="fa fa-user"></i>
-                                                </label>
-                  </label>
-                </div>
                 <!-- end section -->
 
               </section>
