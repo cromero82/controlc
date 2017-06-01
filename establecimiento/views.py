@@ -15,14 +15,63 @@ from django.template import RequestContext
 from establecimiento.models import Establecimientos
 
 # Importando Forms
-from forms import EstablecimientoForm
+from forms import EstablecimientoForm, SedesForm
 import sys
 from configuracion.miUtils import ejecucionAdminDataBase, formularioAdmin, remove_accents
+from configuracion.miUtils import ejecucionAdminDataBaseVal
 from django.contrib import messages
 from django.http import JsonResponse
 from django.template.context_processors import csrf
 
-# Create your views here.
+
+# ----------------------------------------------
+#  Sedes
+@login_required(login_url='/accounts/login/')
+def formularioEditarSedes(request, id):
+    if request.method == 'POST':
+        datos = get_object_or_404(Sedes, pk=id)
+        form = SedesForm(
+            request.POST,  request.FILES or None, instance=datos)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Edicion grado", request.POST['nombre'], "formSedes.html")
+        return JsonResponse(data)
+    else:
+        datos = get_object_or_404(Sedes, pk=id)
+        form = SedesForm(instance=datos)
+        return JsonResponse(formularioAdmin(form, "formSedes.html", "Edicion de sede", request))
+
+@login_required(login_url='/accounts/login/')
+def formularioRegistrarSedes(request):
+    if request.method == 'POST':
+        form = SedesForm(request.POST, request.FILES or None)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Registrar sede", request.POST['nombre'], "formSedes.html")
+        return JsonResponse(data)
+    else:
+        form = SedesForm()
+        return JsonResponse(formularioAdmin(form, "formSedes.html", "Registre datos de la sede", request))
+
+@login_required(login_url='/accounts/login/')
+def SedesJson(request):
+    if request.GET['nombre'] != '':
+        lista_datos = Sedes.objects.filter(
+            estregistro=request.GET['estregistro'],
+            nombre__contains=remove_accents(request.GET['nombre'].upper())
+        ).order_by('codigo')
+    else:
+        lista_datos = Sedes.objects.filter(
+            estregistro=request.GET['estregistro']
+        ).order_by('codigo')
+    json = serializers.serialize('json', lista_datos, use_natural_foreign_keys=True)
+    return HttpResponse(json, content_type='application/json')
+
+# --- No aplica, sin index por ahora.
+# @login_required(login_url='/accounts/login/')
+# def indexSedes(request):
+#     return render(request, 'Sedes.html', context={'datos': ''})
+
+
+
 # ---------
 # Administracion de Establecimiento
 

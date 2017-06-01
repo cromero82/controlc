@@ -4,6 +4,7 @@ var admin = "Establecimientos";
 var formulario = "form-wizard"
 var datosConsultados = null;
 var codigoEstablecimiento = null;
+var idEE = null;
 $('#divDatosConsultados').hide()
 // ------- Carga modal del formulario para actualizar existente
 //$("#divLista").on("click", ".itemEditar", function (e) {
@@ -12,9 +13,9 @@ $("#divDatosConsultados").on("click", ".itemEditar", function (e) {
 });
 
 // ------- Carga modal del formulario para registrar nuevo 
-var formularioRegistrar = function (id) {
+var formularioRegistrarSede = function (id) {
     $.ajax({
-        url: "/" + modulo + "/registrar" + admin,  // <-- AND HERE
+        url: "/" + modulo + "/registrarSedes",  // <-- AND HERE
         type: 'get',
         dataType: 'json',
         beforeSend: function () {
@@ -22,11 +23,18 @@ var formularioRegistrar = function (id) {
         },
         success: function (data) {
             if (data.transaccion) {
-                mostrarModal(data.html_form, data.titulo, "extragrande");
-                suscribirEventos();
-                $("#btnRegistrar").show();
+                mostrarModal(data.html_form, data.titulo, "normal");
+                // suscribirEventos();
                 $("#btnEditar").hide();
-                $('#divDatosConsultados').hide()
+                $("#btnRegistrar").show();
+                // Oculta la columna establecimiento
+                $("#id_establecimiento").hide();  
+                $("label[for='id_establecimiento']").hide()
+                $("#id_establecimiento").val(idEE);
+
+                $("#id_direccion").val(datosConsultados[0].direccion);
+                $("#id_telefono").val(datosConsultados[0].telefono);
+                $("#id_correoelectronico").val(datosConsultados[0].correo_electronico);                
             }
         },
         error: function (data) {
@@ -36,11 +44,11 @@ var formularioRegistrar = function (id) {
     });
 }
 // ------- Eventos del form una vez cargado
-var suscribirEventos = function () {
-    $(".modal-content").on("change", $("input[name*='departamento']"), function (e) {
-        consultaModulo(modulo, 'codigoDepartamento', $("#id_departamento").val());
-    });
-}
+// var suscribirEventos = function () {
+//     $(".modal-content").on("change", $("input[name*='departamento']"), function (e) {
+//         consultaModulo(modulo, 'codigoDepartamento', $("#id_departamento").val());
+//     });
+// }
 
 // ------- Resultado de consulta JSON al servidor
 function resultadoConsultaSimple(result) {
@@ -57,8 +65,70 @@ function resultadoConsultaSimple(result) {
 var clicActualizarPost = function () {
     enviarPost("editar");
 }
-var clicRegistrarPost = function () {
-    //enviarPost("registrar");    
+
+// ------- ejecución del método post de envio de formularios diligenciados
+var clicRegistrarSedePost  = function () {
+    var url;
+    // Controla el tipo de formulario para efecto de ocultar botones (Editar - Registrar)
+    //tipoForm = accion;
+    // url = "/" + modulo + "/editarSedes/" + $("#id").val() + "/";
+    
+    url = "/" + modulo + "/registrarSedes/"; 
+    // if ($("#" + formulario).valid()) {
+        $("#formSede").attr("action", url);
+        var form = $('#formSede');
+        $.ajax({
+            url: form.attr("action"),
+            data: form.serialize(),
+            type: form.attr("method"),
+            dataType: 'json',
+            success: function (data) {
+                if (data.transaccion) {
+                    // miTablaSedes.fnReloadAjax(null, null, true);
+                    $("#modal-form").modal("hide");                    
+                    notificacion("Confirmando transaccion", data.mensaje);
+                    datosSedes();
+                }
+                else {                    
+                    actualizarModal(data.html_form);                    
+                }
+            }
+        });
+}
+var miTablaSedes = null;
+function datosSedes() {
+    if (miTablaSedes != undefined) {
+        miTablaSedes.dataTable().fnDestroy();
+    }
+    var table_data = [
+    [ "Tiger Nixon", "System Architect", "$3,120", "2011/04/25", "Edinburgh", 5421 ],
+    [ "Garrett Winters", "Director", "$8,422", "2011/07/25", "Edinburgh", 8422 ]
+    ];
+    miTablaSedes = $('#postsTable').dataTable({
+        sDom: '<"top">tipr',        
+        "iDisplayLength": 9,
+        "ajax": {
+            "processing": true,
+            "url": "/" + modulo + "/SedesJson/",
+            "data": {
+                "estregistro": $("#estregistro").val(),
+                "nombre": $("#nombre").val()
+            },
+            "dataSrc": ""
+        },
+        "columns": [
+            {
+                "data": function (data, type, row, meta) {
+                    return '<a class="btn btn-xs  btn-primary itemEditar" href="#" data-id="' + data.pk + '"><i class="fa fa-pencil"></i></a>';
+                }
+            },
+            { "data": "fields.codigo" },
+            { "data": "fields.nombre" }            
+        ],
+        "language": {
+                "url": "../../static/admindesigns/vendor/plugins/datatables/espaniol.js"
+            }
+    });
 }
 
 var clicBuscarDatosCo = function () {
@@ -79,9 +149,6 @@ var clicBuscarDatosCo = function () {
             //--- Asignación de datos del establecimiento provenientes de datos.gov.co 
             //$("#id_codigoestablecimiento").val(datosConsultados[0].codigoestablecimiento);           
             $("#id_nombre").val(datosConsultados[0].nombreestablecimiento);
-            $("#id_direccion").val(datosConsultados[0].direccion);
-            $("#id_telefono").val(datosConsultados[0].telefono);
-            $("#id_correoelectronico").val(datosConsultados[0].correo_electronico);
             $("#id_nombreRector").val(datosConsultados[0].codigo_etc);
             
             consultaModulo('configuracion','getCodigoMunicipio',datosConsultados[0].codigomunicipio);
@@ -176,7 +243,7 @@ var clicBuscarDatosCo = function () {
 }
 
 
-// ------- ejecución del método post de envio de formularios diligenciados
+// -------Creación de EE (Boton siguiente, Tab 2: Datos básicos)
 var enviarPost = function (accion) {
     var url;
     if (accion == "editar") {
@@ -196,6 +263,7 @@ var enviarPost = function (accion) {
                 if (data.transaccion) {
                     // miTabla.fnReloadAjax(null, null, true);
                     // $("#modal-form").modal("hide");
+                    idEE = data.dato;
                     alerta("Confirmando transacción", data.mensaje, "success");
                 }
                 else {

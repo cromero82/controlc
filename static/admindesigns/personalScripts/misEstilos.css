@@ -97,3 +97,17 @@
   line-height: 1.5;
   border-radius: 6px;
 }
+
+/**   Ajustes admin - wizard  **/
+
+.admin-form .panel-title {    
+    text-align: left;
+    font-weight: 300;
+    font-size: 14px; 
+    padding: 0;
+    margin: 0;    
+}
+
+.admin-form .panel-heading {
+  padding: 0px 8px;
+}

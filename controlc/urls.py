@@ -31,7 +31,25 @@ app_name = 'micolegio'
 # from django.conf.urls import patterns
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),   
+    url(r'^admin/', admin.site.urls),
+
+    # ---------
+    # Sedes
+    # url(r'^establecimiento/Sedes/$', viewConf.indexSedes),
+    url(r'^establecimiento/SedesJson/$', viewEst.SedesJson),
+    url(r'^establecimiento/editarSedes/(?P<id>[0-9]+)/$', viewEst.formularioEditarSedes),
+    url(r'^establecimiento/registrarSedes/$', viewEst.formularioRegistrarSedes),
+
+    # ---------
+    # Administracion de Establecimientos
+    url(r'^establecimiento/RegistroRapido/$', viewEst.formularioRapidoEstablecimiento),
+    url(r'^establecimiento/RegistrarRapidoEstablecimiento/$', viewEst.formularioRegistrarEstablecimiento),
+    url(r'^establecimiento/nuevoEstablecimiento/$', viewEst.formularioNuevoEstablecimientos),
+    url(r'^establecimiento/Establecimientos/$', viewEst.indexEstablecimientos),
+    url(r'^establecimiento/EstablecimientosJson/$', viewEst.EstablecimientosJson),
+    # url(r'^establecimiento/editarEstablecimiento/(?P<id>[0-9]+)/$', viewConf.formularioEditarEstablecimiento),
+    url(r'^establecimiento/registrarEstablecimientos/$', viewEst.formularioNuevoEstablecimientos),
+
     #----------
     # Inicio de sesion
     url(r'^login/$', viewConf.ingresar, name='login'),
@@ -88,16 +106,6 @@ urlpatterns = [
     url(r'^configuracion/MetodologiasJson/$', viewConf.MetodologiasJson),
     url(r'^configuracion/editarMetodologia/(?P<id>[0-9]+)/$', viewConf.formularioEditarMetodologia),
     url(r'^configuracion/registrarMetodologia/$', viewConf.formularioRegistrarMetodologia),
-
-    # ---------
-    # Administracion de Establecimientos
-    url(r'^establecimiento/RegistroRapido/$', viewEst.formularioRapidoEstablecimiento),
-    url(r'^establecimiento/RegistrarRapidoEstablecimiento/$', viewEst.formularioRegistrarEstablecimiento),
-    url(r'^establecimiento/nuevoEstablecimiento/$', viewEst.formularioNuevoEstablecimientos),
-    url(r'^establecimiento/Establecimientos/$', viewEst.indexEstablecimientos),
-    url(r'^establecimiento/EstablecimientosJson/$', viewEst.EstablecimientosJson),
-    # url(r'^establecimiento/editarEstablecimiento/(?P<id>[0-9]+)/$', viewConf.formularioEditarEstablecimiento),
-    url(r'^establecimiento/registrarEstablecimientos/$', viewEst.formularioNuevoEstablecimientos),
 
     # ---------
     # Administracion de Municipios

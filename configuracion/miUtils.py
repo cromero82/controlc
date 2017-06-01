@@ -14,7 +14,9 @@ def ejecucionAdminDataBase(form, request, accion, datoReferencia):
     data['transaccion'] = True
     if (form.is_valid()):
         try:
-            form.save()
+            modelData = form.save()
+            # form.save()
+            data['dato'] = modelData.id
             data['mensaje'] = "La operacion " + accion + \
                 " " + datoReferencia + " se ha ejecutado correctamente."
         except IntegrityError, err:
