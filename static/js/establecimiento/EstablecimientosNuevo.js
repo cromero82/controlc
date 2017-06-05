@@ -5,6 +5,8 @@ var formulario = "form-wizard"
 var datosConsultados = null;
 var codigoEstablecimiento = null;
 var idEE = null;
+var tipoForm = "";
+var esPrimerSede = true;
 $('#divDatosConsultados').hide()
 // ------- Carga modal del formulario para actualizar existente
 //$("#divLista").on("click", ".itemEditar", function (e) {
@@ -12,8 +14,14 @@ $("#divDatosConsultados").on("click", ".itemEditar", function (e) {
     form.steps("setStep", 1);
 });
 
+function ocultarEstablecimientoEnSede(){
+    $("#id_establecimiento").hide();  
+    $("label[for='id_establecimiento']").hide()
+}
+
+
 // ------- Carga modal del formulario para registrar nuevo 
-var formularioRegistrarSede = function (id) {
+var formularioRegistrarSede = function (id) {    
     $.ajax({
         url: "/" + modulo + "/registrarSedes",  // <-- AND HERE
         type: 'get',
@@ -28,13 +36,14 @@ var formularioRegistrarSede = function (id) {
                 $("#btnEditar").hide();
                 $("#btnRegistrar").show();
                 // Oculta la columna establecimiento
-                $("#id_establecimiento").hide();  
-                $("label[for='id_establecimiento']").hide()
-                $("#id_establecimiento").val(idEE);
-
-                $("#id_direccion").val(datosConsultados[0].direccion);
-                $("#id_telefono").val(datosConsultados[0].telefono);
-                $("#id_correoelectronico").val(datosConsultados[0].correo_electronico);                
+                ocultarEstablecimientoEnSede();
+                // Asigna información a la primera sede (inf. provenientes de datos.gov.co)
+                if(esPrimerSede){
+                    $("#id_establecimiento").val(idEE);
+                    $("#id_direccion").val(datosConsultados[0].direccion);
+                    $("#id_telefono").val(datosConsultados[0].telefono);
+                    $("#id_correoelectronico").val(datosConsultados[0].correo_electronico);                
+                }                
             }
         },
         error: function (data) {
@@ -43,12 +52,6 @@ var formularioRegistrarSede = function (id) {
         }
     });
 }
-// ------- Eventos del form una vez cargado
-// var suscribirEventos = function () {
-//     $(".modal-content").on("change", $("input[name*='departamento']"), function (e) {
-//         consultaModulo(modulo, 'codigoDepartamento', $("#id_departamento").val());
-//     });
-// }
 
 // ------- Resultado de consulta JSON al servidor
 function resultadoConsultaSimple(result) {
@@ -61,19 +64,23 @@ function resultadoConsultaSimple(result) {
     }
 }
 
-// ------- Eventos clic de envio de formularios diligenciados
-var clicActualizarPost = function () {
-    enviarPost("editar");
+var clicRegistrarSedePost = function (){    
+    enviarPostSede("registrar");
+}
+var clicActualizarSedePost = function (){    
+    enviarPostSede("editar");
 }
 
 // ------- ejecución del método post de envio de formularios diligenciados
-var clicRegistrarSedePost  = function () {
+var enviarPostSede  = function (accion) {
     var url;
     // Controla el tipo de formulario para efecto de ocultar botones (Editar - Registrar)
-    //tipoForm = accion;
-    // url = "/" + modulo + "/editarSedes/" + $("#id").val() + "/";
-    
-    url = "/" + modulo + "/registrarSedes/"; 
+    if(accion=="registrar"){
+        url = "/" + modulo + "/registrarSedes/"; 
+    }else{
+        url = "/" + modulo + "/editarSedes/"+ $("#id").val() + "/"; 
+    }
+        
     // if ($("#" + formulario).valid()) {
         $("#formSede").attr("action", url);
         var form = $('#formSede');
@@ -85,9 +92,9 @@ var clicRegistrarSedePost  = function () {
             success: function (data) {
                 if (data.transaccion) {
                     // miTablaSedes.fnReloadAjax(null, null, true);
-                    $("#modal-form").modal("hide");                    
-                    notificacion("Confirmando transaccion", data.mensaje);
-                    datosSedes();
+                    $("#modal-form").modal("hide");      
+                    alerta("Confirmando transaccion", data.mensaje,"success")
+                    datosSedes("Confirmando transaccion", data.mensaje,"");
                 }
                 else {                    
                     actualizarModal(data.html_form);                    
@@ -95,35 +102,65 @@ var clicRegistrarSedePost  = function () {
             }
         });
 }
+// ------- Eventos del form una vez cargado
+function suscribirEventosSedes(){
+    $(".itemEditar2").click(function(e){
+        e.preventDefault();    
+        $.ajax({
+            url: "/" + modulo + "/editarSedes/" + $(this).data('id'),  // <-- AND HERE
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                if (data.transaccion) {                                                  
+                    mostrarModal(data.html_form, data.titulo, "normal");
+                    $("#modal-form").modal("show");
+                    // Oculta la columna establecimiento      
+                    ocultarEstablecimientoEnSede();  
+                    $("#btnEditar").show();
+                    $("#btnRegistrar").hide();            
+                }
+            },
+            error: function (data) {
+                $("#modal-form").modal("hide");
+                alerta("Error al intentar conectarse con el servidor", data.mensaje, "error");
+            }
+        });
+    });
+}
+
 var miTablaSedes = null;
 function datosSedes() {
     if (miTablaSedes != undefined) {
         miTablaSedes.dataTable().fnDestroy();
-    }
-    var table_data = [
-    [ "Tiger Nixon", "System Architect", "$3,120", "2011/04/25", "Edinburgh", 5421 ],
-    [ "Garrett Winters", "Director", "$8,422", "2011/07/25", "Edinburgh", 8422 ]
-    ];
+    }   
     miTablaSedes = $('#postsTable').dataTable({
         sDom: '<"top">tipr',        
         "iDisplayLength": 9,
         "ajax": {
             "processing": true,
-            "url": "/" + modulo + "/SedesJson/",
-            "data": {
-                "estregistro": $("#estregistro").val(),
-                "nombre": $("#nombre").val()
+            "url": "/establecimiento/SedesJson/",
+            "data": {               
+                "establecimiento": idEE
             },
             "dataSrc": ""
         },
         "columns": [
             {
                 "data": function (data, type, row, meta) {
-                    return '<a class="btn btn-xs  btn-primary itemEditar" href="#" data-id="' + data.pk + '"><i class="fa fa-pencil"></i></a>';
+                    suscribirEventosSedes();
+                    return '<a class="btn btn-xs  btn-primary itemEditar2" data-id="' + data.pk + '"><i class="fa fa-pencil"></i></a>';
                 }
             },
-            { "data": "fields.codigo" },
-            { "data": "fields.nombre" }            
+            { "data": "fields.nombre" },
+            { "data": "fields.codigo" } ,    
+            { "data": "fields.direccion" },
+            { "data": "fields.telefono" },
+            { "data": "fields.correoelectronico" },
+            { "data": "fields.responsable" }
+                
+               
+            
+            
         ],
         "language": {
                 "url": "../../static/admindesigns/vendor/plugins/datatables/espaniol.js"
@@ -244,10 +281,10 @@ var clicBuscarDatosCo = function () {
 
 
 // -------Creación de EE (Boton siguiente, Tab 2: Datos básicos)
-var enviarPost = function (accion) {
+var registrarDatosBasicosEE = function (accion) {
     var url;
     if (accion == "editar") {
-        url = "/" + modulo + "/" + accion + admin + "/" + $("#id").val() + "/";
+        url = "/" + modulo + "/editarRapidoEstablecimiento/" + $("#id").val() + "/";
     } else {
         url = "/" + modulo + "/RegistrarRapidoEstablecimiento/";
     }
@@ -320,7 +357,7 @@ jQuery(document).ready(function () {
                 equalTo: "#password"
             }
         }
-    });
+    });0
     //  
     form.children(".wizard").steps({
         headerTag: ".wizard-section-title",
@@ -341,7 +378,12 @@ jQuery(document).ready(function () {
                 // Si se realiza clic en boton "siguiente" de datos generales. entonces se registra
                 // o actualiza el establecimiento
                 if(currentIndex==1 && newIndex == 2){
-                    enviarPost("registrar");
+                    if(idEE== null){
+                        registrarDatosBasicosEE("registrar");
+                    }else{
+                        registrarDatosBasicosEE("Editar");
+                    }
+                    
                 }
             }            
 
@@ -416,8 +458,3 @@ $("#nombre").on("keydown", function (event) {
     if (event.which == 13)
         datos();
 });
-
-
-
-
-

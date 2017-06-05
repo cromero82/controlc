@@ -12,7 +12,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 # Models
-from establecimiento.models import Establecimientos
+from establecimiento.models import Establecimientos, Sedes
 
 # Importando Forms
 from forms import EstablecimientoForm, SedesForm
@@ -30,8 +30,7 @@ from django.template.context_processors import csrf
 def formularioEditarSedes(request, id):
     if request.method == 'POST':
         datos = get_object_or_404(Sedes, pk=id)
-        form = SedesForm(
-            request.POST,  request.FILES or None, instance=datos)
+        form = SedesForm(request.POST,  request.FILES or None, instance=datos)
         data = ejecucionAdminDataBaseVal(
             form, request, "Edicion grado", request.POST['nombre'], "formSedes.html")
         return JsonResponse(data)
@@ -39,6 +38,7 @@ def formularioEditarSedes(request, id):
         datos = get_object_or_404(Sedes, pk=id)
         form = SedesForm(instance=datos)
         return JsonResponse(formularioAdmin(form, "formSedes.html", "Edicion de sede", request))
+
 
 @login_required(login_url='/accounts/login/')
 def formularioRegistrarSedes(request):
@@ -51,18 +51,14 @@ def formularioRegistrarSedes(request):
         form = SedesForm()
         return JsonResponse(formularioAdmin(form, "formSedes.html", "Registre datos de la sede", request))
 
+
 @login_required(login_url='/accounts/login/')
 def SedesJson(request):
-    if request.GET['nombre'] != '':
-        lista_datos = Sedes.objects.filter(
-            estregistro=request.GET['estregistro'],
-            nombre__contains=remove_accents(request.GET['nombre'].upper())
-        ).order_by('codigo')
-    else:
-        lista_datos = Sedes.objects.filter(
-            estregistro=request.GET['estregistro']
-        ).order_by('codigo')
-    json = serializers.serialize('json', lista_datos, use_natural_foreign_keys=True)
+    lista_datos = Sedes.objects.filter(
+        establecimiento=request.GET['establecimiento']
+    ).order_by('codigo')
+    json = serializers.serialize(
+        'json', lista_datos, use_natural_foreign_keys=True)
     return HttpResponse(json, content_type='application/json')
 
 # --- No aplica, sin index por ahora.
@@ -71,18 +67,18 @@ def SedesJson(request):
 #     return render(request, 'Sedes.html', context={'datos': ''})
 
 
-
 # ---------
 # Administracion de Establecimiento
 
 def formularioRapidoEstablecimiento(request):
     form = EstablecimientoForm()
-    return render(request, 'formRapidoEstablecimiento.html', context = {'form': form})
+    return render(request, 'formRapidoEstablecimiento.html', context={'form': form})
 
 
 def formularioNuevoEstablecimientos(request):
     form = EstablecimientoForm()
-    return render(request, 'formModoRegistroEstablecimiento.html', context = {'form': form})
+    return render(request, 'formModoRegistroEstablecimiento.html', context={'form': form})
+
 
 @login_required(login_url='/accounts/login/')
 def formularioEditarEstablecimiento(request, id):

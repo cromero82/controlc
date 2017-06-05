@@ -43,11 +43,11 @@ urlpatterns = [
     # ---------
     # Administracion de Establecimientos
     url(r'^establecimiento/RegistroRapido/$', viewEst.formularioRapidoEstablecimiento),
+    url(r'^establecimiento/editarRapidoEstablecimiento/(?P<id>[0-9]+)/$', viewEst.formularioEditarEstablecimiento),
     url(r'^establecimiento/RegistrarRapidoEstablecimiento/$', viewEst.formularioRegistrarEstablecimiento),
     url(r'^establecimiento/nuevoEstablecimiento/$', viewEst.formularioNuevoEstablecimientos),
     url(r'^establecimiento/Establecimientos/$', viewEst.indexEstablecimientos),
-    url(r'^establecimiento/EstablecimientosJson/$', viewEst.EstablecimientosJson),
-    # url(r'^establecimiento/editarEstablecimiento/(?P<id>[0-9]+)/$', viewConf.formularioEditarEstablecimiento),
+    url(r'^establecimiento/EstablecimientosJson/$', viewEst.EstablecimientosJson),    
     url(r'^establecimiento/registrarEstablecimientos/$', viewEst.formularioNuevoEstablecimientos),
 
     #----------
