@@ -30,22 +30,22 @@
         <div class="admin-form">
 
           <form method="post" action="/" id="form-wizard">
-          {% csrf_token %}
+            {% csrf_token %}
             <div class="wizard  steps-bg steps-tabs steps-justified steps-show-icons">
 
               <!-- Wizard step 1 -->
-              <h4 class="wizard-section-title">1.  Importar datos <i class="glyphicons glyphicons-cloud-download pr5"></i></h4>
+              <h4 class="wizard-section-title">1. Importar datos <i class="glyphicons glyphicons-cloud-download pr5"></i></h4>
               <section class="wizard-section">
 
                 <div class="section">
 
                   <div class="alert alert-default light alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <strong>Proceso de Importar datos. </strong> Favor ingrese el <strong>código del establecimiento </strong>                    y haga clic en el botón <strong>buscar</strong> para consultar datos del establecimiento. Esta información
                     proviene del sitio oficial <a href="https://www.datos.gov.co/">https://www.datos.gov.co/</a> y fue registrada
                     por la secretaría local y demás entes que supervisan y controlan el tema administrativo de establecimientos
                     oficiales y no oficiales en Colombia.
-                            </div>                 
+                  </div>
 
                   <div class="panel-body form-horizontal">
                     <div class="form-group">
@@ -118,72 +118,53 @@
                 <div class="section">
 
                   <div class="panel-body form-horizontal">
-                    <form class="form-horizontal" role="form">                         
+                    <form class="form-horizontal" role="form">
 
                       <div class="form-group">
                         <label class=" col-md-3 control-label">{{ form.nombre.label  }}</label>
                         <div class="col-lg-8">
-                           {{ form.nombre  | add_class:'gui-input' }}    
-                            {{ form.nombre.errors }}
-                            {% comment %}NO FUNCIONO - SEGUIR INVENSTIGANDO{% endcomment %}
+                          {{ form.nombre | add_class:'gui-input' }} {{ form.nombre.errors }} {% comment %}NO FUNCIONO - SEGUIR INVENSTIGANDO{% endcomment
+                          %}
                         </div>
                       </div>
-                      {% comment %}<div class="form-group">                        
-                        <label class=" col-md-3 control-label">{{ form.direccion.label  }}</label>
-                        <div class="col-lg-8">
-                           {{ form.direccion  | add_class:'gui-input' }}    
-                        </div>
-                      </div>{% endcomment %}
-                      {% comment %}<div class="form-group">                        
-                        <label class=" col-md-3 control-label">{{ form.telefono.label  }}</label>
-                        <div class="col-lg-8">
-                           {{ form.telefono  | add_class:'gui-input' }}    
-                        </div>
-                      </div>
-                      <div class="form-group">                        
-                        <label class=" col-md-3 control-label">{{ form.correoelectronico.label  }}</label>
-                        <div class="col-lg-8">
-                           {{ form.correoelectronico  | add_class:'gui-input' }}    
-                        </div>
-                      </div>{% endcomment %}
-                      
-                      <div class="form-group">                        
+
+                      <div class="form-group">
                         <label class=" col-md-3 control-label">{{ form.nombreRector.label  }}</label>
                         <div class="col-lg-8">
-                           {{ form.nombreRector  | add_class:'gui-input' }}    
+                          {{ form.nombreRector | add_class:'gui-input' }}
                         </div>
                       </div>
 
-                      <div class="form-group">                        
+                      <div class="form-group">
                         <label class=" col-md-3 control-label">{{ form.municipio.label  }}</label>
                         <div class="col-lg-8">
-                           {{ form.municipio  | add_class:'gui-input' }}    
-                        </div>
-                      </div>
-                      
-               
-                      
-                      <div class="form-group">                        
-                        <label class=" col-md-3 control-label">{{ form.fechafundacion.label  }}</label>
-                        <div class="col-lg-8">
-                           {{ form.fechafundacion  | add_class:'gui-input' }}    
+                          {{ form.municipio | add_class:'gui-input' }}
                         </div>
                       </div>
 
-                       <div class="form-group">                        
-                         <div class="fileupload fileupload-new admin-form" data-provides="fileupload">
-                            <div class="fileupload-preview thumbnail mb15">
-                              <label for="account-name" class="field">
+
+
+                      <div class="form-group">
+                        <label class=" col-md-3 control-label">{{ form.fechafundacion.label  }}</label>
+                        <div class="col-lg-8">
+                          {{ form.fechafundacion | add_class:'gui-input' }}
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="fileupload fileupload-new admin-form" data-provides="fileupload">
+                          <div class="fileupload-preview thumbnail mb15">
+                            <label for="account-name" class="field">
                               <img src="{{ form.instance.escudo.url }} " class="h-170" >
                                 {{ form.escudo}} 
 
                               </label>
-                            </div>
+                          </div>
                         </div>
-                   
+
                       </div>
 
-             
+
                     </form>
                   </div>
 
@@ -197,7 +178,8 @@
               <h4 class="wizard-section-title">3. Aspecto legal <i class="glyphicons glyphicons-suitcase pr5"></i></h4>
               <section class="wizard-section">
 
-                {% comment %}<div class="section">
+                {% comment %}
+                <div class="section">
                   <label for="email" class="field prepend-icon">
                                                 <input type="email" name="email" id="email" class="gui-input" placeholder="Email address">
                                                 <label for="email" class="field-icon"><i class="fa fa-envelope"></i>
@@ -207,52 +189,81 @@
                 <!-- end section -->
 
                 <div class="section">
+                  <!--ADMINISTRADOR DE       S E D E S-->
                   <div class="col-sm-12">
                     <div class="panel panel-visible">
 
                       <div class="panel-heading">
-                          <div class="panel-title hidden-xs">
-                              <span class="glyphicon glyphicon-home"></span>Sedes
-                              <div class="alineacionVertical pull-right">
-                                  <a class="btn btn-success btn-sm light fw600 ml10 " onclick="formularioRegistrarSede()" title="Nueva sede">
+                        <div class="panel-title hidden-xs">
+                          <span class="glyphicon glyphicon-home"></span>Sedes
+                          <div class="alineacionVertical pull-right">
+                            <a class="btn btn-success btn-sm light fw600 ml10 " onclick="formularioRegistrarSede()" title="Nueva sede">
                               <span class="fa fa-plus pr5"></span> Nueva</a>
-                              </div>
+                          </div>
 
-                          </div>
-                      </div>                      
+                        </div>
+                      </div>
                       <div class="panel-body pn" id="divSedes">
-                          <div class="tray tray-center p10 va-t posr">
-                              <table class="table table-striped table-hover dataTable no-footer" id="postsTable" describedby="datatable_info" cellspacing="0"
-                                  width="100%">
-                                  <thead>
-                                      <tr>
-                                          <th>Acciones</th>
-                                          <th>Sede</th>
-                                          <th>Consecutivo</th>
-                                          <th>Dirección</th>
-                                          <th>Teléfono</th>
-                                          <th>Correo</th>
-                                          <th>Responsable</th>                                          
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                  </tbody>
-                              </table>
-                          </div>
+                        <div class="tray tray-center p10 va-t posr">
+                          <table class="table table-striped table-hover dataTable no-footer" id="postsTable" describedby="datatable_info" cellspacing="0"
+                            width="100%">
+                            <thead>
+                              <tr class="alert">
+                                <th>Acciones</th>
+                                <th>Sede</th>
+                                <th>Consecutivo</th>
+                                <th>Dirección</th>
+                                <th>Teléfono</th>
+                                <th>Correo</th>
+                                <th>Responsable</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                          </table>
+                        </div>
 
                       </div>
 
+                    </div>
                   </div>
-                  </div>
-                  
-                  <div class="col-sm-12">
 
+                  <!--ADMINISTRADOR DE       J O R N A D A S       -->
+                  <div class="col-sm-12" id="divJornadas">
+                    <div class="panel panel-visible">
+
+                      <div class="panel-heading">
+                        <div class="panel-title hidden-xs">
+                          <span class="glyphicon glyphicon-home"></span>Jornadas
+                          <div class="alineacionVertical pull-right">
+                            <a class="btn btn-success btn-sm light fw600 ml10 " onclick="formularioRegistrarSede()" title="Nueva jornada">
+                              <span class="fa fa-plus pr5"></span> Nueva</a>
+                          </div>
+
+                        </div>
+                      </div>
+                      <div class="panel-body pn">
+                        <div class="tray tray-center p10 va-t posr">
+                          <table class="table table-striped table-hover dataTable no-footer" id="postsTableJornadas" describedby="datatable_info" cellspacing="0"
+                            width="100%">
+                            <thead>
+                              <tr class="primary">
+                                <th>Acciones</th>
+                                <th>Sede</th>
+                                <th>Jornada</th>                                
+                              </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                          </table>
+                        </div>
+
+                      </div>
+
+                    </div>
                   </div>
-                  <label for="mobile" class="field prepend-icon">
-                                                <input type="tel" name="mobile" id="mobile" class="gui-input" placeholder="Telephone / moble number">
-                                                <label for="mobile" class="field-icon"><i class="fa fa-phone-square"></i>
-                                                </label>
-                  </label>
+
+                  
                 </div>
                 <!-- end section -->
 

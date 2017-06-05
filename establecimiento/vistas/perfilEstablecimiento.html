@@ -1,0 +1,341 @@
+{% extends 'basePlantillaWide.html' %} {% block migaPan %} {% load widget_tweaks %}
+
+<li class="crumb-active">
+  <a href="dashboard.html">Dashboard</a>
+</li>
+<li class="crumb-icon">
+  <a href="dashboard.html">
+        <span class="glyphicon glyphicon-home"></span>
+    </a>
+</li>
+<li class="crumb-link">
+  <a href="index.html">Establecimientos</a>
+</li>
+<li class="crumb-trail"> Edición de establecimientos</li>
+{% endblock %} {% block panelMigaPan %} {% endblock %} {% block contenido %}
+
+  <!-- <div class="p40 bg-background bg-topbar bg-psuedo-tp"> -->
+                <div class="pv30 ph40 bg-light dark br-b br-grey posr">
+                    <div class="btn-group profile-settings-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle pl20" data-toggle="dropdown">Account
+                            <span class="caret ml5"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="#">Action</a>
+                            </li>
+                            <li>
+                                <a href="#">Another action</a>
+                            </li>
+                            <li>
+                                <a href="#">Something else here</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">Separated link</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="table-layout">
+                        <div class="w200 text-center pr30 hidden-xs">
+                            <img src="assets/img/avatars/profile_avatar.jpg" class="responsive">
+                        </div>
+                        <div class="va-t m30">
+
+                            <h2 class=""> Michael Halls <small> Profile </small></h2>
+                            <p class="fs15 mb20">Lorem ipsum dolor sit amet ctetur adicing elit, sed do eiusmod tempor incididunt</p>
+
+                            <ul class="list-inline list-unstyled">
+                                <li>
+                                    <a href="#" title="facebook link">
+                                        <span class="fa fa-facebook-square fs35 text-primary"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="twitter link">
+                                        <span class="fa fa-twitter-square fs35 text-info"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="google plus link">
+                                        <span class="fa fa-google-plus-square fs35 text-danger"></span>
+                                    </a>
+                                </li>
+                                <li class="hidden">
+                                    <a href="#" title="behance link">
+                                        <span class="fa fa-behance-square fs35 text-primary"></span>
+                                    </a>
+                                </li>
+                                <li class="hidden">
+                                    <a href="#" title="pinterest link">
+                                        <span class="fa fa-pinterest-square fs35 text-danger-light"></span>
+                                    </a>
+                                </li>
+                                <li class="hidden">
+                                    <a href="#" title="linkedin link">
+                                        <span class="fa fa-linkedin-square fs35 text-info"></span>
+                                    </a>
+                                </li>
+                                <li class="hidden">
+                                    <a href="#" title="github link">
+                                        <span class="fa fa-github-square fs35 text-dark"></span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#" title="phone link">
+                                        <span class="fa fa-phone-square fs35 text-system"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" title="email link">
+                                        <span class="fa fa-envelope-square fs35 text-muted"></span>
+                                    </a>
+                                </li>
+                                <li class="hidden">
+                                    <a href="#" title="external link">
+                                        <span class="fa fa-external-link-square fs35 text-muted"></span>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p25 pt35">
+                    <div class="row">
+                        <div class="col-md-4">
+
+                            <h4 class="page-header mtn br-light text-muted hidden">User Info</h4>
+
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <span class="panel-icon"><i class="fa fa-star"></i>
+                                    </span>
+                                    <span class="panel-title"> User Popularity</span>
+                                </div>
+                                <div class="panel-body pn">
+                                    <table class="table mbn tc-icon-1 tc-med-2 tc-bold-last">
+                                        <thead>
+                                            <tr class="hidden">
+                                                <th class="mw30">#</th>
+                                                <th>First Name</th>
+                                                <th>Revenue</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <span class="fa fa-desktop text-warning"></span>
+                                                </td>
+                                                <td>Television</td>
+                                                <td><i class="fa fa-caret-up text-info pr10"></i>$855,913</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span class="fa fa-microphone text-primary"></span>
+                                                </td>
+                                                <td>Radio</td>
+                                                <td><i class="fa fa-caret-down text-danger pr10"></i>$349,712</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span class="fa fa-newspaper-o text-info"></span>
+                                                </td>
+                                                <td>Newspaper</td>
+                                                <td><i class="fa fa-caret-up text-info pr10"></i>$1,259,742</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <span class="panel-icon"><i class="fa fa-trophy"></i>
+                                    </span>
+                                    <span class="panel-title"> My Skills</span>
+                                </div>
+                                <div class="panel-body pb5">
+                                    <span class="label label-warning mr5 mb10 ib lh15">Default</span>
+                                    <span class="label label-primary mr5 mb10 ib lh15">Primary</span>
+                                    <span class="label label-info mr5 mb10 ib lh15">Success</span>
+                                    <span class="label label-success mr5 mb10 ib lh15">Info</span>
+                                    <span class="label label-alert mr5 mb10 ib lh15">Warning</span>
+                                    <span class="label label-system mr5 mb10 ib lh15">Danger</span>
+                                    <span class="label label-info mr5 mb10 ib lh15">Success</span>
+                                    <span class="label label-success mr5 mb10 ib lh15">Ui Design</span>
+                                    <span class="label label-primary mr5 mb10 ib lh15">Primary</span>
+
+                                </div>
+                            </div>
+
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <span class="panel-icon"><i class="fa fa-pencil"></i>
+                                    </span>
+                                    <span class="panel-title">About Me</span>
+                                </div>
+                                <div class="panel-body pb5">
+                                    <h6 class="text-muted fs13">Experience</h6>
+
+                                    <h4>Facebook Internship</h4>
+                                    <p class="text-muted"> University of Missouri, Columbia
+                                        <br> Student Health Center, June 2010 - 2012
+                                    </p>
+
+                                    <hr class="short br-lighter">
+
+                                    <h6 class="text-muted fs13">Education</h6>
+
+                                    <h4>Bachelor of Science, PhD</h4>
+                                    <p class="text-muted"> University of Missouri, Columbia
+                                        <br> Student Health Center, June 2010 through Aug 2011
+                                    </p>
+
+                                    <hr class="short br-lighter">
+
+                                    <h6 class="text-muted fs13">Accomplishments</h6>
+
+                                    <h4>Successful Business</h4>
+                                    <p class="text-muted pb10"> University of Missouri, Columbia
+                                        <br> Student Health Center, June 2010 through Aug 2011
+                                    </p>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-8">
+
+                            <h4 class="page-header text-muted mtn br-light hidden">User Activity</h4>
+
+                            <div class="admin-form hidden">
+                                <div class="panel mb30">
+                                    <label class="field prepend-icon">
+                                        <textarea class="gui-textarea br-light h-60" id="comment" name="comment" placeholder="Text area"></textarea>
+                                        <label for="comment" class="field-icon"><i class="fa fa-comments"></i>
+                                        </label>
+                                        <span class="input-footer hidden">
+                                            <strong>Hint:</strong>Don't be negative or off topic! just be awesome...</span>
+                                    </label>
+                                    <div class="panel-footer text-right br-t-n p8">
+                                        <button type="button" class="btn btn-primary p4 ph10">Comment</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-block psor">
+                                <a href="#account-form" class="profile-settings-icon">
+                                    <span class="fa fa-gear fs16 text-muted"></span>
+                                </a>
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a href="#tab1" data-toggle="tab">Activity</a>
+                                    </li>
+                                    <li>
+                                        <a href="#tab1" data-toggle="tab">Social</a>
+                                    </li>
+                                    <li>
+                                        <a href="#tab1" data-toggle="tab">Media</a>
+                                    </li>
+                                    <li class="pull-right hidden">
+                                        <a href="#tab4" class="ph15" data-toggle="tab">
+                                            <span class="fa fa-gear fs14"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" style="height: 725px;">
+                                    <div id="tab1" class="tab-pane active p15">
+                                        <div class="media pb10">
+                                            <a class="pull-left" href="#"> <img class="media-object mn thumbnail mw50" src="assets/img/avatars/4.jpg" alt="..."> </a>
+                                            <div class="media-body">
+                                                <h5 class="media-heading mb20">Simon Rivers Posted <small> - 3 hours ago</small></h5>
+                                                <img src="assets/img/stock/1.jpg" class="mw140 mr25 mb20"><img src="assets/img/stock/2.jpg" class="mw140 mr25 mb20"> <img src="assets/img/stock/3.jpg" class="mw140 mb20">
+                                                <div class="media-links">
+                                                    <span class="text-light fs12 mr10">
+                                                        <span class="glyphicons glyphicons-thumbs_up text-primary mr5"></span> Like </span>
+                                                    <span class="text-light fs12 mr10">
+                                                        <span class="glyphicons glyphicons-share text-primary mr5"></span> Share </span>
+                                                    <span class="text-light fs12 mr10">
+                                                        <span class="glyphicon glyphicon-floppy-save text-primary mr5"></span> Save </span>
+                                                    <span class="text-light fs12 mr10">
+                                                        <span class="glyphicons glyphicons-chat text-primary mr5"></span> Comment </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="media pb15">
+                                            <a class="pull-left" href="#"> <img class="media-object mn thumbnail thumbnail-sm rounded mw40" src="assets/img/avatars/3.jpg" alt="..."> </a>
+                                            <div class="media-body mb5">
+                                                <h5 class="media-heading mbn">Simon Rivers Posted <small> - 3 hours ago</small></h5>
+                                                <p> Omg so freaking sweet dude.</p>
+                                                <div class="media pb10">
+                                                    <a class="pull-left" href="#"> <img class="media-object mn thumbnail thumbnail-sm rounded mw40" src="assets/img/avatars/4.jpg" alt="..."> </a>
+                                                    <div class="media-body mb5">
+                                                        <h5 class="media-heading mbn">Jessica Wong <small> - 3 hours ago</small></h5>
+                                                        <p>Omgosh I'm in love</p>
+                                                    </div>
+                                                </div>
+                                                <div class="media mtn">
+                                                    <a class="pull-left" href="#"> <img class="media-object mn thumbnail thumbnail-sm rounded mw40" src="assets/img/avatars/3.jpg" alt="..."> </a>
+                                                    <div class="media-body mb5">
+                                                        <h5 class="media-heading mbn">Jessica Wong <small> - 3 hours ago</small></h5>
+                                                        <p>Omgosh I'm in love</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="media pb15">
+                                            <a class="pull-left" href="#"> <img class="media-object thumbnail mw50" src="assets/img/avatars/5.jpg" alt="..."> </a>
+                                            <div class="media-body">
+                                                <h5 class="media-heading mb20">Simon Rivers Posted <small> - 3 hours ago</small></h5>
+                                                <img src="assets/img/stock/4.jpg" class="mw140 mr25 mb20"><img src="assets/img/stock/2.jpg" class="mw140 mr25 mb20"> <img src="assets/img/stock/5.jpg" class="mw140 mb20">
+                                                <div class="media-links">
+                                                    <span class="text-light fs12 mr10">
+                                                        <span class="glyphicons glyphicons-thumbs_up text-primary mr5"></span> Like </span>
+                                                    <span class="text-light fs12 mr10">
+                                                        <span class="glyphicons glyphicons-share text-primary mr5"></span> Share </span>
+                                                    <span class="text-light fs12 mr10">
+                                                        <span class="glyphicon glyphicon-floppy-save text-primary mr5"></span> Save </span>
+                                                    <span class="text-light fs12 mr10">
+                                                        <span class="glyphicons glyphicons-chat text-primary mr5"></span> Comment </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="admin-form hidden">
+                                            <div class="panel mb30">
+                                                <label class="field prepend-icon">
+                                                    <textarea class="gui-textarea br-light h-50" id="comment" name="comment" placeholder="Text area"></textarea>
+                                                    <label for="comment" class="field-icon"><i class="fa fa-comments"></i>
+                                                    </label>
+                                                    <span class="input-footer">
+                                                        <strong>Hint:</strong>Don't be negative or off topic! just be awesome...</span>
+                                                </label>
+                                                <div class="panel-footer text-right br-t-n p8 hidden">
+                                                    <button type="button" class="btn btn-primary p4 ph10">Comment</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="tab2" class="tab-pane"></div>
+                                    <div id="tab3" class="tab-pane"></div>
+                                    <div id="tab4" class="tab-pane"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+<style>
+  
+</style>
+{% endblock %} {% load static %} {% block js %} {{ block.super }} {# includes previous content in block #}
+
+{% comment %}
+<script type="text/javascript" src="{% static 'admindesigns/assets/js/main.js' %}"></script>
+<script type="text/javascript" src="{% static 'admindesigns/assets/js/demo.js' %}"></script>{% endcomment %}
+<script src="{% static 'js/establecimiento/perfilEstablecimiento.js' %}"></script>
+<!-- Page Plugins -->
+{% endblock %}

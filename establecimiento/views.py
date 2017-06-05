@@ -70,6 +70,12 @@ def SedesJson(request):
 # ---------
 # Administracion de Establecimiento
 
+@login_required(login_url='/accounts/login/')
+def perfilEstablecimiento(request, id):
+    establecimiento = get_object_or_404(Establecimientos, pk=id)
+    form = EstablecimientoForm(request.POST,  request.FILES or None, instance=establecimiento)
+    return render(request, 'perfilEstablecimiento.html', context={'form': form})
+# --------------------
 def formularioRapidoEstablecimiento(request):
     form = EstablecimientoForm()
     return render(request, 'formRapidoEstablecimiento.html', context={'form': form})

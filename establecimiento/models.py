@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from configuracion.models import Tdocumento, Municipios
+from configuracion.models import Tdocumento, Municipios, Tjornada
 from django.db import models
 from django.core.validators import MinLengthValidator
 from datetime import date
@@ -39,3 +39,14 @@ class Sedes (models.Model):
         return self.nombre
     def natural_key(self):
         return self.nombre
+
+class Jornadas (models.Model):
+    sede = models.ForeignKey(Sedes, related_query_name='Sede')
+    jornada = models.ForeignKey(Tjornada, related_query_name='Tjornada')
+    estregistro = models.IntegerField(default=1, blank=False)
+    class Meta:
+        unique_together = (('sede', 'jornada'))
+    # def __unicode__(self):  # __unicode__ en Python 2
+    #     return self.nombre
+    # def natural_key(self):
+    #     return self.nombre

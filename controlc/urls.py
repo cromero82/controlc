@@ -41,7 +41,9 @@ urlpatterns = [
     url(r'^establecimiento/registrarSedes/$', viewEst.formularioRegistrarSedes),
 
     # ---------
-    # Administracion de Establecimientos
+    # Administracion de Establecimientos    
+    url(r'^establecimiento/perfilEstablecimiento/(?P<id>[0-9]+)/$', viewEst.perfilEstablecimiento),
+    # -----
     url(r'^establecimiento/RegistroRapido/$', viewEst.formularioRapidoEstablecimiento),
     url(r'^establecimiento/editarRapidoEstablecimiento/(?P<id>[0-9]+)/$', viewEst.formularioEditarEstablecimiento),
     url(r'^establecimiento/RegistrarRapidoEstablecimiento/$', viewEst.formularioRegistrarEstablecimiento),
