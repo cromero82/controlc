@@ -343,10 +343,10 @@ jQuery(document).ready(function () {
     "use strict";
 
     // Init Theme Core    
-    Core.init();
+    // Core.init();
 
-    // Init Demo JS     
-    Demo.init();
+    // // Init Demo JS     
+    // Demo.init();
 
     // Form Wizard 
     form = $("#form-wizard");

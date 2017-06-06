@@ -35,11 +35,18 @@
     </li>
 
     <!--Sección del establecimiento -->
-
     <li class="{% if '/establecimiento/Establecimientos/' == request.path %}active{% endif %} ">
         <a class="menu-open" href="http://{{ request.get_host }}/establecimiento/Establecimientos"> 
                                         <span class="glyphicon glyphicon-home"></span>
                             <span class="sidebar-title">Establecimiento</span>
+                            {% comment %}<span class="caret"></span>{% endcomment %}
+                                        </a>
+    </li>
+<!--Sección del establecimiento -->
+    <li class="{% if '/establecimiento/perfilEstablecimiento/' == request.path %}active{% endif %} ">
+        <a class="menu-open" href="http://{{ request.get_host }}/establecimiento/perfilEstablecimiento"> 
+                                        <span class="glyphicon glyphicon-home"></span>
+                            <span class="sidebar-title">Mi establecimiento</span>
                             {% comment %}<span class="caret"></span>{% endcomment %}
                                         </a>
     </li>

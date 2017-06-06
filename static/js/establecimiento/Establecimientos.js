@@ -125,7 +125,7 @@ function datos() {
         "columns": [            
             {
                 "data": function (data, type, row, meta) {
-                    return '<a class="btn btn-primary" href="establecimiento/perfilEstablecimiento/'+ data.pk + '" data-id="' + data.pk + '"><i class="fa fa-pencil"></i></a>';
+                    return '<a class="btn btn-primary" href="../../establecimiento/perfilEstablecimiento/'+ data.pk + '" data-id="' + data.pk + '"><i class="fa fa-pencil"></i></a>';
                 }
             },
             { "data": "fields.nombre" },
