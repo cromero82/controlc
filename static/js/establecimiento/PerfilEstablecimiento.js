@@ -4,9 +4,126 @@ var admin = "Establecimientos";
 var formulario = "form-wizard"
 var datosConsultados = null;
 var codigoEstablecimiento = null;
-var idEE = null;
+var idEE = $('#hdId').val();
 var tipoForm = "";
 var esPrimerSede = true;
+
+var miTablaSedes = null;
+
+
+datosSedes();
+
+function ocultarEstablecimientoEnSede(){
+    $("#id_establecimiento").hide();  
+    $("label[for='id_establecimiento']").hide()
+}
+
+// ------- Eventos del form una vez cargado
+function suscribirEventosSedes(){
+    $(".itemEditarSede").click(function(e){
+        e.preventDefault();    
+        $.ajax({
+            url: "/" + modulo + "/editarSedes/" + $(this).data('id'),  // <-- AND HERE
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                if (data.transaccion) {                                                  
+                    mostrarModal(data.html_form, data.titulo, "normal");
+                    $("#modal-form").modal("show");
+                    // Oculta la columna establecimiento      
+                    ocultarEstablecimientoEnSede();  
+                    $("#btnEditar").show();
+                    $("#btnRegistrar").hide();            
+                }
+            },
+            error: function (data) {
+                $("#modal-form").modal("hide");
+                alerta("Error al intentar conectarse con el servidor", data.mensaje, "error");
+            }
+        });
+    });
+}
+
+var clicRegistrarSedePost = function (){    
+    enviarPostSede("registrar");
+}
+var clicActualizarSedePost = function (){    
+    enviarPostSede("editar");
+}
+
+// ------- ejecución del método post de envio de formularios diligenciados
+var enviarPostSede  = function (accion) {
+    var url;
+    // Controla el tipo de formulario para efecto de ocultar botones (Editar - Registrar)
+    if(accion=="registrar"){
+        url = "/" + modulo + "/registrarSedes/"; 
+    }else{
+        url = "/" + modulo + "/editarSedes/"+ $("#id").val() + "/"; 
+    }
+        
+    // if ($("#" + formulario).valid()) {
+        $("#formSede").attr("action", url);
+        var form = $('#formSede');
+        $.ajax({
+            url: form.attr("action"),
+            data: form.serialize(),
+            type: form.attr("method"),
+            dataType: 'json',
+            success: function (data) {
+                if (data.transaccion) {
+                    // miTablaSedes.fnReloadAjax(null, null, true);
+                    $("#modal-form").modal("hide");      
+                    alerta("Confirmando transaccion", data.mensaje,"success")
+                    datosSedes("Confirmando transaccion", data.mensaje,"");                    
+                }
+                else {                    
+                    actualizarModal(data.html_form);                    
+                }
+            }
+        });
+}
+
+function datosSedes() {
+    if (miTablaSedes != undefined) {
+        miTablaSedes.dataTable().fnDestroy();
+    }   
+    miTablaSedes = $('#postsTable').dataTable({
+        // sDom: '<"top">tipr',        
+        sDom: '<"top">t', 
+        "iDisplayLength": 9,
+        "ajax": {
+            "processing": true,
+            "url": "/establecimiento/SedesJson/",
+            "data": {               
+                "establecimiento": idEE
+            },
+            "dataSrc": ""
+        },
+        "columns": [
+            {
+                "data": function (data, type, row, meta) {
+                    suscribirEventosSedes();
+                    return '<a class="btn btn-xs  btn-primary itemEditarSede" data-id="' + data.pk + '"><i class="fa fa-pencil"></i></a>';
+                }
+            },
+            { "data": "fields.nombre" },
+            { "data": "fields.codigo" } ,    
+            { "data": "fields.direccion" },
+            { "data": "fields.telefono" },
+            { "data": "fields.correoelectronico" },
+            { "data": "fields.responsable" }
+                
+               
+            
+            
+        ],
+        "language": {
+                "url": "../../static/admindesigns/vendor/plugins/datatables/espaniol.js"
+            }
+    });
+    $("#numSedes").html(miTablaSedes.length);    
+}
+
 // $('#divDatosConsultados').hide()
 // $('#divJornadas').hide()
 // ------- Carga modal del formulario para actualizar existente
@@ -14,11 +131,6 @@ var esPrimerSede = true;
 // $("#divDatosConsultados").on("click", ".itemEditar", function (e) {   
 //     form.steps("setStep", 1);
 // });
-
-// function ocultarEstablecimientoEnSede(){
-//     $("#id_establecimiento").hide();  
-//     $("label[for='id_establecimiento']").hide()
-// }
 
 
 // // ------- Carga modal del formulario para registrar nuevo 
@@ -65,110 +177,8 @@ var esPrimerSede = true;
 //     }
 // }
 
-// var clicRegistrarSedePost = function (){    
-//     enviarPostSede("registrar");
-// }
-// var clicActualizarSedePost = function (){    
-//     enviarPostSede("editar");
-// }
 
-// // ------- ejecución del método post de envio de formularios diligenciados
-// var enviarPostSede  = function (accion) {
-//     var url;
-//     // Controla el tipo de formulario para efecto de ocultar botones (Editar - Registrar)
-//     if(accion=="registrar"){
-//         url = "/" + modulo + "/registrarSedes/"; 
-//     }else{
-//         url = "/" + modulo + "/editarSedes/"+ $("#id").val() + "/"; 
-//     }
-        
-//     // if ($("#" + formulario).valid()) {
-//         $("#formSede").attr("action", url);
-//         var form = $('#formSede');
-//         $.ajax({
-//             url: form.attr("action"),
-//             data: form.serialize(),
-//             type: form.attr("method"),
-//             dataType: 'json',
-//             success: function (data) {
-//                 if (data.transaccion) {
-//                     // miTablaSedes.fnReloadAjax(null, null, true);
-//                     $("#modal-form").modal("hide");      
-//                     alerta("Confirmando transaccion", data.mensaje,"success")
-//                     datosSedes("Confirmando transaccion", data.mensaje,"");
-//                     $('#divJornadas').show()
-//                 }
-//                 else {                    
-//                     actualizarModal(data.html_form);                    
-//                 }
-//             }
-//         });
-// }
-// // ------- Eventos del form una vez cargado
-// function suscribirEventosSedes(){
-//     $(".itemEditar2").click(function(e){
-//         e.preventDefault();    
-//         $.ajax({
-//             url: "/" + modulo + "/editarSedes/" + $(this).data('id'),  // <-- AND HERE
-//             type: 'get',
-//             dataType: 'json',
-//             success: function (data) {
-//                 if (data.transaccion) {                                                  
-//                     mostrarModal(data.html_form, data.titulo, "normal");
-//                     $("#modal-form").modal("show");
-//                     // Oculta la columna establecimiento      
-//                     ocultarEstablecimientoEnSede();  
-//                     $("#btnEditar").show();
-//                     $("#btnRegistrar").hide();            
-//                 }
-//             },
-//             error: function (data) {
-//                 $("#modal-form").modal("hide");
-//                 alerta("Error al intentar conectarse con el servidor", data.mensaje, "error");
-//             }
-//         });
-//     });
-// }
 
-// var miTablaSedes = null;
-// function datosSedes() {
-//     if (miTablaSedes != undefined) {
-//         miTablaSedes.dataTable().fnDestroy();
-//     }   
-//     miTablaSedes = $('#postsTable').dataTable({
-//         sDom: '<"top">tipr',        
-//         "iDisplayLength": 9,
-//         "ajax": {
-//             "processing": true,
-//             "url": "/establecimiento/SedesJson/",
-//             "data": {               
-//                 "establecimiento": idEE
-//             },
-//             "dataSrc": ""
-//         },
-//         "columns": [
-//             {
-//                 "data": function (data, type, row, meta) {
-//                     suscribirEventosSedes();
-//                     return '<a class="btn btn-xs  btn-primary itemEditar2" data-id="' + data.pk + '"><i class="fa fa-pencil"></i></a>';
-//                 }
-//             },
-//             { "data": "fields.nombre" },
-//             { "data": "fields.codigo" } ,    
-//             { "data": "fields.direccion" },
-//             { "data": "fields.telefono" },
-//             { "data": "fields.correoelectronico" },
-//             { "data": "fields.responsable" }
-                
-               
-            
-            
-//         ],
-//         "language": {
-//                 "url": "../../static/admindesigns/vendor/plugins/datatables/espaniol.js"
-//             }
-//     });
-// }
 
 // var clicBuscarDatosCo = function () {
 //     datosConsultados = null;
