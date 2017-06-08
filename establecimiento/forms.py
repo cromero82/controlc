@@ -1,9 +1,12 @@
 from django import forms
-from models import Establecimientos, Sedes
+from models import Establecimientos, Sedes, Jornadas
 from django.utils.translation import gettext_lazy as _
 from django.forms import Field
 from django.utils.translation import ugettext
 
+ESTREGISTRO_TYPES = (
+    (1, 'Activo'),
+    (2, 'Inactivo'),)
 
 class EstablecimientoForm(forms.ModelForm):
     class Meta:
@@ -25,4 +28,14 @@ class SedesForm(forms.ModelForm):
         'codigo': _('Consecutivo DANE sede'), 'direccion': _('Direccion'), 
         'telefono': _('Telefono'), 'correoelectronico': _('Correo electronico'),
         'responsable': _('Nombre de persona a cargo'), 'municipio': _('Municipio / Ciudad')
+        }
+
+class JornadasForm(forms.ModelForm):
+    estregistro = forms.ChoiceField(
+        required=True, label='Estado del registro', choices=ESTREGISTRO_TYPES)
+    class Meta:
+        model = Jornadas
+        fields = ['sede', 'jornada', 'estregistro']
+        labels = {'sede': _('Sede'), 'jornada': _('Jornada'), 
+        'estregistro': _('Estado')
         }

@@ -34,6 +34,12 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     # ---------
+    # Jornadas    
+    url(r'^establecimiento/JornadasJson/$', viewEst.JornadasJson),
+    url(r'^establecimiento/editarJornadas/(?P<id>[0-9]+)/$', viewEst.formularioEditarJornadas),
+    url(r'^establecimiento/registrarJornadas/$', viewEst.formularioRegistrarJornadas),
+
+    # ---------
     # Sedes
     # url(r'^establecimiento/Sedes/$', viewConf.indexSedes),
     url(r'^establecimiento/SedesJson/$', viewEst.SedesJson),

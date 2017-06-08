@@ -9,9 +9,11 @@ var tipoForm = "";
 var esPrimerSede = true;
 
 var miTablaSedes = null;
+var miTablaJornadas = null;
 
-
+datosJornadas()
 datosSedes();
+;
 
 function ocultarEstablecimientoEnSede(){
     $("#id_establecimiento").hide();  
@@ -44,6 +46,7 @@ function suscribirEventosSedes(){
     });
 }
 
+// -----    Clic Sede
 var clicRegistrarSedePost = function (){    
     enviarPostSede("registrar");
 }
@@ -51,7 +54,49 @@ var clicActualizarSedePost = function (){
     enviarPostSede("editar");
 }
 
-// ------- ejecución del método post de envio de formularios diligenciados
+// -----    Clic Jornada
+var clicRegistrarJornadaPost = function (){    
+    enviarPostJornada("registrar");
+}
+var clicActualizarJornadaPost = function (){    
+    enviarPostJornada("editar");
+}
+
+// ------- ejecución form editado JORNADA
+var enviarPostJornada  = function (accion) {
+    var url;
+    // Controla el tipo de formulario para efecto de ocultar botones (Editar - Registrar)
+    if(accion=="registrar"){
+        url = "/" + modulo + "/registrarJornadas/"; 
+    }else{
+        url = "/" + modulo + "/editarJornadas/"+ $("#id").val() + "/"; 
+    }
+        
+    // if ($("#" + formulario).valid()) {
+        $("#formJornada").attr("action", url);
+        var form = $('#formJornada');
+        $.ajax({
+            url: form.attr("action"),
+            data: form.serialize(),
+            type: form.attr("method"),
+            dataType: 'json',
+            success: function (data) {
+                if (data.transaccion) {
+                    // miTablaSedes.fnReloadAjax(null, null, true);
+                    $("#modal-form").modal("hide");      
+                    alerta("Confirmando transaccion", data.mensaje,"success")
+                    datosSedes("Confirmando transaccion", data.mensaje,"");                    
+                }
+                else {                    
+                    actualizarModal(data.html_form);                    
+                }
+            }, error: function (data){
+                alerta("Confirmando transaccion", "El sistema no pudo procesar la información, inténtelo mas tarde","error")
+            }
+        });
+}
+
+// ------- ejecución form editado SEDE
 var enviarPostSede  = function (accion) {
     var url;
     // Controla el tipo de formulario para efecto de ocultar botones (Editar - Registrar)
@@ -87,7 +132,7 @@ function datosSedes() {
     if (miTablaSedes != undefined) {
         miTablaSedes.dataTable().fnDestroy();
     }   
-    miTablaSedes = $('#postsTable').dataTable({
+    miTablaSedes = $('#postsTableSedes').dataTable({
         // sDom: '<"top">tipr',        
         sDom: '<"top">t', 
         "iDisplayLength": 9,
@@ -111,17 +156,88 @@ function datosSedes() {
             { "data": "fields.direccion" },
             { "data": "fields.telefono" },
             { "data": "fields.correoelectronico" },
-            { "data": "fields.responsable" }
-                
-               
-            
-            
-        ],
-        "language": {
-                "url": "../../static/admindesigns/vendor/plugins/datatables/espaniol.js"
-            }
+            { "data": "fields.responsable" }                                                       
+        ]
     });
     $("#numSedes").html(miTablaSedes.length);    
+}
+
+function datosJornadas() {
+    if (miTablaJornadas != undefined) {
+        miTablaJornadas.dataTable().fnDestroy();
+    }   
+    miTablaJornadas = $('#postsTableJornada').dataTable({     
+        sDom: '<"top">t', 
+        "iDisplayLength": 9,
+        "ajax": {
+            "processing": true,
+            "url": "/establecimiento/JornadasJson/",
+            "data": {               
+                "establecimiento": idEE
+            },
+            "dataSrc": ""
+        },
+        "columns": [
+            {
+                "data": function (data, type, row, meta) {
+                    suscribirEventosSedes();
+                    return '<a class="btn btn-xs  btn-primary itemEditarJornada" data-id="' + data.pk + '"><i class="fa fa-pencil"></i></a>';
+                }
+            },
+            { "data": "fields.sede" },
+            { "data": "fields.jornada" }             
+        ]
+    });
+    $("#numJornadas").html(miTablaJornadas.length);    
+}
+
+// ------- Carga modal del formulario para registrar nueva SEDE
+var formularioRegistrarSede = function (id) {    
+    $.ajax({
+        url: "/" + modulo + "/registrarSedes",  // <-- AND HERE
+        type: 'get',
+        dataType: 'json',
+        beforeSend: function () {
+            $("#modal-form").modal("show");
+        },
+        success: function (data) {
+            if (data.transaccion) {
+                mostrarModal(data.html_form, data.titulo, "normal");
+                // suscribirEventos();
+                $("#btnEditar").hide();
+                $("#btnRegistrar").show();
+                              
+            }
+        },
+        error: function (data) {
+            $("#modal-form").modal("hide");
+            alerta("Error al intentar conectarse con el servidor", data.mensaje, "error");
+        }
+    });
+}
+
+// ------- Carga modal del formulario para registrar nueva JORNADA
+var formularioRegistrarJornada = function (id) {    
+    $.ajax({
+        url: "/" + modulo + "/registrarJornadas",  // <-- AND HERE
+        type: 'get',
+        dataType: 'json',
+        beforeSend: function () {
+            $("#modal-form").modal("show");
+        },
+        success: function (data) {
+            if (data.transaccion) {
+                mostrarModal(data.html_form, data.titulo, "normal");
+                // suscribirEventos();
+                $("#btnEditar").hide();
+                $("#btnRegistrar").show();                              
+            }
+        },
+        error: function (data) {
+            $("#modal-form").modal("hide");
+            alerta("Error al intentar conectarse con el servidor", data.mensaje, "error");
+        }
+    });
 }
 
 // $('#divDatosConsultados').hide()
@@ -133,38 +249,7 @@ function datosSedes() {
 // });
 
 
-// // ------- Carga modal del formulario para registrar nuevo 
-// var formularioRegistrarSede = function (id) {    
-//     $.ajax({
-//         url: "/" + modulo + "/registrarSedes",  // <-- AND HERE
-//         type: 'get',
-//         dataType: 'json',
-//         beforeSend: function () {
-//             $("#modal-form").modal("show");
-//         },
-//         success: function (data) {
-//             if (data.transaccion) {
-//                 mostrarModal(data.html_form, data.titulo, "normal");
-//                 // suscribirEventos();
-//                 $("#btnEditar").hide();
-//                 $("#btnRegistrar").show();
-//                 // Oculta la columna establecimiento
-//                 ocultarEstablecimientoEnSede();
-//                 // Asigna información a la primera sede (inf. provenientes de datos.gov.co)
-//                 if(esPrimerSede){
-//                     $("#id_establecimiento").val(idEE);
-//                     $("#id_direccion").val(datosConsultados[0].direccion);
-//                     $("#id_telefono").val(datosConsultados[0].telefono);
-//                     $("#id_correoelectronico").val(datosConsultados[0].correo_electronico);                
-//                 }                
-//             }
-//         },
-//         error: function (data) {
-//             $("#modal-form").modal("hide");
-//             alerta("Error al intentar conectarse con el servidor", data.mensaje, "error");
-//         }
-//     });
-// }
+
 
 // // ------- Resultado de consulta JSON al servidor
 // function resultadoConsultaSimple(result) {

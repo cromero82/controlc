@@ -59,6 +59,8 @@ class Tjornada(models.Model):
         default_related_name = 'Tjornada'
     def __unicode__(self):  
         return self.nombre
+    def natural_key(self):
+        return self.nombre
 
 class Especialidad(models.Model):
     codigo = models.CharField(max_length=2, blank=False,  unique=True, error_messages=my_default_errors)

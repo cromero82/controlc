@@ -12,16 +12,74 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 # Models
-from establecimiento.models import Establecimientos, Sedes
+from establecimiento.models import Establecimientos, Sedes, Jornadas
 
 # Importando Forms
-from forms import EstablecimientoForm, SedesForm
+from forms import EstablecimientoForm, SedesForm, JornadasForm
 import sys
 from configuracion.miUtils import ejecucionAdminDataBase, formularioAdmin, remove_accents
 from configuracion.miUtils import ejecucionAdminDataBaseVal
 from django.contrib import messages
 from django.http import JsonResponse
 from django.template.context_processors import csrf
+import psycopg2
+# from django.db import connection
+
+# ----------------------------------------------
+#  Jornadas
+@login_required(login_url='/accounts/login/')
+def formularioEditarJornadas(request, id):
+    if request.method == 'POST':
+        datos = get_object_or_404(Jornadas, pk=id)
+        form = JornadasForm(request.POST,  request.FILES or None, instance=datos)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Edicion grado", request.POST['nombre'], "formJornadas.html")
+        return JsonResponse(data)
+    else:
+        datos = get_object_or_404(Jornadas, pk=id)
+        form = JornadasForm(instance=datos)
+        return JsonResponse(formularioAdmin(form, "formJornadas.html", "Edicion de jornada", request))
+
+
+@login_required(login_url='/accounts/login/')
+def formularioRegistrarJornadas(request):
+    if request.method == 'POST':
+        form = JornadasForm(request.POST, request.FILES or None)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Registrar sede", 'Sede actual', "formJornadas.html")
+        return JsonResponse(data)
+    else:
+        form = JornadasForm()
+        return JsonResponse(formularioAdmin(form, "formJornadas.html", "Registre datos de jornada", request))
+
+
+@login_required(login_url='/accounts/login/')
+def JornadasJson(request):
+    try:
+        conn=psycopg2.connect("dbname='dbcontrolc' user='dbmicolegiouser' password='adm1nm1colegio123'")
+    except:
+        print "I am unable to connect to the database."
+
+    cur = conn.cursor()
+    try:
+        cur.execute("""SELECT * from establecimiento_sedes""")
+    except:
+        print "I can't SELECT from establecimiento_sedes"
+    rows = cur.fetchall()
+#     cursor = connection.cursor()
+#     cursor.execute('''select j.id, s.nombre as sede, tj.nombre as TipoJornada  from establecimiento_establecimientos e
+# inner join establecimiento_sedes s  on s.establecimiento_id = e.id
+# inner join establecimiento_jornadas j on j.sede_id = s.id
+# inner join configuracion_tjornada tj on j.jornada_id = tj.id
+# where s.id = 21''')
+    lista_datos = rows
+    # lista_datos = Person.objects.raw('SELECT id, first_name FROM myapp_person')    
+    # lista_datos = Jornadas.objects.filter(
+    #     establecimiento=request.GET['establecimiento']
+    # ).order_by('codigo')
+    json = serializers.serialize(
+        'json', lista_datos, use_natural_foreign_keys=True)
+    return HttpResponse(json, content_type='application/json')
 
 
 # ----------------------------------------------
