@@ -25,8 +25,6 @@ from django.template.context_processors import csrf
 import psycopg2
 import json
 from psycopg2.extras import RealDictCursor
-# from django.utils import simplejson
-# from django.db import connection
 
 # ----------------------------------------------
 #  Jornadas
@@ -73,13 +71,7 @@ where e.id = %s"""
         cur.execute(sql % (request.GET['establecimiento']))
     except:
         print "I can't SELECT from establecimiento_sedes"
-    rows = cur.fetchall()
-#     cursor = connection.cursor()
-#     cursor.execute('''select j.id, s.nombre as sede, tj.nombre as TipoJornada  from establecimiento_establecimientos e
-# inner join establecimiento_sedes s  on s.establecimiento_id = e.id
-# inner join establecimiento_jornadas j on j.sede_id = s.id
-# inner join configuracion_tjornada tj on j.jornada_id = tj.id
-# where s.id = 21''')      
+    rows = cur.fetchall()      
     columns = ('id', 'sede', 'tipojornada')
     lista_datos = []
     for row in rows:
@@ -141,8 +133,6 @@ def perfilEstablecimiento(request, id):
     establecimiento = get_object_or_404(Establecimientos, pk=id)
     form = EstablecimientoForm(request.POST,  request.FILES or None, instance=establecimiento)
     context = {'form': form, 'ee': ee,'sede': sede}
-    # data['html_form'] = render_to_string(
-    #     nombreFormulario, context, request=request)
     return render(request, 'perfilEstablecimiento.html', context)
 # --------------------
 def formularioRapidoEstablecimiento(request):
