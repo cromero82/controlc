@@ -68,8 +68,9 @@ def JornadasJson(request):
         sql = """select j.id, s.nombre as sede, tj.nombre as TipoJornada  from establecimiento_establecimientos e
 inner join establecimiento_sedes s  on s.establecimiento_id = e.id
 inner join establecimiento_jornadas j on j.sede_id = s.id
-inner join configuracion_tjornada tj on j.jornada_id = tj.id"""
-        cur.execute(sql)
+inner join configuracion_tjornada tj on j.jornada_id = tj.id
+where e.id = %s"""
+        cur.execute(sql % (request.GET['establecimiento']))
     except:
         print "I can't SELECT from establecimiento_sedes"
     rows = cur.fetchall()
