@@ -181,11 +181,19 @@ function datosJornadas() {
             {
                 "data": function (data, type, row, meta) {
                     suscribirEventosSedes();
-                    return '<a class="btn btn-xs  btn-primary itemEditarJornada" data-id="' + data.pk + '"><i class="fa fa-pencil"></i></a>';
+                    return '<a class="btn btn-xs  btn-primary itemEditarJornada" data-id="' + data.id + '"><i class="fa fa-pencil"></i></a>';
                 }
             },
-            { "data": "fields.sede" },
-            { "data": "fields.jornada" }             
+            {
+                "data": function (data, type, row, meta) {                    
+                    return '' + data.sede + '';
+                }
+            },
+            {
+                "data": function (data, type, row, meta) {                   
+                    return '' + data.tipojornada + '';
+                }
+            },          
         ]
     });
     $("#numJornadas").html(miTablaJornadas.length);    

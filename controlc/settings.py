@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_tables2',
     'widget_tweaks',
     'crispy_forms',
+    'simplejson',
     # 'simple_forms.apps.core',
     # Mis aplicaciones
     'controlc',

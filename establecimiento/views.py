@@ -23,6 +23,9 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.template.context_processors import csrf
 import psycopg2
+import json
+from psycopg2.extras import RealDictCursor
+# from django.utils import simplejson
 # from django.db import connection
 
 # ----------------------------------------------
@@ -62,7 +65,11 @@ def JornadasJson(request):
 
     cur = conn.cursor()
     try:
-        cur.execute("""SELECT * from establecimiento_sedes""")
+        sql = """select j.id, s.nombre as sede, tj.nombre as TipoJornada  from establecimiento_establecimientos e
+inner join establecimiento_sedes s  on s.establecimiento_id = e.id
+inner join establecimiento_jornadas j on j.sede_id = s.id
+inner join configuracion_tjornada tj on j.jornada_id = tj.id"""
+        cur.execute(sql)
     except:
         print "I can't SELECT from establecimiento_sedes"
     rows = cur.fetchall()
@@ -71,15 +78,13 @@ def JornadasJson(request):
 # inner join establecimiento_sedes s  on s.establecimiento_id = e.id
 # inner join establecimiento_jornadas j on j.sede_id = s.id
 # inner join configuracion_tjornada tj on j.jornada_id = tj.id
-# where s.id = 21''')
-    lista_datos = rows
-    # lista_datos = Person.objects.raw('SELECT id, first_name FROM myapp_person')    
-    # lista_datos = Jornadas.objects.filter(
-    #     establecimiento=request.GET['establecimiento']
-    # ).order_by('codigo')
-    json = serializers.serialize(
-        'json', lista_datos, use_natural_foreign_keys=True)
-    return HttpResponse(json, content_type='application/json')
+# where s.id = 21''')      
+    columns = ('id', 'sede', 'tipojornada')
+    lista_datos = []
+    for row in rows:
+        lista_datos.append(dict(zip(columns, row)))
+    miJson = json.dumps(lista_datos, indent=2)
+    return HttpResponse(miJson, content_type='application/json')
 
 
 # ----------------------------------------------
