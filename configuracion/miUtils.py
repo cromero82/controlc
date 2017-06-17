@@ -41,9 +41,15 @@ def ejecucionAdminDataBaseVal(form, request, accion, datoReferencia, nombreFormu
         except IntegrityError, err:
             data['transaccion'] = False
             data['mensaje'] = "ya existe"
+            context = {'form': form}
+            data['html_form'] = render_to_string(
+            nombreFormulario, context, request=request)
         except Exception,  err:
             data['transaccion'] = False
             data['mensaje'] = err.message
+            context = {'form': form}
+            data['html_form'] = render_to_string(
+            nombreFormulario, context, request=request)
     else:
         data['transaccion'] = False
         messages.error(request, "Error")

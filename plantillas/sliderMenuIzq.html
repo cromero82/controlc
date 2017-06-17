@@ -53,7 +53,7 @@
 
     <!--Sección configuración -->
     <li>
-        <a class="accordion-toggle {% if  '/configuracion/Grados/' == request.path or '/configuracion/Niveles/' == request.path or '/configuracion/TfuenteRecursos/' == request.path or '/configuracion/Tcaracteres/' == request.path or '/configuracion/Tjornadas/' == request.path or '/configuracion/Especialidades/' == request.path or '/configuracion/Metodologias/' == request.path or '/configuracion/Usuarios/' == request.path or '/configuracion/Personas/' == request.path or '/configuracion/relacionesFamiliares/' == request.path or '/configuracion/tiposDocumentos/' == request.path or '/configuracion/Municipios/' == request.path or '/configuracion/departamentos/' == request.path %}menu-open{% endif %}         "
+        <a class="accordion-toggle {% if  '/configuracion/Tactoadmins/' == request.path or '/configuracion/Grados/' == request.path or '/configuracion/Niveles/' == request.path or '/configuracion/TfuenteRecursos/' == request.path or '/configuracion/Tcaracteres/' == request.path or '/configuracion/Tjornadas/' == request.path or '/configuracion/Especialidades/' == request.path or '/configuracion/Metodologias/' == request.path or '/configuracion/Usuarios/' == request.path or '/configuracion/Personas/' == request.path or '/configuracion/relacionesFamiliares/' == request.path or '/configuracion/tiposDocumentos/' == request.path or '/configuracion/Municipios/' == request.path or '/configuracion/departamentos/' == request.path %}menu-open{% endif %}         "
             href="#">
                             <span class="glyphicons glyphicons-vector_path_all"></span>
                             <span class="sidebar-title">Configuración</span>
@@ -61,7 +61,7 @@
                         </a>
         <ul class="nav sub-nav">
             <li>
-                <a class="accordion-toggle {% if  '/configuracion/Grados/' == request.path or '/configuracion/Niveles/' == request.path or '/configuracion/TfuenteRecursos/' == request.path or '/configuracion/Tcaracteres/' == request.path or '/configuracion/Tjornadas/' == request.path or '/configuracion/Especialidades/' == request.path or '/configuracion/Metodologias/' == request.path or '/configuracion/Usuarios/' == request.path or '/configuracion/Personas/' == request.path or '/configuracion/relacionesFamiliares/' == request.path or '/configuracion/tiposDocumentos/' == request.path or '/configuracion/Municipios/' == request.path or '/configuracion/departamentos/' == request.path %}menu-open{% endif %}         "
+                <a class="accordion-toggle {% if  '/configuracion/Tactoadmins/' == request.path or '/configuracion/Grados/' == request.path or '/configuracion/Niveles/' == request.path or '/configuracion/TfuenteRecursos/' == request.path or '/configuracion/Tcaracteres/' == request.path or '/configuracion/Tjornadas/' == request.path or '/configuracion/Especialidades/' == request.path or '/configuracion/Metodologias/' == request.path or '/configuracion/Usuarios/' == request.path or '/configuracion/Personas/' == request.path or '/configuracion/relacionesFamiliares/' == request.path or '/configuracion/tiposDocumentos/' == request.path or '/configuracion/Municipios/' == request.path or '/configuracion/departamentos/' == request.path %}menu-open{% endif %}         "
                     href="#">
                                     <span class="glyphicons glyphicons-table"></span> Datos paramétricos
                                     <span class="caret"></span>
@@ -111,7 +111,10 @@
                     </li>
                     <li class="{% if '/configuracion/tiposDocumentos/' == request.path %}active{% endif %}">
                         <a href="http://{{ request.get_host }}/configuracion/tiposDocumentos"> Tipos de documentos</a>
-                    </li>                    
+                    </li>   
+                    <li class="{% if '/configuracion/Tactoadmins/' == request.path %}active{% endif %}">
+                        <a href="http://{{ request.get_host }}/configuracion/Tactoadmins"> Tipos de actos administrativos </a>
+                    </li>                 
                     <li class="{% if '/configuracion/Municipios/' == request.path %}active{% endif %}">
                         <a href="http://{{ request.get_host }}/configuracion/Municipios/"> Municipios </a>
                     </li>

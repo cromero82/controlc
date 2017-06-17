@@ -12,10 +12,10 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 # Models
-from establecimiento.models import Establecimientos, Sedes, Jornadas
+from establecimiento.models import Establecimientos, Sedes, Jornadas, Nivelesaprobados
 
 # Importando Forms
-from forms import EstablecimientoForm, SedesForm, JornadasForm
+from forms import EstablecimientoForm, SedesForm, JornadasForm, NivelesaprobadosForm
 import sys
 from configuracion.miUtils import ejecucionAdminDataBase, formularioAdmin, remove_accents
 from configuracion.miUtils import ejecucionAdminDataBaseVal
@@ -25,6 +25,43 @@ from django.template.context_processors import csrf
 import psycopg2
 import json
 from psycopg2.extras import RealDictCursor
+
+# ----------------------------------------------
+#  NivelesAprobados
+@login_required(login_url='/accounts/login/')
+def formularioEditarNivelesAprobados(request, id):
+    if request.method == 'POST':
+        datos = get_object_or_404(Nivelesaprobados, pk=id)
+        form = NivelesaprobadosForm(request.POST,  request.FILES or None, instance=datos)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Edicion grado", request.POST['nombre'], "formNivelesaprobados.html")
+        return JsonResponse(data)
+    else:
+        datos = get_object_or_404(Nivelesaprobados, pk=id)
+        form = NivelesaprobadosForm(instance=datos)
+        return JsonResponse(formularioAdmin(form, "formNivelesaprobados.html", "Edicion de NivelesAprobado", request))
+
+
+@login_required(login_url='/accounts/login/')
+def formularioRegistrarNivelesAprobados(request):
+    if request.method == 'POST':
+        form = NivelesaprobadosForm(request.POST, request.FILES or None)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Registrar niveles academicos", request.POST['numeroActo'], "formNivelesaprobados.html")
+        return JsonResponse(data)
+    else:
+        form = NivelesaprobadosForm()
+        return JsonResponse(formularioAdmin(form, "formNivelesaprobados.html", "Registre datos del nivel academico", request))
+
+
+@login_required(login_url='/accounts/login/')
+def NivelesAprobadosJson(request):
+    lista_datos = Nivelesaprobados.objects.filter(
+        establecimiento=request.GET['establecimiento']
+    ).order_by('id')
+    json = serializers.serialize(
+        'json', lista_datos, use_natural_foreign_keys=True)
+    return HttpResponse(json, content_type='application/json')
 
 # ----------------------------------------------
 #  Jornadas

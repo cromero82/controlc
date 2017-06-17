@@ -1,6 +1,6 @@
 from django import forms
 from models import Persona, Municipios, Metodologia, Especialidad, Tjornada, Tcaracter
-from models import TfuenteRecursos, Niveles, Grados
+from models import TfuenteRecursos, Niveles, Grados, Tactoadmin
 from models import Departamento
 from django.utils.translation import gettext_lazy as _
 from django.forms import Field
@@ -23,6 +23,22 @@ class PersonaForm(forms.ModelForm):
             'numerodocumento': _('Numero documento'), 'tdocumento': _('Tipo documento'),
             'direccion': _('Direccion'), 'telefono': _('Telefono'),
             'fechanacimiento': _('Fecha nacimiento'), 'correoelectronico': _('Email')
+        }
+
+class TactoadminsForm(forms.ModelForm):
+    estregistro = forms.ChoiceField(
+        required=True, label='Estado del registro', choices=ESTREGISTRO_TYPES)
+
+    class Meta:
+        model = Tactoadmin
+        fields = ['nombre','aplicacion', 'estregistro']
+        labels = {
+            'nombre': _('Nombre del acto'),
+            'aplicacion': _('Alcance o aplicacion de la norma'), 'estregistro': _('Estado registro'),
+        }
+        widgets = {
+            'nombre': forms.TextInput({'placeholder': 'Ingrese nombre'}),
+            'aplicacion': forms.TextInput({'placeholder': 'Ingrese aplicacion o alcance'})
         }
 
 class NivelesForm(forms.ModelForm):

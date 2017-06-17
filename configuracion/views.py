@@ -15,12 +15,12 @@ from django.template import RequestContext
 from datetime import datetime
 # from models import Persona
 from models import Tdocumento, TRelacionFamiliar
-from models import Departamento, Persona, Municipios, Metodologia, Especialidad, Tjornada 
-from models import Tcaracter, TfuenteRecursos, Niveles, Grados
+from models import Departamento, Persona, Municipios, Metodologia, Especialidad, Tjornada
+from models import Tcaracter, TfuenteRecursos, Niveles, Grados, Tactoadmin
 # Importando Forms
 from forms import DepartamentoForm, PersonaForm, MunicipioForm, MetodologiaForm
 from forms import EspecialidadForm, TjornadaForm, TcaracterForm, TfuenteRecursosForm, NivelesForm
-from forms import GradosForm
+from forms import GradosForm, TactoadminsForm
 import sys
 import miUtils
 from miUtils import ejecucionAdminDataBaseVal
@@ -28,9 +28,55 @@ from miUtils import ejecucionAdminDataBase, formularioAdmin, remove_accents
 from django.contrib import messages
 from django.http import JsonResponse
 from django.template.context_processors import csrf
+# ----------------------------------------------
+# Administracion de Tactosadmins (tipos de actos administrativos)
+
+@login_required(login_url='/accounts/login/')
+def formularioEditarTactoadmins(request, id):
+    if request.method == 'POST':
+        datos = get_object_or_404(Tactoadmin, pk=id)
+        form = TactoadminsForm(request.POST,  request.FILES or None, instance=datos)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Edicion de acto administrativo", request.POST['nombre'], "formTactoadmin.html")
+        return JsonResponse(data)
+    else:
+        datos = get_object_or_404(Tactoadmin, pk=id)
+        form = TactoadminsForm(instance=datos)
+        return JsonResponse(formularioAdmin(form, "formTactoadmin.html", "Edicion de acto administrativo", request))
+
+@login_required(login_url='/accounts/login/')
+def formularioRegistrarTactoadmins(request):
+    if request.method == 'POST':
+        form = TactoadminsForm(request.POST)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Registrar acto administrativo", request.POST['nombre'], "formTactoadmin.html")
+        return JsonResponse(data)
+    else:
+        form = TactoadminsForm()
+        return JsonResponse(formularioAdmin(form, "formTactoadmin.html", "Registre datos de acto administrativo", request))
+
+@login_required(login_url='/accounts/login/')
+def TactoadminsJson(request):
+    if request.GET['nombre'] != '':
+        lista_datos = Tactoadmin.objects.filter(
+            estregistro=request.GET['estregistro'],
+            nombre__contains=remove_accents(request.GET['nombre'].upper())
+        ).order_by('id')
+    else:
+        lista_datos = Tactoadmin.objects.filter(
+            estregistro=request.GET['estregistro']
+        ).order_by('id')
+    json = serializers.serialize('json', lista_datos, use_natural_foreign_keys=True)
+    return HttpResponse(json, content_type='application/json')
+
+
+@login_required(login_url='/accounts/login/')
+def indexTactoadmins(request):
+    return render(request, 'Tactoadmins.html', context={'datos': ''})
+
 
 # ----------------------------------------------
-# Administracion de Tipos de fuentes de recursos
+# Administracion de Grados
 
 @login_required(login_url='/accounts/login/')
 def formularioEditarGrados(request, id):
@@ -71,13 +117,9 @@ def GradosJson(request):
     json = serializers.serialize('json', lista_datos, use_natural_foreign_keys=True)
     return HttpResponse(json, content_type='application/json')
 
-
 @login_required(login_url='/accounts/login/')
 def indexGrados(request):
     return render(request, 'Grados.html', context={'datos': ''})
-
-
-
 # ----------------------------------------------
 # Administracion de Tipos de fuentes de recursos
 
@@ -148,7 +190,7 @@ def formularioRegistrarTfuenteRecursos(request):
     if request.method == 'POST':
         form = TfuenteRecursosForm(request.POST, request.FILES or None)
         data = ejecucionAdminDataBaseVal(
-            form, request, "Registrar tipo de caracter", request.POST['nombre'], "formTfuenteRecursos.html")
+            form, request, "Registrar tipo de fuente de recursos", request.POST['nombre'], "formTfuenteRecursos.html")
         return JsonResponse(data)
     else:
         form = TfuenteRecursosForm()

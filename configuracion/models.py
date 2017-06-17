@@ -11,6 +11,17 @@ my_default_errors = {
     'unique':"Ya se encuentra registrado en el sistema."
 }
 
+class Tactoadmin(models.Model):    
+    aplicacion = models.CharField(max_length=3, blank=False, error_messages=my_default_errors)
+    nombre = models.CharField(max_length=200, blank=False, unique=True, error_messages=my_default_errors)
+    estregistro = models.IntegerField(default=1, blank=False)
+    class Meta:
+        default_related_name = 'Tactoadmin'
+    def __unicode__(self):  
+        return self.nombre
+    def natural_key(self):
+        return self.nombre
+
 class Niveles(models.Model):    
     codigo = models.CharField(max_length=2, blank=False,  unique=True, error_messages=my_default_errors)
     nombre = models.CharField(max_length=200, blank=False, unique=True, error_messages=my_default_errors)
@@ -67,7 +78,7 @@ class Especialidad(models.Model):
     nombre = models.CharField(max_length=40, blank=False, unique=True, error_messages=my_default_errors)
     estregistro = models.IntegerField(default=1, blank=False)
     class Meta:
-        default_related_name = 'especialidad'
+        default_related_name = 'nombre'
     def __unicode__(self):  
         return self.nombre
 

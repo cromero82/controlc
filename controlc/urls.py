@@ -34,6 +34,12 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     # ---------
+    # NivelesAprobados    
+    url(r'^establecimiento/NivelesAprobadosJson/$', viewEst.NivelesAprobadosJson),
+    url(r'^establecimiento/editarNivelesAprobados/(?P<id>[0-9]+)/$', viewEst.formularioEditarNivelesAprobados),
+    url(r'^establecimiento/registrarNivelesAprobados/$', viewEst.formularioRegistrarNivelesAprobados),
+
+    # ---------
     # Jornadas    
     url(r'^establecimiento/JornadasJson/$', viewEst.JornadasJson),
     url(r'^establecimiento/editarJornadas/(?P<id>[0-9]+)/$', viewEst.formularioEditarJornadas),
@@ -72,6 +78,13 @@ urlpatterns = [
     url(r'^configuracion/TfuenteRecursosJson/$', viewConf.TfuenteRecursosJson),
     url(r'^configuracion/editarTfuenteRecursos/(?P<id>[0-9]+)/$', viewConf.formularioEditarTfuenteRecursos),
     url(r'^configuracion/registrarTfuenteRecursos/$', viewConf.formularioRegistrarTfuenteRecursos),
+
+    # ---------
+    # Parametricas Tipo Acto administrativo
+    url(r'^configuracion/Tactoadmins/$', viewConf.indexTactoadmins),
+    url(r'^configuracion/TactoadminsJson/$', viewConf.TactoadminsJson),
+    url(r'^configuracion/editarTactoadmin/(?P<id>[0-9]+)/$', viewConf.formularioEditarTactoadmins),
+    url(r'^configuracion/registrarTactoadmin/$', viewConf.formularioRegistrarTactoadmins),
 
     # ---------
     # Parametricas Niveles educativos
