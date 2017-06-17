@@ -29,6 +29,20 @@ from psycopg2.extras import RealDictCursor
 # ----------------------------------------------
 #  NivelesAprobados
 @login_required(login_url='/accounts/login/')
+def consultaArchivos(request, id):
+    if request.method == 'POST':
+        datos = get_object_or_404(Nivelesaprobados, pk=id)
+        form = NivelesaprobadosForm(request.POST,  request.FILES or None, instance=datos)
+        data = ejecucionAdminDataBaseVal(
+            form, request, "Edicion grado", request.POST['nombre'], "formNivelesaprobados.html")
+        return JsonResponse(data)
+    else:
+        datos = get_object_or_404(Nivelesaprobados, pk=id)
+        form = NivelesaprobadosForm(instance=datos)
+        return JsonResponse(formularioAdmin(form, "formNivelesaprobados.html", "Edicion de NivelesAprobado", request))
+
+
+@login_required(login_url='/accounts/login/')
 def formularioEditarNivelesAprobados(request, id):
     if request.method == 'POST':
         datos = get_object_or_404(Nivelesaprobados, pk=id)

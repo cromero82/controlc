@@ -107,53 +107,34 @@ var enviarPostNivelAprobado  = function (accion) {
     }else{
         url = "/" + modulo + "/editarNivelesAprobados/"+ $("#id").val() + "/"; 
     }
-    $("#formNivelesaprobados").attr("action",url);
-        var form = $('#formNivelesaprobados');
-        var token = $('input[name="csrfmiddlewaretoken"]').prop('value');
-        var data = new FormData($('#formNivelesaprobados').get(0));
-        form.append("csrftoken",   token)
-        $.ajax({
-            url: form.attr("action"),
-            data: data,
-            type: form.attr("method"),
-            processData: false,
-            contentType: false,
-            cache: false,
-            dataType: 'json',
-            success: function (data) {
-                if (data.transaccion) {
-                    miTabla.fnReloadAjax(null, null, true);
-                    $("#modal-form").modal("hide");
-                    alerta("Confirmando transacción", data.mensaje, "success");
+    if ($("#formNivelesaprobados").valid()) {
+        $("#formNivelesaprobados").attr("action",url);
+            var form = $('#formNivelesaprobados');
+            var token = $('input[name="csrfmiddlewaretoken"]').prop('value');
+            var data = new FormData($('#formNivelesaprobados').get(0));
+            form.append("csrftoken",   token)
+            $.ajax({
+                url: form.attr("action"),
+                data: data,
+                type: form.attr("method"),
+                processData: false,
+                contentType: false,
+                cache: false,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.transaccion) {
+                        datosNivelesaprobados();
+                        // miTabla.fnReloadAjax(null, null, true);
+                        $("#modal-form").modal("hide");
+                        alerta("Confirmando transacción", data.mensaje, "success");
+                    }
+                    else {
+                        alerta("Confirmando error", data.mensaje, "error");
+                    }
                 }
-                else {
-                    alerta("Confirmando error", data.mensaje, "error");
-                }
-            }
         });
-    return false;
-    // if ($("#" + formulario).valid()) {
-        // $("#formNivelesaprobados").attr("action", url);
-        // var form = $('#formNivelesaprobados');
-        // $.ajax({
-        //     url: form.attr("action"),
-        //     data: form.serialize(),
-        //     type: form.attr("method"),
-        //     dataType: 'json',
-        //     success: function (data) {
-        //         if (data.transaccion) {
-        //             // miTablaSedes.fnReloadAjax(null, null, true);
-        //             $("#modal-form").modal("hide");      
-        //             alerta("Confirmando transaccion", data.mensaje,"success")
-        //             datosNivelesaprobados("Confirmando transaccion", data.mensaje,"");                    
-        //         }
-        //         else {                    
-        //             actualizarModal(data.html_form);                    
-        //         }
-        //     }, error: function (data){
-        //         alerta("Confirmando transaccion", "El sistema no pudo procesar la información, inténtelo mas tarde","error")
-        //     }
-        // });
+    }
+    return false;    
 }
 
 // ------- ejecución form editado JORNADA
@@ -213,7 +194,7 @@ var enviarPostSede  = function (accion) {
                     // miTablaSedes.fnReloadAjax(null, null, true);
                     $("#modal-form").modal("hide");      
                     alerta("Confirmando transaccion", data.mensaje,"success")
-                    datosNivelesaprobados();                    
+                    datosSedes();                    
                 }
                 else {                    
                     actualizarModal(data.html_form);                    
@@ -242,6 +223,7 @@ function datosNivelesaprobados() {
             {
                 "data": function (data, type, row, meta) {
                     suscribirEventosNivelesaprobados();
+                   
                     return '<a class="btn btn-xs  btn-primary itemEditarNivelesaprobados" data-id="' + data.pk + '"><i class="fa fa-pencil"></i></a>';
                 }
             },
@@ -249,13 +231,12 @@ function datosNivelesaprobados() {
             { "data": "fields.tipoaprobacion" } ,    
             { "data": "fields.numeroActo" },
 
-           { "data": function (data, type, row, meta) {              
-                return 'link pa descargar';
-                    // return '<img src="/media/'+ data.fields.foto +'" class="media-object mn thumbnail mw40">';
-                  }},   
+           { "data": function (data, type, row, meta) {               
+               return '<a href="/media/'+  data.fields.anexo +'" download> descargar </a>';
+            }},   
         ]
     });
-    $("#numNivelesaprobados").html(miTablaNivelesaprobados.length);    
+    $("#numNiveles").html(miTablaNivelesaprobados.fnGetData.length);    
 }
 
 function datosSedes() {
@@ -289,7 +270,7 @@ function datosSedes() {
             { "data": "fields.responsable" }                                                       
         ]
     });
-    $("#numSedes").html(miTablaSedes.length);    
+    $("#numSedes").html(miTablaSedes.fnGetData.length);    
 }
 
 function datosJornadas() {
@@ -325,8 +306,8 @@ function datosJornadas() {
                 }
             },          
         ]
-    });
-    $("#numJornadas").html(miTablaJornadas.length);    
+    });    
+    $("#numJornadas").html(miTablaJornadas.fnGetData.length);    
 }
 
 // ------- Carga modal del formulario para registrar nueva NIVEL APROBADO
@@ -404,8 +385,6 @@ var formularioRegistrarJornada = function (id) {
 }
 
 
-
-
 function iniciarModal() {
     // $("#codigoDepartamento").hide();
     // var reglas = {
@@ -429,10 +408,7 @@ function iniciarModal() {
 }
 
 var form = null;
-jQuery(document).ready(function () {
-    var tituloInicialBoton = "Siguiente";
-    "use strict";
-
+jQuery(document).ready(function () {    
     // Init Theme Core    
     // Core.init();
 

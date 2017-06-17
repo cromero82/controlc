@@ -35,6 +35,7 @@ urlpatterns = [
 
     # ---------
     # NivelesAprobados    
+    url(r'^establecimiento/consultarFile/$', viewEst.consultaArchivos),
     url(r'^establecimiento/NivelesAprobadosJson/$', viewEst.NivelesAprobadosJson),
     url(r'^establecimiento/editarNivelesAprobados/(?P<id>[0-9]+)/$', viewEst.formularioEditarNivelesAprobados),
     url(r'^establecimiento/registrarNivelesAprobados/$', viewEst.formularioRegistrarNivelesAprobados),
